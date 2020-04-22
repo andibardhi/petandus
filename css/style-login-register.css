@@ -24,7 +24,7 @@ body{
     text-transform: uppercase;
     font-weight: 500;
   }
-  .box input[type = "text"],.box input[type = "date"],.box input[type = "password"]{
+  .box input[type = "text"],.box input[type = "date"],.box input[type = "password"],.box input[type = "email"]{
     border:0;
     background: none;
     display: block;
@@ -77,12 +77,12 @@ body{
     /* color: #7f8c8d;  */
 } 
 
-  .box input[type = "text"]:focus,.box input[type = "password"]:focus{
+  .box input[type = "text"]:focus,.box input[type = "password"]:focus,.box input[type = "email"]:focus{
     width: 280px;
     /* border-color: #f0932b; */
   }
   
-  .box input[type = "submit"]{
+  .box button{
     border:0;
     background: none;
     display: block;
@@ -98,7 +98,7 @@ body{
     transition: 0.25s;
     cursor: pointer;
   }
-  .box input[type = "submit"]:hover{
+  .box button:hover{
     /* background: #f0932b; */
     background: white;
     color: #f0932b;
