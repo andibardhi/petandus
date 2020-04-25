@@ -65,11 +65,22 @@ body{
     width: 0;
     height: 0;
     border: 6px solid transparent;
-    border-color: #fff transparent transparent transparent;
+    border-color: transparent transparent transparent transparent;
   }
+
+  
 
   .box option{
     color:black;
+    background-color: #e4572e;
+  }
+
+  .box option:checked{
+    background-color: #fff3b4;
+  } 
+
+  .box option:disabled{
+    display: none;
   }
 
   .box ::placeholder {  
