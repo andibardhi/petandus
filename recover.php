@@ -1,26 +1,20 @@
-<?php require_once('includes/header.php')?>
-<?php require_once('includes/navbar.php')?>
+<?php include_once('functions/config.php'); ?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>َPet&Us Rikthe fjalëkalimin</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="css/style-login-register.css">
+  </head>
+  <body>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-8 col-lg-6 m-auto">
-                <div class="card bg-light mt-5 py-2">
-                    <div class="card-title">
-                        <h2 class="text-center">Rikthe fjalëkalim</h2>
-                    </div>
-                    <div class="card-body">
-                        <form>
-                            <input type="text" name="email" placeholder="Email" class="form-control py-2 mb-2">
-                        
-                        </form>
-                    </div>
-                    <div class="card-footer">
-                        <button class="btn btn-danger float-left">Anullo</button>
-                        <button class="btn btn-success float-right">Dërgo fjalëkalim</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
+    <form class="box"  method="post">
+        <h1>Rikthe fjalëkalimin</h1>
+        <label> Shkruani emailin tuaj </label>
+        <input type="email" id="email" name="email" placeholder="Email" /> 
+        <button id="btn"> Dërgo fjalëkalim </button>
+    </form>
+
 
 <?php require_once('includes/footer.php')?>

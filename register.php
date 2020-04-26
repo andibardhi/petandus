@@ -1,38 +1,39 @@
-<?php require_once('includes/header.php')?>
-<?php require_once('includes/navbar.php')?>    
+<?php include_once('functions/config.php'); ?>
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>َPet&Us Regjistrohu</title>
+    <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    <link rel="stylesheet" href="css/style-login-register.css">
+  </head>
+  <body>
 
-    <div class="container">
-        <div class="row">
-            <div class="col-8 col-lg-6 m-auto">
-                <div class="card bg-light mt-5 py-2">
-                    <div class="card-title">
-                        <h2 class="text-center">Forma e Regjistrimit</h2>
-                    </div>
-                    <div class="card-body">
-                        <!--Here we call user_validation function -->
-                        <?php register_validation(); ?>
-                        <form method="POST" autocomplete="on">
-                            <input type="text" name="firstname" placeholder="Emri" class="form-control py-2 mb-2">
-                            <input type="text" name="lastname" placeholder="Mbiemri" class="form-control py-2 mb-2">
-                            <input type="date" name="birthdate" placeholder="Datëlindja" class="form-control py-2 mb-2">
-                            <input type="text" name="phonenumber" placeholder="Numër telefoni" class="form-control py-2 mb-2">
-                            <select name="city" class="form-control py-2 mb-2">
-                                <option value="null" selected disabled>Qyteti</option>
-                                <option value="tirane">Tirane</option>
-                                <option value="durres">Durres</option>
-                                <option value="korce">Korce</option>
-                                <option value="vlore">Vlore</option>
-                            </select>
-                            <input type="text" name="username" placeholder="Username" class="form-control py-2 mb-2">
-                            <input type="text" name="email" placeholder="Email" class="form-control py-2 mb-2">
-                            <input type="password" name="password" placeholder="Fjalëkalimi" class="form-control py-2 mb-2">
-                            <input type="password" name="cpassword" placeholder="Konfirmim Fjalëkalimi" class="form-control py-2 mb-2">
-                            <button class="btn btn-success ml-auto">Regjistrohu</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+    
+    
+<div class="container">
+    <?php register_validation(); ?>
+    <form class="box" method="post" autocomplete="on">
+        <h1>Regjistrohu</h1>
+        <input type="text" name="firstname" id="firstname" placeholder="Emri">
+        <input type="text" name="lastname" id="lastname" placeholder="Mbiemri">
+        <input type="date" name="birthdate" id="birthdate" placeholder="Datëlindja">
+        <input type="text" name="phonenumber" id="phonenumber" placeholder="Numer telefoni">
+        <select id="city" name="city" >
+            <option value="null" selected disabled > Qyteti </option>
+            <option value="tirane">Tirane</option>
+            <option value="durres">Durres</option>
+            <option value="korce">Korce</option>
+            <option value="vlore">Vlore</option>
+        </select>
+        <input type="text" name="username" id="Username" placeholder="Username">
+        <input type="text" name="email" id="email"  placeholder="Email">
+        <input type="password" name="password" id="password" placeholder="Fjalëkalimi">
+        <input type="password" name="cpassword" name="cpassword" placeholder="Konfirmim Fjalëkalimi">
+        <button id="btn"> Regjistrohu </button> 
+        <label> Have an account? <a href="./login.html">Login!</a> </label> 
+    </form>
     </div>
+
 
 <?php require_once('includes/footer.php')?>
