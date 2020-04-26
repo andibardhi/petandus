@@ -11,7 +11,7 @@
                     <div class="card-body">
                         <!--Here we call user_validation function -->
                         <?php register_validation(); ?>
-                        <form method="POST">
+                        <form method="POST" autocomplete="on">
                             <input type="text" name="firstname" placeholder="Emri" class="form-control py-2 mb-2">
                             <input type="text" name="lastname" placeholder="Mbiemri" class="form-control py-2 mb-2">
                             <input type="date" name="birthdate" placeholder="Datëlindja" class="form-control py-2 mb-2">

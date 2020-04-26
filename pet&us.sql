@@ -5,7 +5,7 @@ CREATE TABLE `User` (
 	`password` varchar(255) NOT NULL,
 	`role`char NOT NULL DEFAULT 'U',
     `validation_code` TEXT NOT NULL DEFAULT "",
-    `active` TINYINT NOT NULL DEFAULT 0,
+    `active` TINYINT NOT NULL DEFAULT 1,
 	PRIMARY KEY (`id`)
 );
 

@@ -40,22 +40,69 @@
             //Variable for storing errors
             $errors = [];
 
-            //$firstname = clean($_POST['firstname']);
-            //$lastname = clean($_POST['lastname']);
-            //$birthdate = clean($_POST['birthdate']);
-            //$phonenumber = clean($_POST['phonenumber']);
-            //$city = $_POST['city'];
+            $firstname = clean($_POST['firstname']);
+            $lastname = clean($_POST['lastname']);
+            $birthdate = clean($_POST['birthdate']);
+            $phonenumber = clean($_POST['phonenumber']);
+            $city = (int)$_POST['city'];
             $username = clean($_POST['username']);
-            $email = clean($_POST['email']);
+            $email = strtolower(clean($_POST['email']));
             $password = clean($_POST['password']);
             $cpassword = clean($_POST['cpassword']);
 
-            if(email_exist($email)){
-                //We add it to errors array
-                $errors[] = "Email-i është në përdorim!";
+            $min_char = 03;
+            $max_char = 25;
+
+            if(strlen($firstname) > $max_char){
+                $errors[] = "Ju lutem vendosni emrin me më pak se 25 gërma!";
             }
-            if(username_exist($username)){
-                $errors[] = "Username është në përdorim!";
+
+            if(strlen($firstname) < $min_char){
+                $errors[] = "Ju lutem vendosni emrin me më shumë se 3 gërma!";
+            }
+            if(strlen($lastname) > $max_char){
+                $errors[] = "Ju lutem vendosni mbiemrin me më pak se 25 gërma!";
+            }
+
+            if(strlen($lastname) < $min_char){
+                $errors[] = "Ju lutem vendosni mbiemrin me më shumë se 3 gërma!";
+            }
+
+            if(strlen($username) > $max_char){
+                $errors[] = "Ju lutem vendosni username me më pak se 25 karaktere!";
+            }
+
+            if(strlen($username) < $min_char){
+                $errors[] = "Ju lutem vendosni username me më shumë se 3 karaktere!";
+            }
+
+            if(strlen($password) > $max_char){
+                $errors[] = "Ju lutem vendosni username me më pak se 25 gërma!";
+            }
+
+            if(strlen($password) < 6){
+                $errors[] = "Ju lutem vendosni fjalëkalim me më shumë se 6 karaktere!";
+            }
+
+            if($password != $cpassword){
+                $errors[] = "Fjalëkalimet nuk përshtaten!";
+            }
+
+            if(!preg_match("/^[a-zA-Z,0-9]*$/", $username)){
+                $errors[] = "Karaktere të pranueshem janë vetëm gërma dhe numra!";
+            }else{
+                if(username_exist($username)){
+                    $errors[] = "Username është në përdorim!";
+                }
+            }
+            
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                $errors[] = "Email jo i saktë!";
+            }else{
+                if(email_exist($email)){
+                    //We add it to errors array
+                    $errors[] = "Email-i është në përdorim!";
+                }
             }
 
             if(!empty($errors)){
@@ -67,7 +114,8 @@
                 //We register the user because no error was found completing the form
                 if(user_registration($username, $email, $password)){
                     //If registration succesful redirect the user
-                    echo('<p class="text-success text-center">U regjistruat me sukses. Kontrolloni email për aktivizim!</p>');
+                    //echo('<p class="text-success text-center">U regjistruat me sukses.Kontrolloni email për aktivizim!</p>');
+                    echo('<p class="text-success text-center">U regjistruat me sukses.</p>');
                 }else{
                     echo('<p class="text-danger text-center">Ndodhi një gabim. Ju lutem provoni përsëri!/p>');  
                 }
@@ -110,15 +158,18 @@
         $tmpPassword = Escape($password);
 
         $hashed_password = md5($tmpPassword);
-        $validation_code = md5($tmpUsername + microtime());
+        //$time = microtime();
+        //$validation_code = md5($tmpUsername.$time);
 
-        $sql = "insert into user (username, email, password, validation_code) values ('$username', '$email', '$hashed_password', '$validation_code')";
-        
+        //$sql = "insert into user (username, email, password, validation_code) values ('$username', '$email', '$hashed_password', '$validation_code')";
+        $sql = "insert into user (username, email, password) values ('$username', '$email', '$hashed_password')";
         $result = query($sql);
         confirm($result);
-
+        
+        set_message('<p class="text-success text-center">Regjistrimi përfundoi. Mund të kyçeni në sistem.</p>');
+        redirect("login.php");
         //Send account activation email
-        send_activation_email($tmpEmail, $validation_code);
+        //send_activation_email($tmpEmail, $validation_code);
 
         return true;
     }
@@ -173,11 +224,15 @@
             if(empty($username))
             {
                 $errors[] = "Ju lutem vendosni username tuaj!";
+            }else if(strlen($username) < 3){
+                $errors[] = "Ju lutem vendosni username me më shumë se 3 karaktere!";
             }
 
             if(empty($password))
             {
                 $errors[] = "Ju lutem vendosni fjalëkalimin!";
+            }else if(strlen($password) < 6){
+                $errors[] = "Ju lutem vendosni fjalëkalim me më shumë se 6 karaktere!"; 
             }
 
             if(!empty($errors)){
@@ -225,4 +280,12 @@
             return false;
         }
     }
+
+     ///////////////////////////////////////////////////////////////////////
+    //*------------------Recover form functions----------------------*//
+    ///////////////////////////////////////////////////////////////////////
+
+
+
+
 ?>

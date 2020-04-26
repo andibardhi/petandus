@@ -9,7 +9,10 @@
                         <h2 class="text-center">Rikthe fjalëkalim</h2>
                     </div>
                     <div class="card-body">
-                        <input type="text" name="email" placeholder="Email" class="form-control py-2 mb-2">
+                        <form>
+                            <input type="text" name="email" placeholder="Email" class="form-control py-2 mb-2">
+                        
+                        </form>
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-danger float-left">Anullo</button>
