@@ -7,13 +7,19 @@
                 <div class="card bg-light mt-5 py-2">
                     <div class="card-title">
                         <h2 class="text-center">Vendosni kodin</h2>
+
+                        <?php 
+                            validate_code() 
+                        ?>
                     </div>
                     <div class="card-body">
-                        <input type="text" name="recover-code" placeholder="########" class="form-control py-2 mb-2">
+                        <form method="POST">
+                            <input type="text" name="recover-code" placeholder="########" class="form-control py-2 mb-2">
+                            <input type = "submit" value="Dërgo kodin" />
+                        </form>    
                     </div>
                     <div class="card-footer">
                         <button class="btn btn-danger float-left">Anullo</button>
-                        <button class="btn btn-success float-right">Dërgo fjalëkalim</button>
                     </div>
                 </div>
             </div>

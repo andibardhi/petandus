@@ -11,9 +11,16 @@
 
     <form class="box"  method="post">
         <h1>Rikthe fjalëkalimin</h1>
-        <label> Shkruani emailin tuaj </label>
-        <input type="email" id="email" name="email" placeholder="Email" /> 
-        <button id="btn"> Dërgo fjalëkalim </button>
+        <?php 
+          recover_password(); 
+          display_message();
+        ?>
+        <form method="POST">
+          <label> Shkruani emailin tuaj </label>
+          <input type="email" id="email" name="email" placeholder="Email" /> 
+          <input type="hidden" name="token" value="<?php echo token_generator(); ?>"/> 
+          <button id="btn"> Dërgo fjalëkalim </button>
+        </form>
     </form>
 
 
