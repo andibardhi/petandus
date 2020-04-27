@@ -241,7 +241,8 @@
                 }
             }else{
                 if(user_login($username, $password, $remember_me)){
-                    redirect('index.php');
+                    // redirect('index.php');
+                    echo 'success';
                 }else{
                     echo '<div class="alert alert-danger">Username ose fjalëkalim i gabuar.</div>';
                 }
