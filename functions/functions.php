@@ -11,7 +11,7 @@
 
     //Store message in session
     function set_message($msg){
-        if(!empty(msg))
+        if(!empty($msg))
         {
             $_SESSION['info_msg']=$msg;
         }
@@ -298,7 +298,7 @@
                     
                     $subject = "Rikthim fjalëkalimi";
                     $message = "Klikoni link-un e mëposhtëm për të rikthyer fjalëkalimin tuaj. 
-                                http://localhost/petus/code.php?email='$email'&code='$code'";
+                                http://localhost/petus/reset.php?email=$email&code=$code";
                     $header = "From: petusteam@gmail.com";
 
                     if(mail($email, $subject, $message, $header)){
@@ -315,55 +315,38 @@
     }
 
     ///////////////////////////////////////////////////////////////////////
-    //*------------------Code form functions----------------------*//
-    ///////////////////////////////////////////////////////////////////////
-
-    //Validation code function
-    function validate_code(){
-        if(isset($_COOKIE['temp_code'])){
-            if(!isset($_GET['email']) && !isset($_GET['code'])){
-                redirect('index.php');
-            }else if(empty($_GET['email']) && empty($_GET['code'])){
-                redirect('index.php');
-            }else{
-                if(isset($_POST['recover-code'])){
-                    $recover_code = $_POST['recover-code'];
-                    $email = $_GET['email'];
-
-                    $sql = "select * from user where validation_code='$recover_code' AND email='$email'";
-                    $result = query($sql);
-
-                    if(fetch_data($result)){
-                        setcookie('tmp_code_reset', $recover_code, time()+3600);
-                        redirect("reset.php?email=$email&code=$recover_code");
-                    }else{
-                        echo '<div class="alert alert-danger">Ndodhi një gabim</div>';
-                    }
-                }
-            }
-        }else{
-            set_message('<div class="alert">Kodi juaj ka skaduar!</div>');
-            redirect('recover.php');
-        }
-    }
-
-    ///////////////////////////////////////////////////////////////////////
     //*------------------Reset form functions----------------------*//
     ///////////////////////////////////////////////////////////////////////
     function reset_password(){
-        if(isset($_COOKIE['tmp_code_reset'])){
+        if($_SERVER['REQUEST_METHOD'] == "POST"){
+
+        
+        if(isset($_COOKIE['temp_code'])){
             if(isset($_GET['email']) && isset($_GET['code'])){
-                if(isset($_SESSION['token']) && isset($_POST['token'])){
+                if($_POST['reset-password']  === $_POST['creset-password']){
+                    $em = $_GET['email'];
+                    $pass = md5($_POST['reset-password']);
+                    
+                    $sql = "update user set password='$pass', validation_code='' where email='$em'";
+                    $result = query($sql);
+
+                    if($result){
+                        set_message('<p class="alert alert-success">Fjalëkalimi u ndryshua me sukses!</p>');
+                        redirect('login.php');
+                    }else{
+                        set_message('<div class="alert">Ndodhi një gabim!</div>');
+                    }
 
                 }else{
-                    set_message('<div class="alert">Ndodhi nje gabim!</div>');
+                    set_message('<div class="alert">Fjalëkalimet nuk përputhen!</div>');
                 }
             }else{
                 redirect('index.php');
             }
         }else{
-            set_message('<div class="alert">Kjo kërkese  skaduar!</div>');
+            set_message('<div class="alert">Kjo kërkese nuk është më e vlefshme!</div>');
         }
     }
+}
 
 ?>
