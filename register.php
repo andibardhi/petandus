@@ -112,7 +112,6 @@
                 if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword ) {
                     $.post('register.php', { firstname: firstname,lastname: lastname,birthdate: birthdate,phonenumber: phonenumber,city: city, username: username, password: password, cpassword: cpassword, email: email }, 
                      (data,response) => {
-                        alert(data);
                         if(data.slice(0, 500).includes("success")){
                             window.location.href="login.php";
                         }
