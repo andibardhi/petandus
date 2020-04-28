@@ -18,6 +18,8 @@
         Username ose fjalëkalim i gabuar.
         
         </div>
+        <div class="row align-items-center justify-content-center h-100">
+        <div class="col-6 mx-auto">
         <div class="box" >
             <h1>Login</h1>
             <input type="text" name="username" id="username" placeholder="Username">
@@ -27,7 +29,8 @@
             <button id="btn"> LOGIN </button> 
             <label> Nuk keni nje llogari? <a href="./register.php">Regjistrohuni!</a> </label>
         </div>
-        
+        </div>
+        </div>
     </div>
     <script>
         $(document).ready(function () {

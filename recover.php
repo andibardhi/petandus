@@ -8,7 +8,9 @@
     <link rel="stylesheet" href="css/style-login-register.css">
   </head>
   <body>
-
+  <div class="container h-100">
+  <div class="row align-items-center justify-content-center h-100" style="margin-top:100px">
+    <div class="col-6 mx-auto">
     <form class="box"  method="post">
         <h1>Rikthe fjalëkalimin</h1>
         <?php 
@@ -22,6 +24,9 @@
           <button id="btn"> Dërgo fjalëkalim </button>
         </form>
     </form>
+    </div>
+    </div>
+    </div>
 
 
 <?php require_once('includes/footer.php')?>
