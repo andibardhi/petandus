@@ -12,29 +12,33 @@
 
     
     
-<div class="container">
+<div class="container h-100">
     <?php register_validation(); ?>
     <div class="alert alert-danger text-center" id="error" style="visibility: hidden;"></div>
-    <div id="box" class="box" autocomplete="on" >
-        <h1>Regjistrohu</h1>
-        <input type="text" name="firstname" id="firstname" placeholder="Emri">
-        <input type="text" name="lastname" id="lastname" placeholder="Mbiemri">
-        <input type="date" name="birthdate" id="birthdate" placeholder="Datëlindja">
-        <input type="text" name="phonenumber" id="phonenumber" placeholder="Numer telefoni">
-        <select id="city" name="city" >
-            <option value="null" selected disabled > Qyteti </option>
-            <option value="tirane">Tirane</option>
-            <option value="durres">Durres</option>
-            <option value="korce">Korce</option>
-            <option value="vlore">Vlore</option>
-        </select>
-        <input type="text" name="username" id="username" placeholder="Username">
-        <input type="text" name="email" id="email"  placeholder="Email">
-        <input type="password" name="password" id="password" placeholder="Fjalëkalimi">
-        <input type="password" name="cpassword" id="cpassword" name="cpassword" placeholder="Konfirmim Fjalëkalimi">
-        <button id="btn"> Regjistrohu </button> 
-        <label> Have an account? <a href="./login.php">Login!</a> </label> 
-    </div>
+    <div class="row align-items-center justify-content-center h-100">
+      <div class="col-6 mx-auto">
+          <div id="box" class="box" autocomplete="on" >
+              <h1>Regjistrohu</h1>
+              <input type="text" name="firstname" id="firstname" placeholder="Emri">
+              <input type="text" name="lastname" id="lastname" placeholder="Mbiemri">
+              <input type="date" name="birthdate" id="birthdate" placeholder="Datëlindja">
+              <input type="text" name="phonenumber" id="phonenumber" placeholder="Numer telefoni">
+              <select id="city" name="city" >
+                  <option value="null" selected disabled > Qyteti </option>
+                  <option value="tirane">Tirane</option>
+                  <option value="durres">Durres</option>
+                  <option value="korce">Korce</option>
+                  <option value="vlore">Vlore</option>
+              </select>
+              <input type="text" name="username" id="username" placeholder="Username">
+              <input type="text" name="email" id="email"  placeholder="Email">
+              <input type="password" name="password" id="password" placeholder="Fjalëkalimi">
+              <input type="password" name="cpassword" id="cpassword" name="cpassword" placeholder="Konfirmim Fjalëkalimi">
+              <button id="btn"> Regjistrohu </button> 
+              <label> Have an account? <a href="./login.php">Login!</a> </label> 
+          </div>
+                </div>
+            </div>
     </div>
 
     <script>
