@@ -8,7 +8,7 @@
                         if(isset($_SESSION['username']) OR isset($_COOKIE['username'])){
                     ?>
                     <a href="./logout.php" id="logreg">Logout </a> 
-                    <a href="#" id="logreg"> Profile </a> 
+                    <a href="./profile.php" id="logreg"> Profile </a> 
                     <?php  
                         }else{
                     ?>
