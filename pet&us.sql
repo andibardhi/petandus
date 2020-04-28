@@ -3,7 +3,9 @@ CREATE TABLE `User` (
 	`username` varchar(255) NOT NULL UNIQUE,
 	`email` varchar(255) NOT NULL UNIQUE,
 	`password` varchar(255) NOT NULL,
-	`role` varchar(10) NOT NULL,
+	`role`char NOT NULL DEFAULT 'U',
+    `validation_code` TEXT NOT NULL DEFAULT "",
+    `active` TINYINT NOT NULL DEFAULT 1,
 	PRIMARY KEY (`id`)
 );
 
