@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <title>َPet&Us Rikthe fjalëkalimin</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
+    
     <link rel="stylesheet" href="css/style-login-register.css">
   </head>
   <body>

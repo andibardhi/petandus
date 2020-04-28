@@ -1,0 +1,86 @@
+/* stili per headerin */
+* {box-sizing: border-box;}
+
+body { 
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+  font-family: Montserrat, sans-serif;
+}
+
+.header {
+  overflow: hidden;
+  background-color: #f68e5f;
+  padding: 25px 50px;
+}
+
+.header a {
+  float: left;
+  color: white;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color:transparent;
+  color: #fbd1a2;
+}
+
+.header a.active {
+  background-color: #fbd1a2;
+  color: white;
+}
+
+.header-right {
+  float: right;
+}
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+
+
+
+/* butoni login/register ose profili */
+#logreg{
+    min-width: 100px;
+    padding: 12px 24px;
+    font-size: 11px;
+    margin: 0 0 0 20px;
+    border-radius: 40px;
+    font-family: Montserrat, sans-serif;
+    background-color: #e45225;
+    text-transform: uppercase;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-decoration: none;
+}
+
+
+
+/* stili per footerin */
+.footer {
+    /* position: fixed; */
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    background-color: #f68e5f;
+    color: white;
+    text-align: center;
+  }
