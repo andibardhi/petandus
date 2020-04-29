@@ -22,7 +22,7 @@ html,body{
     margin-top: 40px;
     border-radius: 5px;
     color: white;
-    padding-bottom: 30px;
+    /* padding-bottom: 30px; */
     padding-left: 30px;
     padding-right: 30px;
 }
@@ -68,4 +68,20 @@ h6,title{
     padding: 15px 60px;
     text-transform: uppercase;
     margin-top: 40px;
+}
+
+.edit-icon{
+    color: white;
+    margin-right: 10px;
+    font-size: 25px;
+}
+
+.edit-icon:hover{
+    color: white;
+}
+
+.edit-post{
+    margin-left: 20px;
+    background-color: #fff9e9;
+    color: #e45225;
 }
