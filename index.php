@@ -6,11 +6,10 @@
       <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
       <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
       <link rel = "stylesheet" type = "text/css" href = "./css/header-style.css">
-      <link rel = "stylesheet" type = "text/css" href = "./css/homepage-style.css">
       <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
       <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
       <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
-
+      <link rel = "stylesheet" type = "text/css" href = "./css/homepage-style.css">
     </head>
     
     <body style="background-color: #fff9e9;">
@@ -70,23 +69,26 @@ include_once('./includes/navbar.php');
 
             
               <div class="card-body">
-                <div class="list-unstyled mt-3 mb-4">
-                  <a href="#"> <img src="./img/b.jpg" class="opacity"></a>
+                <div class="list-unstyled mt-3 mb-4 opacity">
+                <div class="text-centered">Sherbimi 1</div>
+                  <a href="#"> <img src="./img/b.jpg" ></a>
                 </div>
               </div>
             
               
             
               <div class="card-body">
-                <div class="list-unstyled mt-3 mb-4">
-                  <a href="#"> <img src="./img/b.jpg" class="opacity"></a>
+                <div class="list-unstyled mt-3 mb-4 opacity">
+                  <div class="text-centered">Sherbimi 2</div>
+                  <a href="#"> <img src="./img/b.jpg" ></a>
                 </div>
               </div>
             
 
               <div class="card-body">
-                <div class="list-unstyled mt-3 mb-4">
-                  <a href="#"> <img src="./img/b.jpg" class="opacity">
+                <div class="list-unstyled mt-3 mb-4 opacity">
+                  <div class="text-centered">Sherbimi 3</div>
+                  <a href="#"> <img src="./img/b.jpg" >
                     
                   </a> 
 
