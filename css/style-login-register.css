@@ -29,7 +29,7 @@ body{
   text-transform: uppercase;
   font-weight: 500;
 }
-.box input[type = "text"],.box input[type = "date"],.box input[type = "password"],.box input[type = "email"]{
+.box input[type = "text"],.box input[type = "date"],.box input[type = "email"],.box input[type = "password"]{
   border:0;
   background: none;
   display: block;
@@ -45,6 +45,35 @@ body{
   border-radius: 24px;
   transition: 0.25s;
 }
+
+.reveal-password{
+  border:0;
+  background: none;
+  display: block;
+  margin: 10px auto;
+  text-align: center;
+  border: 2px solid white;
+  width: 200px;
+  color: whitesmoke;
+  border-radius: 24px;
+  transition: 0.25s;
+  padding: 0px 10px;
+}
+
+.reveal-password input[type = "password"],.reveal-password input[type = "text"]{
+  outline: none;
+  background: transparent;
+  border: 0px solid;
+  padding: 14px 0px;
+  padding-left: 24px;
+  text-align: center;
+  color: white;
+  margin: auto;
+  width: auto;
+  display: initial;
+  width: 140px;
+}
+
 
 input:-webkit-autofill,
 input:-webkit-autofill:hover, 

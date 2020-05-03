@@ -5,6 +5,7 @@
 
 /*  shadow ne fotot */
 .opacity{
+    display: inline-block;
     opacity: 0.5;
 }
   
@@ -13,6 +14,16 @@
     box-shadow: 0px 0px 30px 5px grey;
 }
 
+.text-centered {
+    position: absolute;
+    font-size: 47px;
+    color: #e45225;
+    margin-left: 15px;
+    margin-top: 115px;
+    -webkit-text-stroke: 0.3px #fbd1a2;
+    text-transform: uppercase;
+    cursor: pointer;
+}
 
 
 
