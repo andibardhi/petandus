@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>Modifikoni profilin</title>
+    <title>Krijoni post</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
@@ -21,15 +21,15 @@
     <br>
     <div class="container">
                 <form class="form">
-                    <h1>Modifikoni profilin</h1>
-                    <label for="email">Emer:</label>
-                    <input type="text" class="form-control" id="firstname" value="Emer"  name="firstname">
-                    <label for="email">Mbiemer:</label>
-                    <input type="text" class="form-control" id="lastname" value="Mbiemer" name="lastname">
-                    <label for="email">Datelindje:</label>
-                    <input type="date" class="form-control" id="birthdate" value="1990-03-25" name="lastname">
-                    <label for="email">Nr telefoni:</label>
-                    <input type="text" class="form-control" id="phonenumber" value="+355 68 XXXXXXX" name="lastname">
+                    <h1>Krijoni post</h1>
+                    <label for="email">Titull:</label>
+                    <input type="text" class="form-control" id="title" name="title">
+                    <label for="description">Pershkrim:</label>
+                    <textarea id="w3mission" rows="4" cols="50"></textarea>
+                    <label for="email">Nr i kontaktit:</label>
+                    <input type="text" class="form-control" id="birthdate" name="lastname">
+                    <label for="email">Emaili i kontaktit:</label>
+                    <input type="text" class="form-control" id="phonenumber" name="lastname">
                     <label for="email">Qyteti:</label>
                     <select class="custom-select" name="city" id="city">
                         <option value="tirane">Tirane</option>
@@ -37,8 +37,20 @@
                         <option value="korce">Korce</option>
                         <option value="vlore">Vlore</option>
                     </select>
-                    <label for="email">Konfirmoni fjalekalimin:</label>
-                    <input type="password" class="form-control" id="password" value="" name="lastname">
+                    <label for="email">Kafsha:</label>
+                    <select class="custom-select" name="city" id="city">
+                        <option value="qen">Qen</option>
+                        <option value="mace">Mace</option>
+                        <option value="peshk">Peshk</option>
+                        <option value="kavje">Kavje</option>
+                    </select>
+                    <label for="email">Kategoria:</label>
+                    <select class="custom-select" name="city" id="city">
+                        <option value="petsitting">Pet sitting</option>
+                        <option value="adoptim">Adoptim</option>
+                        <option value="petcare">Kujdese</option>
+                        <option value="lajmerim">Lajmerim</option>
+                    </select>
                     <br>
                     <div class="row justify-content-center">
                         <button class="btn btn-primary text-center" type="button">Konfirmo</button>

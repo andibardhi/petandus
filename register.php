@@ -36,7 +36,7 @@
               <input type="password" name="password" id="password" placeholder="Fjalëkalimi">
               <input type="password" name="cpassword" id="cpassword" name="cpassword" placeholder="Konfirmim Fjalëkalimi">
               <button id="btn"> Regjistrohu </button> 
-              <label> Have an account? <a href="./login.php">Login!</a> </label> 
+              <label> Keni nje llogari? <a href="./login.php">Login!</a> </label> 
           </div>
                 </div>
             </div>
@@ -121,11 +121,11 @@
                             window.location.href="login.php";
                         }
                         else{
-                            if(data.slice(0, 500).includes('Username është në përdorim!')){
+                            if(data.slice(0, 600).includes('Username është në përdorim!')){
                               errors+="<br>Username është në përdorim!";
                               count++;
                             }
-                            if(data.slice(0, 500).includes('Email-i është në përdorim!')){
+                            if(data.slice(0, 600).includes('Email-i është në përdorim!')){
                               errors+="<br>Email-i është në përdorim!";
                               count++;
                             }
