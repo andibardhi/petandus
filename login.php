@@ -41,7 +41,7 @@
                 if (un != "" && pass != "") {
                     $.post('login.php', { username: un, password: pass,remember: remember}, 
                      (data,response) => {
-                        if(data.slice(0, 500).includes("success")){
+                        if(data.slice(0, 600).includes("success")){
                             window.location.href="index.php";
                         }
                         else{
