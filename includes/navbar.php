@@ -2,7 +2,7 @@
             <div class="header">
                 <a href="./index.php" class="logo"> PETS&US </a>
                 <div class="header-right">
-                    <a class="active" href="#">Posts</a>
+                    <a class="active" href="./posts.php">Posts</a>
                     <a href="#">Blog</a>
                     <?php 
                         if(isset($_SESSION['username']) OR isset($_COOKIE['username'])){
