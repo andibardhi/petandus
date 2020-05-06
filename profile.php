@@ -51,7 +51,7 @@
             <div class="col-md-8">
             
                 <div class="row justify-content-center">
-                <a href="#"> <button type="button" class="btn create-post">Krijo post</button> </a>
+                <a href="./new-post.php"> <button type="button" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post</button> </a>
                         <div class="row single-post">
                             <title class="row">Titull</title>
                             <div class="row justify-content-around">
@@ -66,7 +66,10 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button class="btn edit-post"> Modifiko postin </button>
+                                <a href="./edit-post.php">
+                                
+                                    <button class="btn edit-post">  Modifiko postin </button>
+                                </a>
                             </div>
                         </div>
                         <div class="row single-post">
@@ -83,7 +86,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <button class="btn edit-post"> Modifiko postin </button>
+                            <a href="./edit-post.php">
+                                    <button class="btn edit-post"> Modifiko postin </button>
+                                </a>
                             </div>
                         </div>
                         <div class="row single-post">
@@ -100,7 +105,9 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <a href="#"><button class="btn edit-post"> Modifiko postin </button></a> 
+                            <a href="./edit-post.php">
+                                    <button class="btn edit-post"> Modifiko postin </button>
+                                </a>
                             </div>
                         </div>
                 </div>

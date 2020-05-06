@@ -85,3 +85,14 @@ h6,title{
     background-color: #fff9e9;
     color: #e45225;
 }
+
+
+.single-post button{
+    border: 2px solid #e4572e;
+}
+
+.single-post button:hover{
+    color:white;
+    background-color: #e4572e;
+    border: 2px solid white;
+}
