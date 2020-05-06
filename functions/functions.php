@@ -350,4 +350,116 @@
     }
 }
 
+    /////////////////////////////////////////////////////////////////////
+    //*------------------New post page functions----------------------*//
+    /////////////////////////////////////////////////////////////////////
+    
+    function post_validation(){
+
+        if (!isset($_SESSION['username'])){
+            echo('<p class="text-danger text-center">Ju duhet të keni llogari për të krijuar një postim</p>');  
+        }else{
+            if($_SERVER['REQUEST_METHOD']=='POST'){
+                //Variable for storing errors
+                $errors = [];
+                
+                $username = $_SESSION['username'];
+                $title = clean($_POST['title']);
+                $description = clean($_POST['description']);
+                $phonenumber = clean($_POST['phonenumber']);
+                $city = clean($_POST['city']);
+                $email = strtolower(clean($_POST['email']));
+                $animal = clean($_POST['animal']);
+                $category = clean($_POST['category']);
+    
+                date_default_timezone_set("Europe/Tirane");
+                $time = date("Y-m-d H:i:s");
+    
+                $min_char = 05;
+                $max_char = 30;
+                $desc_min_char = 005;
+                $desc_max_char = 200;
+                $count = 0;
+    
+                if(strlen($title) > $max_char){
+                    $errors[] = "Ju lutem vendosni titullin me më pak se 30 gërma!";
+                }
+    
+                if(strlen($title) < $min_char){
+                    $errors[] = "Ju lutem vendosni titullin me më shumë se 5 gërma!";
+                }
+    
+                if(strlen($description) > $desc_max_char){
+                    $errors[] = "Ju lutem vendosni përshkrimin me më pak se 200 gërma!";
+                }
+    
+                if(strlen($description) < $desc_min_char){
+                    $errors[] = "Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
+                }
+    
+                if(!empty($errors)){
+                    foreach($errors as $error){
+                        echo '<div class="alert alert-danger">'.$error.'</div>';
+                    }
+                }else{
+                    // Post registration
+                    if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
+                        echo 'success';
+                    }else{
+                        echo('<p class="text-danger text-center">Ndodhi një gabim. Ju lutem provoni përsëri!/p>');
+                    }
+                }
+            }
+        }
+    }
+
+    function create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time){
+        
+        $all_id = get_allID($username, $city, $animal, $category);
+
+        $userID = $all_id['userID'];
+        $cityID = $all_id['cityID'];
+        $animalID = $all_id['animalID'];
+        $categoryID = $all_id['categoryID'];
+
+        $sql = "insert into Post (titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email) values ('". $title. "','" . $description . "','" . $time . "','" . $userID . "','" . $categoryID . "','" . $animalID . "','" . $cityID . "','" . $phonenumber . "','" . $email . "')";
+        $result = query($sql);
+        
+        set_message('<p class="text-success text-center">Postimi u krijua me sukses.</p>');
+
+        return true;
+    }
+
+    function get_allID($username, $city, $animal, $category){
+        
+        // UserID
+        $sql = "select id from User where username='" . $username . "'";
+        $result = query($sql);
+        $row = mysqli_fetch_assoc($result);
+        $userID = $row['id'];
+
+        // CityID
+
+        $sql = "select id from Qytet where emer='" . $city . "'";
+        $result = query($sql);
+        $row = mysqli_fetch_assoc($result);
+        $cityID = $row['id'];
+
+        // AnimalID
+
+        $sql = "select id from Kafshe where emer='" . $animal . "'";
+        $result = query($sql);
+        $row = mysqli_fetch_assoc($result);
+        $animalID = $row['id'];
+
+        // CategoryID
+
+        $sql = "select id from Kategori where emer='" . $category . "'";
+        $result = query($sql);
+        $row = mysqli_fetch_assoc($result);
+        $categoryID = $row['id'];
+
+        return array('userID'=>$userID, 'cityID'=>$cityID, 'animalID'=>$animalID, 'categoryID'=>$categoryID);
+    }
+
 ?>
