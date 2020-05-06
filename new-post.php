@@ -19,8 +19,8 @@
     <?php include_once('./includes/navbar.php'); ?>
     <br>
     <div class="container">
+    <?php post_validation(); ?>
     <div class="alert alert-danger text-center" id="error" style="visibility: hidden;"></div>
-      <?php //create_post(); ?>
       <form class="form">
           <h1>Krijoni post</h1>
           <label for="title">Titull:</label>
@@ -52,14 +52,14 @@
           </select>
           <label for="category">Kategoria:</label>
           <select class="custom-select" name="category" id="category">
-              <option value="petsitting">Pet sitting</option>
+              <option value="petsitting">Pet Sitting</option>
               <option value="adoptim">Adoptim</option>
               <option value="petcare">Kujdesje</option>
               <option value="lajmerim">Lajmerim</option>
           </select>
           <br>
           <div class="row justify-content-center">
-              <button class="btn btn-primary text-center" type="button">Konfirmo</button>
+              <button class="btn btn-primary text-center" type="button" id="btn">Konfirmo</button>
           </div>
           <br>
           <div class="alert alert-success text-center" id="success" style="visibility: hidden;"></div>
@@ -75,9 +75,9 @@
           var phonenumber = $('#phonenumber').val();
           var email = $('#email').val();
           var city = $("#city option:selected").text();
-          var animal = $("#animal option:selected").val();
-          var category = $("#category option:selected").val();
-          var files_length = $('#files').length;
+          var animal = $("#animal option:selected").text();
+          var category = $("#category option:selected").text(); 
+          var files_length = $('#images').length;
           var min_char = 05;
           var max_char = 30;
           var desc_min_char = 005;
@@ -96,15 +96,15 @@
             count++;
           }
           if(description.length > desc_max_char){
-            errors+="<br>Ju lutem vendosni titullin me më pak se 30 gërma!";
+            errors+="<br>Ju lutem vendosni përshkrimin me më pak se 30 gërma!";
             count++;
           }
           if(description.length < desc_min_char){
-            errors+="<br>Ju lutem vendosni titullin me më shumë se 5 gërma!";
+            errors+="<br>Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
             count++;
           }
           if(phonenumber < 10){
-            errors+="<br>Vendosni nje numër telefoni te saktë!";
+            errors+="<br>Ju lutem vendosni nje numër telefoni te saktë!";
             count++;
           }
           var emailRegex = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -112,7 +112,7 @@
             errors+="<br>Email jo i saktë!";
             count++;
           }
-          if(files_length < 1){
+          if(files_length == 0){
             errors+="<br>Ju duhet të ngarkoni të paktën një foto";
             count++;
           }
@@ -122,28 +122,14 @@
           }
 
           if (title != "" && description != "" && phonenumber != "" && email != "" && city != "" && animal != "" && category != "") {
-            $.post('new-post.php', {title:title, description:description, phonenumber:phonenumber, email:email, city:city, animal:animal, category: category}, 
+            $.post('new-post.php', {title:title, description:description, phonenumber:phonenumber, email:email, city:city, animal:animal, category:category}, 
               (data,response) => {
-                if(data.slice(0, 600).includes("success")){
+                if(data.slice(0, 5000).includes("success")){
                     $('#success').html("Postimi u krijua me sukses");
                     $('#success').css("visibility", "visible");
-                    setTimeout(function(){
-                      window.location.href="index.php";
-                    }, 3000);
                 }
                 else{
-                    if(data.slice(0, 600).includes('Username është në përdorim!')){
-                      errors+="<br>Username është në përdorim!";
-                      count++;
-                    }
-                    if(data.slice(0, 600).includes('Email-i është në përdorim!')){
-                      errors+="<br>Email-i është në përdorim!";
-                      count++;
-                    }
-                    count=count+50;
-                    $('#error').html(errors.slice(4,errors.length));
-                    $('#box').css("top",count.toString()+"%");
-                    $('#error').css("visibility", "visible");
+                    // Errors
                 }
             });
           }
