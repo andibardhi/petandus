@@ -22,7 +22,7 @@ CREATE TABLE `Profil` (
 
 CREATE TABLE `Post` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`titull` varchar(50) NOT NULL,
+	`titull` mediumblob NOT NULL,
 	`pershkrim` varchar(255) NOT NULL,
 	`foto` varchar(255) NOT NULL,
 	`data` DATETIME NOT NULL,
@@ -73,3 +73,8 @@ ALTER TABLE `Post` ADD CONSTRAINT `Post_fk2` FOREIGN KEY (`kafshaId`) REFERENCES
 
 ALTER TABLE `Post` ADD CONSTRAINT `Post_fk3` FOREIGN KEY (`qytetiId`) REFERENCES `Qytet`(`id`);
 
+INSERT INTO `Kategori` (emer) VALUES ('Pet Sitting'), ('Adoptim'), ('Kujdesje'), ('Lajmërim');
+
+INSERT INTO `Qytet` (emer) VALUES ('Tirane'), ('Durres'), ('Korcë'), ('Vlore');
+
+INSERT INTO `Kafshe` (emer) VALUES ('Qen'), ('Mace'), ('Peshk'), ('Kavje');
