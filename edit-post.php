@@ -26,26 +26,26 @@
                     <input type="text" class="form-control" id="title" value="Lorem Ipsum"  name="title">
                     <label for="description">Pershkrim:</label>
                     <textarea id="description" rows="4" cols="50">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</textarea>
-                    <label for="email" >Nr i kontaktit:</label>
-                    <input type="text" class="form-control" id="phonenumber" value="068XXXXXXX" name="lastname">
+                    <label for="phonenumber" >Nr i kontaktit:</label>
+                    <input type="text" class="form-control" id="phonenumber" value="068XXXXXXX" name="phonenumber">
                     <label for="email">Emaili i kontaktit:</label>
-                    <input type="text" class="form-control" id="email" value="emermbiemer@gmail.com" name="lastname">
-                    <label for="email">Qyteti:</label>
+                    <input type="text" class="form-control" id="email" value="emermbiemer@gmail.com" name="email">
+                    <label for="city">Qyteti:</label>
                     <select class="custom-select" name="city" id="city">
                         <option value="tirane" selected>Tirane</option>
                         <option value="durres">Durres</option>
                         <option value="korce">Korce</option>
                         <option value="vlore">Vlore</option>
                     </select>
-                    <label for="email">Kafsha:</label>
-                    <select class="custom-select" name="city" id="city">
+                    <label for="animal">Kafsha:</label>
+                    <select class="custom-select" name="animal" id="animal">
                         <option value="qen" selected>Qen</option>
                         <option value="mace">Mace</option>
                         <option value="peshk">Peshk</option>
                         <option value="kavje">Kavje</option>
                     </select>
-                    <label for="email">Kategoria:</label>
-                    <select class="custom-select" name="city" id="city">
+                    <label for="category">Kategoria:</label>
+                    <select class="custom-select" name="category" id="category">
                         <option value="petsitting" selected>Pet sitting</option>
                         <option value="adoptim">Adoptim</option>
                         <option value="petcare">Kujdese</option>

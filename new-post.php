@@ -25,11 +25,11 @@
                     <label for="email">Titull:</label>
                     <input type="text" class="form-control" id="title" name="title">
                     <label for="description">Pershkrim:</label>
-                    <textarea id="w3mission" rows="4" cols="50"></textarea>
-                    <label for="email">Nr i kontaktit:</label>
-                    <input type="text" class="form-control" id="birthdate" name="lastname">
+                    <textarea id="description" rows="4" cols="50"></textarea>
+                    <label for="phonenumber">Nr i kontaktit:</label>
+                    <input type="text" class="form-control" id="phonenumber" name="phonenumber">
                     <label for="email">Emaili i kontaktit:</label>
-                    <input type="text" class="form-control" id="phonenumber" name="lastname">
+                    <input type="text" class="form-control" id="email" name="email">
                     <label for="email">Qyteti:</label>
                     <select class="custom-select" name="city" id="city">
                         <option value="tirane">Tirane</option>
@@ -37,15 +37,15 @@
                         <option value="korce">Korce</option>
                         <option value="vlore">Vlore</option>
                     </select>
-                    <label for="email">Kafsha:</label>
-                    <select class="custom-select" name="city" id="city">
+                    <label for="animal">Kafsha:</label>
+                    <select class="custom-select" name="animal" id="animal">
                         <option value="qen">Qen</option>
                         <option value="mace">Mace</option>
                         <option value="peshk">Peshk</option>
                         <option value="kavje">Kavje</option>
                     </select>
                     <label for="email">Kategoria:</label>
-                    <select class="custom-select" name="city" id="city">
+                    <select class="custom-select" name="category" id="category">
                         <option value="petsitting">Pet sitting</option>
                         <option value="adoptim">Adoptim</option>
                         <option value="petcare">Kujdese</option>
