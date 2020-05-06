@@ -126,7 +126,7 @@
     //Check if email exist
     function email_exist($email){
         //Prepare sql query
-        $sql = " select * from user where email='$email'";
+        $sql = " select * from User where email='$email'";
         //Get data
         $result = query($sql);
         if(fetch_data($result)){
@@ -140,7 +140,7 @@
     //Check if username exist
     function username_exist($username){
         //Prepare sql query
-        $sql = " select * from user where username='$username' LIMIT 1";
+        $sql = " select * from User where username='$username' LIMIT 1";
         //Get data
         $result = query($sql);
         if(fetch_data($result)){
@@ -162,7 +162,7 @@
         //$validation_code = md5($tmpUsername.$time);
 
         //$sql = "insert into user (username, email, password, validation_code) values ('$username', '$email', '$hashed_password', '$validation_code')";
-        $sql = "insert into user (username, email, password) values ('$username', '$email', '$hashed_password')";
+        $sql = "insert into User (username, email, password) values ('$username', '$email', '$hashed_password')";
         $result = query($sql);
         confirm($result);
         
@@ -195,12 +195,12 @@
             $email = $_GET['email'];
             $code = $_GET['code'];
 
-            $sql = "select * from user where email='$email' AND validation_code ='$code'";
+            $sql = "select * from User where email='$email' AND validation_code ='$code'";
             $result = query($sql);
             confirm($result);
 
             if(fetch_data($result)){
-                $sqlupdate = "update user set active='1', validation_code='' where email='$email' AND validation_code='$code'";
+                $sqlupdate = "update User set active='1', validation_code='' where email='$email' AND validation_code='$code'";
                 $res_update = query($sqlupdate);
                 confirm($res_update);
                 set_message('<p class="text-success text-center">Regjistrimi përfundoi. Mund të kyçeni në sistem.</p>');
@@ -252,7 +252,7 @@
     }
 
     function user_login($username, $password, $remember_me){
-        $sql = "select * from user where username='$username' AND active='1'";
+        $sql = "select * from User where username='$username' AND active='1'";
         $result = query($sql);
 
         if($row=fetch_data($result)){
@@ -294,7 +294,7 @@
                     $code = md5($email.microtime());
                     setcookie("temp_code", $code, time()+3600);
 
-                    $sql = "update user set validation_code='$code' where email='$email' and active = '1'";
+                    $sql = "update User set validation_code='$code' where email='$email' and active = '1'";
                     query($sql);
                     
                     $subject = "Rikthim fjalëkalimi";
@@ -328,7 +328,7 @@
                     $em = $_GET['email'];
                     $pass = md5($_POST['reset-password']);
                     
-                    $sql = "update user set password='$pass', validation_code='' where email='$em'";
+                    $sql = "update User set password='$pass', validation_code='' where email='$em'";
                     $result = query($sql);
 
                     if($result){
