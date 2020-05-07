@@ -424,7 +424,11 @@
 
         $sql = "insert into Post (titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email) values ('". $title. "','" . $description . "','" . $time . "','" . $userID . "','" . $categoryID . "','" . $animalID . "','" . $cityID . "','" . $phonenumber . "','" . $email . "')";
         $result = query($sql);
+
+        $postID = getpostID($userID, $time);
         
+        save_photo($postID);
+
         set_message('<p class="text-success text-center">Postimi u krijua me sukses.</p>');
 
         return true;
@@ -460,6 +464,28 @@
         $categoryID = $row['id'];
 
         return array('userID'=>$userID, 'cityID'=>$cityID, 'animalID'=>$animalID, 'categoryID'=>$categoryID);
+    }
+
+    function save_photo($postID){
+
+        if(count($_FILES["image"]["tmp_name"]) > 0){
+            for($count = 0; $count < count($_FILES["image"]["tmp_name"]); $count++){
+                $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][$count]));
+                $sql = "update Post set foto='" . $image_file . "' where id='" . $postID . "'";
+                $result = query($sql);
+                confirm($result);
+            }
+        }
+    }
+
+    function getpostID($userID, $time){
+
+        $sql = "select id from Post where autorID='" . $userID . "' and data='" . $time . "'";
+        $result = query($sql);
+        $row = mysqli_fetch_assoc($result);
+        $postID = $row['id'];
+
+        return $postID;
     }
 
 ?>
