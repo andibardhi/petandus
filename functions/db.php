@@ -1,5 +1,5 @@
 <?php
-    $connect = mysqli_connect('localhost', 'root', '', 'petus'); 
+    $connect = mysqli_connect('localhost', 'petus', 'admin', 'petus'); 
 
     //Function for cleaning string characters
     function escape($string){
