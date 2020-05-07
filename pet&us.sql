@@ -24,7 +24,7 @@ CREATE TABLE `Post` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`titull` mediumblob NOT NULL,
 	`pershkrim` varchar(255) NOT NULL,
-	`foto` varchar(255) NOT NULL,
+	`foto` mediumblob,
 	`data` DATETIME NOT NULL,
 	`autorId` INT NOT NULL,
 	`kategoriId` INT NOT NULL,
