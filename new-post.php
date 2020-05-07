@@ -21,14 +21,14 @@
     <div class="container">
     <?php post_validation(); ?>
     <div class="alert alert-danger text-center" id="error" style="visibility: hidden;"></div>
-      <form class="form">
+      <form class="form" method="post" id="newpost" enctype="multipart/form-data">
           <h1>Krijoni post</h1>
           <label for="title">Titull:</label>
           <input type="text" class="form-control" id="title" name="title">
           <label for="description">Përshkrim:</label>
-          <textarea id="description" rows="4" cols="50"></textarea><br><br>
+          <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
           <div class="custom-file">
-            <input type="file" class="custom-file-input" id="images" multiple>
+            <input type="file" class="custom-file-input" name="image[]" id="image" multiple accept=".jpg, .png, .jpeg">
             <label class="custom-file-label" for="images">Përzgjidh foto...</label>
           </div><br><br>
           <label for="phonenumber">Nr i kontaktit:</label>
@@ -59,7 +59,7 @@
           </select>
           <br>
           <div class="row justify-content-center">
-              <button class="btn btn-primary text-center" type="button" id="btn">Konfirmo</button>
+              <input type="button" class="btn btn-primary text-center" id="btn" value="Konfirmo"></button>
           </div>
           <br>
           <div class="alert alert-success text-center" id="success" style="visibility: hidden;"></div>
@@ -77,7 +77,8 @@
           var city = $("#city option:selected").text();
           var animal = $("#animal option:selected").text();
           var category = $("#category option:selected").text(); 
-          var files_length = $('#images').length;
+          var files_length = $('#image').length;
+          var image = $('#image').val();
           var min_char = 05;
           var max_char = 30;
           var desc_min_char = 005;
@@ -87,12 +88,10 @@
           
           if(title.length > max_char){
             errors+="<br>Ju lutem vendosni titullin me më pak se 30 gërma!";
-            console.log(errors);
             count++;
           }
           if(title.length < min_char){
             errors+="<br>Ju lutem vendosni titullin me më shumë se 5 gërma!";
-            console.log(errors);
             count++;
           }
           if(description.length > desc_max_char){
@@ -121,15 +120,24 @@
             count++;
           }
 
+          var formData = new FormData(document.getElementById("newpost"));
+          formData.set('city', city);
+          formData.set('animal', animal);
+          formData.set('category', category);
+
           if (title != "" && description != "" && phonenumber != "" && email != "" && city != "" && animal != "" && category != "") {
-            $.post('new-post.php', {title:title, description:description, phonenumber:phonenumber, email:email, city:city, animal:animal, category:category}, 
-              (data,response) => {
-                if(data.slice(0, 5000).includes("success")){
-                    $('#success').html("Postimi u krijua me sukses");
-                    $('#success').css("visibility", "visible");
-                }
-                else{
-                    // Errors
+            $.ajax({
+                url: 'new-post.php',
+                method: 'POST',
+                data: formData,
+                contentType:false,
+                cache:false,
+                processData:false,
+                success: function(data){
+                  if(data.slice(0, 5000).includes("success")){
+                      $('#success').html("Postimi u krijua me sukses");
+                      $('#success').css("visibility", "visible");
+                  }
                 }
             });
           }
