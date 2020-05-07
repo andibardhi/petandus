@@ -22,7 +22,7 @@ CREATE TABLE `Profil` (
 
 CREATE TABLE `Post` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`titull` mediumblob NOT NULL,
+	`titull` varchar(30) NOT NULL,
 	`pershkrim` varchar(255) NOT NULL,
 	`foto` mediumblob,
 	`data` DATETIME NOT NULL,

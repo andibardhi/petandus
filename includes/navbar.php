@@ -2,18 +2,18 @@
             <div class="header">
                 <a href="./index.php" class="logo"> PETS&US </a>
                 <div class="header-right">
-                    <a class="active" href="./posts.php">Posts</a>
+                    <a class="active" href="./posts.php">Postime</a>
                     <a href="#">Blog</a>
                     <?php 
                         if(isset($_SESSION['username']) OR isset($_COOKIE['username'])){
                     ?>
-                    <a href="./logout.php" id="logreg">Logout </a> 
-                    <a href="./profile.php" id="logreg"> Profile </a> 
+                    <a href="./profile.php" id="logreg"> Profili </a> 
+                    <a href="./logout.php" id="logreg">Dil </a> 
                     <?php  
                         }else{
                     ?>
-                    <a href="./login.php" id="logreg">Login </a>
-                    <a href="./register.php" id="logreg">Register</a>
+                    <a href="./login.php" id="logreg">Logohu </a>
+                    <a href="./register.php" id="logreg">Regjistrohu</a>
                     <?php
                         }
                     ?>

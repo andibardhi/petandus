@@ -26,7 +26,7 @@
 
         <!-- filer start -->
         <div class="container col-md-8" style="padding: 0px;">
-        <a href="#"> <button type="button" class="btn" id="btncolor" style="background-color:#e45225; border-radius: 50px;  padding: 13px 15px; color: white"> <i class="fa fa-pencil" style="font-size:27px"></i> </button> </a>
+        <a href="./new-post.php" > <button type="button" class="btn" id="btncolor" style="background-color:#e45225; border-radius: 50px;  padding: 13px 15px; color: white"> <i class="fa fa-pencil" style="font-size:27px"></i> </button> </a>
             <span class="txtformat" style="padding-left:150px;"> Shto filter: </span>
             <div class="btn-group">
                 <button type="button" id="btncolor"  class="btn  dropdown-toggle" data-toggle="dropdown">
