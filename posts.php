@@ -26,40 +26,38 @@
 
         <!-- filer start -->
         <div class="container col-md-8" style="padding: 0px;">
-        <a href="./new-post.php" > <button type="button" class="btn" id="btncolor" style="background-color:#e45225; border-radius: 50px;  padding: 13px 15px; color: white"> <i class="fa fa-pencil" style="font-size:27px"></i> </button> </a>
-            <span class="txtformat" style="padding-left:150px;"> Shto filter: </span>
+            <form method="get"> 
+                <a href="./new-post.php" > <button type="button" class="btn" id="btncolor" style="background-color:#e45225; border-radius: 50px;  padding: 13px 15px; color: white"> <i class="fa fa-pencil" style="font-size:27px"></i> </button> </a>
+            <span class="txtformat" style="padding-left:150px;"> Shto filter: </span> 
             <div class="btn-group">
-                <button type="button" id="btncolor"  class="btn  dropdown-toggle" data-toggle="dropdown">
-                    Kafsha
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">qen</a>
-                    <a class="dropdown-item" href="#">mace</a>
-                </div>   
-            </div> 
-
-            <div class="btn-group">
-                <button type="button" id="btncolor" class="btn  dropdown-toggle" data-toggle="dropdown">
-                    Qyteti
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">tirane</a>
-                    <a class="dropdown-item" href="#">durres</a>
-                </div>
+                <select id="btncolor" name="animal" id="animal">
+                    <option value="null" selected disabled style=" display: none;">Kafsha</option>
+                    <option value="qen">Qen</option>
+                    <option value="mace">Mace</option>
+                    <option value="peshk">Peshk</option>
+                </select>
             </div>
 
             <div class="btn-group">
-                <button type="button" id="btncolor" class="btn  dropdown-toggle" data-toggle="dropdown">
-                    Kategoria
-                </button>
-                <div class="dropdown-menu">
-                    <a class="dropdown-item" href="#">petsitter</a>
-                    <a class="dropdown-item" href="#">veteriner</a>
-                </div> 
+                <select id="btncolor" name="city" id="city">
+                    <option value="null" selected disabled style=" display: none;">Qyteti</option>
+                    <option value="tirane" >Tirane</option>
+                    <option value="durres">Durres</option>
+                    <option value="korce">Korce</option>
+                    <option value="vlore">Vlore</option>
+                </select>
             </div>
 
-            
-            <button type="button" id="btncolor" class="btn" style="margin-left: 2%; background-color:#e45225; border-radius: 40px; color:white;">Shto</button>
+            <div class="btn-group">
+                <select id="btncolor" name="category" id="category">
+                    <option value="null" selected disabled style=" display: none;">Kategoria</option>
+                    <option value="adoptim" >Adoptim</option>
+                    <option value="petsitting">Pet sitting</option>
+                    <option value="veteriner">veteriner</option>
+                </select>
+            </div>
+            <button type="submit    " id="btncolor" class="btn" style="margin-left: 2%; background-color:#e45225; border-radius: 40px; color:white;">Shto</button>
+        </form>
         </div> <!-- filter end -->
         
         <br>
@@ -67,6 +65,7 @@
         <!-- postet start -->
         <div class="container col-md-8">
             <div class="row justify-content-center">
+            <a href="./single-post.php">    
                 <div class="row single-post">
                     <title class="row">Titull</title>
                     <div class="row justify-content-around">
@@ -82,6 +81,8 @@
                         </div>
                     </div>
                 </div>
+            </a>
+            <a href="./single-post.php"> 
                 <div class="row single-post">
                     <title class="row">Titull</title>
                     <div class="row justify-content-around">
@@ -96,6 +97,8 @@
                         </div>
                     </div>
                 </div>
+            </a>
+            <a href="./single-post.php"> 
                 <div class="row single-post">
                     <title class="row">Titull</title>
                     <div class="row justify-content-around">
@@ -110,6 +113,8 @@
                         </div>
                     </div>
                 </div>
+            </a>
+            <a href="./single-post.php"> 
                 <div class="row single-post">
                     <title class="row">Titull</title>
                     <div class="row justify-content-around">
@@ -125,6 +130,8 @@
                         </div>
                     </div>
                 </div>
+            </a>
+            <a href="./single-post.php"> 
                 <div class="row single-post">
                     <title class="row">Titull</title>
                     <div class="row justify-content-around">
@@ -139,6 +146,7 @@
                         </div>
                     </div>
                 </div>
+            </a>
             </div>
         </div> <!-- postet end -->
         

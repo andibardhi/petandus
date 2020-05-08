@@ -52,6 +52,7 @@
             
                 <div class="row justify-content-center">
                 <a href="./new-post.php"> <button type="button" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post</button> </a>
+                    <a href="./single-post.php"> 
                         <div class="row single-post">
                             <title class="row">Titull</title>
                             <div class="row justify-content-around">
@@ -72,6 +73,8 @@
                                 </a>
                             </div>
                         </div>
+                    </a>
+                    <a href="./single-post.php"> 
                         <div class="row single-post">
                             <title class="row">Titull</title>
                             <div class="row justify-content-around">
@@ -91,6 +94,8 @@
                                 </a>
                             </div>
                         </div>
+                    </a>
+                    <a href="./single-post.php"> 
                         <div class="row single-post">
                             <title class="row">Titull</title>
                             <div class="row justify-content-around">
@@ -110,6 +115,7 @@
                                 </a>
                             </div>
                         </div>
+                    </a>
                 </div>
             </div>
 
