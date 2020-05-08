@@ -1,6 +1,6 @@
 <header> 
             <div class="header">
-                <a href="./index.php" class="logo"> PETS&US </a>
+                <a href="./index.php" class="logo"> PET&US </a>
                 <div class="header-right">
                     <a class="active" href="./posts.php">Postime</a>
                     <a href="#">Blog</a>

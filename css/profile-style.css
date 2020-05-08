@@ -96,3 +96,12 @@ h6,title{
     background-color: #e4572e;
     border: 2px solid white;
 }
+
+.single-post a:hover{
+    color: white;
+    text-decoration: none;
+}
+
+.single-post a{
+    color: white;
+}
