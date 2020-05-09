@@ -357,7 +357,8 @@
     function post_validation(){
 
         if (!isset($_SESSION['username'])){
-            echo('<p class="text-danger text-center">Ju duhet të keni llogari për të krijuar një postim</p>');  
+            set_message('postim anonim');
+            redirect('register.php');
         }else{
             if($_SERVER['REQUEST_METHOD']=='POST'){
                 //Variable for storing errors
@@ -487,5 +488,11 @@
 
         return $postID;
     }
+
+    /////////////////////////////////////////////////////////////////////
+    //*------------------Posts page functions----------------------*//
+    ////////////////////////////////////////////////////////////////////    
+
+    
 
 ?>
