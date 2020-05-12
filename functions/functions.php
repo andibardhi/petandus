@@ -440,28 +440,28 @@
         // UserID
         $sql = "select id from User where username='" . $username . "'";
         $result = query($sql);
-        $row = mysqli_fetch_assoc($result);
+        $row = fetch_data($result);
         $userID = $row['id'];
 
         // CityID
 
         $sql = "select id from Qytet where emer='" . $city . "'";
         $result = query($sql);
-        $row = mysqli_fetch_assoc($result);
+        $row = fetch_data($result);
         $cityID = $row['id'];
 
         // AnimalID
 
         $sql = "select id from Kafshe where emer='" . $animal . "'";
         $result = query($sql);
-        $row = mysqli_fetch_assoc($result);
+        $row = fetch_data($result);
         $animalID = $row['id'];
 
         // CategoryID
 
         $sql = "select id from Kategori where emer='" . $category . "'";
         $result = query($sql);
-        $row = mysqli_fetch_assoc($result);
+        $row = fetch_data($result);
         $categoryID = $row['id'];
 
         return array('userID'=>$userID, 'cityID'=>$cityID, 'animalID'=>$animalID, 'categoryID'=>$categoryID);
@@ -483,7 +483,7 @@
 
         $sql = "select id from Post where autorID='" . $userID . "' and data='" . $time . "'";
         $result = query($sql);
-        $row = mysqli_fetch_assoc($result);
+        $row = fetch_data($result);
         $postID = $row['id'];
 
         return $postID;
@@ -493,6 +493,34 @@
     //*------------------Posts page functions----------------------*//
     ////////////////////////////////////////////////////////////////////    
 
-    
+    function retrieve_data(){
+
+        $sql = "SELECT id, titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email FROM Post ORDER BY id DESC LIMIT 5";
+
+        $result = query($sql);
+
+        confirm($result);
+
+        $row = mysqli_fetch_all($result);
+
+        return $row;
+    }
+
+    function show_photo(){
+        
+        $sql = "SELECT foto FROM Post ORDER BY id DESC LIMIT 5";
+
+        $result = query($sql);
+
+        confirm($result);
+
+        $imgs = array();
+
+        while($d = mysqli_fetch_row($result)){
+            array_push($imgs, base64_encode($d[0]));
+        }
+
+        return $imgs;
+    }
 
 ?>
