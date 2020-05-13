@@ -3,7 +3,7 @@
                 <a href="./index.php" class="logo"> PET&US </a>
                 <div class="header-right">
                     <a class="active" href="./posts.php">Postime</a>
-                    <a href="#">Blog</a>
+                    <a href="./blog.php">Blog</a>
                     <?php 
                         if(isset($_SESSION['username']) OR isset($_COOKIE['username'])){
                     ?>
