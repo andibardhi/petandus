@@ -88,7 +88,7 @@
                             unknown printer took a galley of type ...
                         </div>
                         <div class="col-5">
-                            <img src="./img/a.jpg" alt="post_photo">
+                            <img src="./img/c.jpg" alt="post_photo">
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                             unknown printer took a galley of type ...
                         </div>
                         <div class="col-5">
-                            <img src="./img/a.jpg">
+                            <img src="./img/b.jpg">
                         </div>
                     </div>
                 </div>
