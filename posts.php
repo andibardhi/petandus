@@ -72,7 +72,7 @@
                         </div>
 
                         <div class="col-5">
-                            <img alt="post_photo">
+                            <img src="./img/a.jpg" alt="post_photo">
                         </div>
                     </div>
                 </div>
@@ -88,7 +88,7 @@
                             unknown printer took a galley of type ...
                         </div>
                         <div class="col-5">
-                            <img alt="post_photo">
+                            <img src="./img/a.jpg" alt="post_photo">
                         </div>
                     </div>
                 </div>
@@ -104,7 +104,7 @@
                             unknown printer took a galley of type ...
                         </div>
                         <div class="col-5">
-                            <img >
+                            <img src="./img/a.jpg">
                         </div>
                     </div>
                 </div>
@@ -121,7 +121,7 @@
                         </div>
 
                         <div class="col-5">
-                            <img alt="post_photo">
+                            <img src="./img/a.jpg" alt="post_photo">
                         </div>
                     </div>
                     <div class="row">
