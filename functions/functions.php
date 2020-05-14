@@ -502,8 +502,22 @@
         confirm($result);
 
         $row = mysqli_fetch_all($result);
+        
+        for ($i = 0; $i < row_count($result); $i++){
+            $uname = getUserName($row[$i][4]);
+            $row[$i][4] = $uname;
+        }
 
         return $row;
+    }
+
+    function getUserName($uid){
+        $sql = "SELECT username from User WHERE id='" . $uid . "'";
+        $result = query($sql);
+        confirm($result);
+        $row = fetch_data($result);
+        return $row['username'];
+
     }
 
     function show_photo(){
