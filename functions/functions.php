@@ -502,11 +502,6 @@
         confirm($result);
 
         $row = mysqli_fetch_all($result);
-        
-        for ($i = 0; $i < row_count($result); $i++){
-            $uname = getUserName($row[$i][4]);
-            $row[$i][4] = $uname;
-        }
 
         return $row;
     }
@@ -535,6 +530,33 @@
         }
 
         return $imgs;
+    }
+
+    function getUserIDbyUsername(){
+        $username = $_SESSION['username'];
+        $sql = "SELECT id  FROM `user` where username = '$username'";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0][0];
+    }
+
+    function getProfileData(){
+        $id = getUserIDbyUsername();
+        $sql = "SELECT *  FROM `profil` where userid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row;
+    }
+
+    function getUserPosts(){
+        $id = getUserIDbyUsername();
+        $sql = "SELECT * FROM `post` WHERE autorid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row;
     }
 
 ?>

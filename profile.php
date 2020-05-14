@@ -18,6 +18,11 @@
 <body>
     <?php
     include_once('./includes/navbar.php');
+    include_once('functions/config.php'); 
+    $data = getUserPosts();
+    $userData = getProfileData();
+    var_dump($userData);
+    exit();
     ?>
     <br>
     <div class="container">
@@ -51,71 +56,47 @@
             <div class="col-md-8">
             
                 <div class="row justify-content-center">
-                <a href="./new-post.php"> <button type="button" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post</button> </a>
-                    <a href="./single-post.php"> 
-                        <div class="row single-post">
-                            <title class="row">Titull</title>
-                            <div class="row justify-content-around">
-                                <div class="col-7 description">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                    an
-                                    unknown printer took a galley of type ...
+                    
+                    <?php
+                       
+                    if(count($data)>0){
+
+                        foreach ($data as $postValue){
+                            $title = $postValue[1];
+                            $description = $postValue[2];
+                            $postId = $postValue[0];
+                            $modifikoPostin = "Modifiko Postimin";
+                            // var_dump($title);
+                            // var_dump($description);
+                            //$postURL = 'title=?'.$title="?".$postId;
+                            //var_dump($postURL)
+                        ?>
+                        <a href="./new-post.php" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post </a>
+                            <a href="./single-post.php?id=<?php echo $postId?>"> 
+                                <div class="row single-post">
+                                    <title class="row"><?php echo $title?></title>
+                                    <div class="row justify-content-around">
+                                        <div class="col-7 description">
+                                        <?php echo $description?>
+                                        </div>
+                                        <div class="col-5">
+                                            <img src="./img/profile-dog.jpg">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <a href="./single-post.php?id=<?php echo $postId?>">
+                                            <button class="btn edit-post"> <?php echo $modifikoPostin?> </button>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="col-5">
-                                    <img src="./img/profile-dog.jpg">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <a href="./edit-post.php">
-                                
-                                    <button class="btn edit-post">  Modifiko postin </button>
-                                </a>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="./single-post.php"> 
-                        <div class="row single-post">
-                            <title class="row">Titull</title>
-                            <div class="row justify-content-around">
-                                <div class="col-7 description">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                    an
-                                    unknown printer took a galley of type ...
-                                </div>
-                                <div class="col-5">
-                                    <img src="./img/profile-cat.jpg">
-                                </div>
-                            </div>
-                            <div class="row">
-                            <a href="./edit-post.php">
-                                    <button class="btn edit-post"> Modifiko postin </button>
-                                </a>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="./single-post.php"> 
-                        <div class="row single-post">
-                            <title class="row">Titull</title>
-                            <div class="row justify-content-around">
-                                <div class="col-7 description">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                    an
-                                    unknown printer took a galley of type ...
-                                </div>
-                                <div class="col-5">
-                                    <img src="./img/profile-fish.jpg">
-                                </div>
-                            </div>
-                            <div class="row">
-                            <a href="./edit-post.php">
-                                    <button class="btn edit-post"> Modifiko postin </button>
-                                </a>
-                            </div>
-                        </div>
-                    </a>
+                            </a>
+                        <?php } 
+                    }else {?>
+                    <br>
+                    <br>
+                        <a href="./new-post.php" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post </a>
+                        <h1 style="margin-top: 2em">Ju akoma nuk keni krijuar postime!</h1>
+                    <?php }?>
                 </div>
             </div>
 
