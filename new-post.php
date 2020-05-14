@@ -28,7 +28,7 @@
           <label for="description">Përshkrim:</label>
           <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
           <div class="custom-file">
-            <input type="file" class="custom-file-input" name="image[]" id="image" multiple accept=".jpg, .png, .jpeg">
+            <input type="file" class="custom-file-input" name="image[]" id="image" accept=".jpg, .png, .jpeg">
             <label class="custom-file-label" for="images">Përzgjidh foto...</label>
           </div><br><br>
           <label for="phonenumber">Nr i kontaktit:</label>

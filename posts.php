@@ -58,90 +58,87 @@
         <br>
 
         <!-- postet start -->
-        <div class="container col-md-8">
+        <div class="container col-md-8" id="posts">
             <div class="row justify-content-center">
-            <a href="./single-post.php">    
+            <a href="./single-post.php" id="post">    
                 <div class="row single-post">
-                    <title class="row">Titull</title>
+                    <title class="row" id="title">Titull</title>
                     <div class="row justify-content-around">
                         <div class="col-7 description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                            an
-                            unknown printer took a galley of type ...
-                        </div>
-
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php"> 
-                <div class="row single-post">
-                    <title class="row">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                            an
-                            unknown printer took a galley of type ...
+                            <span id="desc"></span>
                         </div>
                         <div class="col-5">
                             <img alt="post_photo">
                         </div>
+                        <!-- KETU -->
+                        <div class="row">
+                            <span id="info">
+                        </div>
                     </div>
                 </div>
             </a>
-            <a href="./single-post.php"> 
+            <a href="./single-post.php" id="post"> 
                 <div class="row single-post">
-                    <title class="row">Titull</title>
+                    <title class="row" id="title">Titull</title>
                     <div class="row justify-content-around">
                         <div class="col-7 description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                            an
-                            unknown printer took a galley of type ...
+                            <span id="desc"></span>
                         </div>
                         <div class="col-5">
-                            <img >
+                            <img alt="post_photo">
+                        </div><br>
+                        <!-- KETU -->
+                        <div class="row">
+                            <span id="info">
                         </div>
                     </div>
                 </div>
             </a>
-            <a href="./single-post.php">    
+            <a href="./single-post.php" id="post"> 
                 <div class="row single-post">
-                    <title class="row">Titull</title>
+                    <title class="row" id="title">Titull</title>
                     <div class="row justify-content-around">
                         <div class="col-7 description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                            an
-                            unknown printer took a galley of type ...
+                            <span id="desc"></span>
                         </div>
-
+                        <div class="col-5">
+                            <img alt="post_photo">
+                        </div><br>
+                        <div class="row">
+                            <span id="info">
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="./single-post.php" id="post">    
+                <div class="row single-post">
+                    <title class="row" id="title">Titull</title>
+                    <div class="row justify-content-around">
+                        <div class="col-7 description">
+                            <span id="desc"></span>
+                        </div>
+                        <div class="col-5">
+                            <img alt="post_photo">
+                        </div>
+                    </div><br><br>
+                    <div class="row">
+                        <span id="info">
+                    </div>
+                </div>
+            </a>
+            <a href="./single-post.php" id="post">    
+                <div class="row single-post">
+                    <title class="row" id="title">Titull</title>
+                    <div class="row justify-content-around">
+                        <div class="col-7 description">
+                            <span id="desc"></span>
+                        </div>
                         <div class="col-5">
                             <img alt="post_photo">
                         </div>
                     </div>
                     <div class="row">
-                    05/09/2020  -    @fotikerkeshi  -   Adoptim   -   #2432489
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php"> 
-                <div class="row single-post">
-                    <title class="row">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                            an
-                            unknown printer took a galley of type ...
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
+                        <span id="info">
                     </div>
                 </div>
             </a>
@@ -157,26 +154,32 @@
 
     <script>
 
-        var data = <?php echo json_encode(retrieve_data()); ?>;
-        var imgs = <?php echo json_encode(show_photo()); ?>;
+        var dt = <?php echo json_encode(retrieve_data()); ?>;
+        var im = <?php echo json_encode(show_photo()); ?>;
 
-        console.log(data);
-        var oldSrc = 'data:image/jpeg;base64,';
+        console.log(dt);
+        var src = 'data:image/jpeg;base64,';
 
         var images = $('img');
+        var posts  = $("#posts a");
+
+        var ctgr = {1: "Adoptim", 2: "Pet Sitting", 3: "Kujdesje"};
+        var city = {1: "Tirane", 2: "Durres", 3: "Korce", 4: "Vlore"};
 
         $.each(images, function(i, v){
-            $(this).attr('src', oldSrc + imgs[i]);
+            $(this).attr('src', src + im[i]);
+            console.log(i);
         });
 
-        $(document).ready(function () {
-            $("a").click(function () {
-                
-
-
-            });
-        });
-            
+        $.each(posts, function(i, v){
+            $(this).find('#title').text(dt[i][1]);
+            $(this).find('#desc').text(dt[i][2]);
+            var d = dt[i][3];
+            var u = dt[i][4]
+            var ct = ctgr[dt[i][5]];
+            var ci = city[dt[i][6]];
+            $(this).find('#info').text(d + " | " + u + " | " + ct + " | " + ci);
+        }); 
         
     </script>
 
