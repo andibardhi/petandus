@@ -493,6 +493,15 @@
     //*------------------Posts page functions----------------------*//
     ////////////////////////////////////////////////////////////////////    
 
+    function getUserName($uid){
+        $sql = "SELECT username from User WHERE id='" . $uid . "'";
+        $result = query($sql);
+        confirm($result);
+        $row = fetch_data($result);
+        return $row['username'];
+
+    }
+
     function retrieve_data(){
 
         $sql = "SELECT id, titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email FROM Post ORDER BY id DESC LIMIT 5";
@@ -511,15 +520,6 @@
         return $row;
     }
 
-    function getUserName($uid){
-        $sql = "SELECT username from User WHERE id='" . $uid . "'";
-        $result = query($sql);
-        confirm($result);
-        $row = fetch_data($result);
-        return $row['username'];
-
-    }
-
     function show_photo(){
         
         $sql = "SELECT foto FROM Post ORDER BY id DESC LIMIT 5";
@@ -535,6 +535,76 @@
         }
 
         return $imgs;
+    }
+
+    function filtering_data(){
+
+        if (!empty($_GET)) {
+            $sql1 = "SELECT id, titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email FROM Post WHERE";
+            $sql2 = " ORDER BY id DESC LIMIT 5";
+
+            $sql1 = getfiltersID($sql1);
+
+            $result = query($sql1.$sql2);
+            
+            confirm($result);
+            $row = mysqli_fetch_all($result);
+            for ($i = 0; $i < row_count($result); $i++){
+                $uname = getUserName($row[$i][4]);
+                $row[$i][4] = $uname;
+            }
+
+            return $row;
+        }
+    }
+
+    function filtering_photo(){
+
+        $sql1 = "SELECT foto FROM Post WHERE";
+        $sql2 = " ORDER BY id DESC LIMIT 5";
+
+        $sql1 = getfiltersID($sql1);
+
+        $result = query($sql1.$sql2);
+
+        confirm($result);
+
+        $imgs = array();
+        while($d = mysqli_fetch_row($result)){
+            array_push($imgs, base64_encode($d[0]));
+        }
+
+        return $imgs;
+    }
+
+    function getfiltersID($sql1){
+        if (isset($_GET['city'])) {
+
+            $res = query("SELECT id FROM Qytet WHERE emer='". $_GET['city'] . "'");
+            $city = mysqli_fetch_assoc($res);
+            $sql1 = $sql1 . " qytetiId='" . $city['id'] . "'";
+        }
+        if (isset($_GET['animal'])) {
+            if(isset($_GET['city'])){
+                $sql1 = $sql1 . " and ";
+            }
+
+            $res = query("SELECT id FROM Kafshe WHERE emer='". $_GET['animal']."'");
+            $animal = mysqli_fetch_assoc($res);
+            $sql1 = $sql1 . " kafshaId='" . $animal['id'] . "'";
+            
+        }
+        if (isset($_GET['category'])) {
+            if (isset($_GET['animal']) || isset($_GET['city'])){
+                $sql1 = $sql1 . " and ";
+            }
+
+            $res = query("SELECT id FROM Kategori WHERE emer='". $_GET['category']."'");
+            $category = mysqli_fetch_assoc($res);
+            $sql1 = $sql1 . " kategoriId='" . $category['id'] . "'";
+        }
+
+        return $sql1;
     }
 
 ?>

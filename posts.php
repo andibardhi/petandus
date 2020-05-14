@@ -36,10 +36,10 @@
             <div class="btn-group">
                 <select id="btncolor" name="city" id="city">
                     <option value="null" selected disabled style=" display: none;">Qyteti</option>
-                    <option value="tirane" >Tirane</option>
-                    <option value="durres">Durres</option>
-                    <option value="korce">Korce</option>
-                    <option value="vlore">Vlore</option>
+                    <option value="tirane" >Tiranë</option>
+                    <option value="durres">Durrës</option>
+                    <option value="korce">Korçë</option>
+                    <option value="vlore">Vlorë</option>
                 </select>
             </div>
 
@@ -59,7 +59,7 @@
 
         <!-- postet start -->
         <div class="container col-md-8" id="posts">
-            <div class="row justify-content-center">
+            <div class="row justify-content-center" id="post_holder">
             <a href="./single-post.php" id="post">    
                 <div class="row single-post">
                     <title class="row" id="title">Titull</title>
@@ -153,22 +153,30 @@
     </body>
 
     <script>
-
-        var dt = <?php echo json_encode(retrieve_data()); ?>;
-        var im = <?php echo json_encode(show_photo()); ?>;
+        var dt = <?php if (empty($_GET)) {echo json_encode(retrieve_data());} else {echo json_encode(filtering_data());}?>;
+        var im = <?php if (empty($_GET)) {echo json_encode(show_photo());} else {echo json_encode(filtering_photo());}?>;
 
         console.log(dt);
         var src = 'data:image/jpeg;base64,';
-
-        var images = $('img');
+        
         var posts  = $("#posts a");
+
+        // Fshirja e posteve te tepert (default 5)
+        if(dt.length < 5){
+            for(var i = 0; i < 5-dt.length; i++){
+                console.log(posts[i]);
+                posts[i].remove();
+            }
+        }
+
+        var posts  = $('#posts a');
+        var images = $('img');
 
         var ctgr = {1: "Adoptim", 2: "Pet Sitting", 3: "Kujdesje"};
         var city = {1: "Tirane", 2: "Durres", 3: "Korce", 4: "Vlore"};
 
         $.each(images, function(i, v){
             $(this).attr('src', src + im[i]);
-            console.log(i);
         });
 
         $.each(posts, function(i, v){
@@ -177,7 +185,7 @@
             var d = dt[i][3];
             var u = dt[i][4]
             var ct = ctgr[dt[i][5]];
-            var ci = city[dt[i][6]];
+            var ci = city[dt[i][7]];
             $(this).find('#info').text(d + " | " + u + " | " + ct + " | " + ci);
         }); 
         
