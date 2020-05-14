@@ -16,9 +16,10 @@
 <div class="container h-100">
     <?php register_validation(); ?>
     <?php
-      if ($_SESSION['info_msg'] == 'postim anonim')
+      if (isset($_SESSION['info_msg']) && $_SESSION['info_msg'] == 'postim anonim'){
         echo('<div class="alert alert-danger text-center">Ju duhet të keni një llogari për të postuar</div>');
         unset($_SESSION['info_msg']);
+      }
     ?>
     <div class="alert alert-danger text-center" id="error" style="visibility: hidden;"></div>
     <div class="row align-items-center justify-content-center h-100">
