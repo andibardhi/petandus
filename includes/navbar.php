@@ -3,7 +3,7 @@
         <a href="./index.php" class="logo"> PET&US </a>
 
         <div class="header-right">
-            <a href="./index.php">Kryefaqja</a>
+        <a href="./index.php">Kryefaqja</a>
             <a class="active" href="./posts.php">Postime</a>
             <a href="./blog.php">Blog</a>
             <?php 
