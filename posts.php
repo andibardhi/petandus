@@ -59,137 +59,20 @@
 
         <!-- postet start -->
         <div class="container col-md-8" id="posts">
-            <div class="row justify-content-center" id="post_holder">
-
-            <a href="./single-post.php" id="post">    
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post">    
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post">    
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post">    
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post">    
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-
-            </div>
+                <?php
+                if(!empty($_GET))
+                    generate_post(1);
+                else
+                    generate_post(0);
+                ?>
         </div> <!-- postet end -->
-        
+
         <br>
 
         <?php
             include_once('./includes/footer.php');
         ?>
     </body>
-
-    <script>
-        var dt = <?php if (empty($_GET)) {echo json_encode(retrieve_data());} else {echo json_encode(filtering_data());}?>;
-        var im = <?php if (empty($_GET)) {echo json_encode(show_photo());} else {echo json_encode(filtering_photo());}?>;
-
-        console.log(dt);
-        var src = 'data:image/jpeg;base64,';
-        
-        var posts  = $("#posts a");
-
-        // Fshirja e posteve te tepert (default 5)
-        if(dt.length < 5){
-            for(var i = 0; i < 5-dt.length; i++){
-                console.log(posts[i]);
-                posts[i].remove();
-            }
-        }
-
-        var posts  = $('#posts a');
-        var images = $('img');
-
-        var ctgr = {1: "Adoptim", 2: "Pet Sitting", 3: "Kujdesje"};
-        var city = {1: "Tirane", 2: "Durres", 3: "Korce", 4: "Vlore"};
-
-        $.each(images, function(i, v){
-            $(this).attr('src', src + im[i]);
-        });
-
-        $.each(posts, function(i, v){
-            $(this).find('#title').text(dt[i][1]);
-            $(this).find('#desc').text(dt[i][2]);
-            var d = dt[i][3];
-            var u = dt[i][4]
-            var ct = ctgr[dt[i][5]];
-            var ci = city[dt[i][7]];
-            $(this).find('#info').text(d + " | " + u + " | " + ct + " | " + ci);
-        }); 
-        
-    </script>
 
 </html>
 
