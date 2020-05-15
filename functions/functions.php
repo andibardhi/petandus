@@ -493,18 +493,52 @@
     //*------------------Posts page functions----------------------*//
     ////////////////////////////////////////////////////////////////////    
 
+    function generate_post($filter){
+
+        if ($filter == 1){
+            $data = filtering_data();
+            $imgs = filtering_photo();    
+        }else{
+            $data = retrieve_data(5);
+            $imgs = retrieve_photo(5);
+        }
+
+        for($i = 0; $i < count($data); $i++){
+
+            echo "
+            <a href='./single-post.php' id='post'>    
+                <div class='row single-post'>
+                    <title class='row' id='title'>" . $data[$i][1] . "</title>
+                    <div class='row justify-content-around'>
+                        <div class='col-7 description'>
+                            <span id='desc'>" . $data[$i][2] . "</span>
+                        </div>
+                        <div class='col-5'>
+                            <img src='data:image/jpeg;base64, " . $imgs[$i] . "' alt='post_photo'>
+                        </div>
+                    </div>
+                    <div class='row'>
+                        <span id='info'>" . $data[$i][3] . $data[$i][4] . $data[$i][5] . $data[$i][7] . "</span>
+                    </div>
+                </div>
+            </a>
+            ";
+        }
+
+    }
+
     function getUserName($uid){
         $sql = "SELECT username from User WHERE id='" . $uid . "'";
         $result = query($sql);
         confirm($result);
         $row = fetch_data($result);
-        return $row['username'];
 
+        return $row['username'];
     }
 
-    function retrieve_data(){
+    function retrieve_data($nr){
 
-        $sql = "SELECT id, titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email FROM Post ORDER BY id DESC LIMIT 5";
+        $sql = "SELECT id, titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email FROM Post ORDER BY id DESC LIMIT " . $nr;
 
         $result = query($sql);
 
@@ -520,9 +554,9 @@
         return $row;
     }
 
-    function show_photo(){
+    function retrieve_photo($nr){
         
-        $sql = "SELECT foto FROM Post ORDER BY id DESC LIMIT 5";
+        $sql = "SELECT foto FROM Post ORDER BY id DESC LIMIT " . $nr;
 
         $result = query($sql);
 
@@ -540,7 +574,7 @@
     function filtering_data(){
 
         if (!empty($_GET)) {
-            $sql1 = "SELECT id, titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email FROM Post WHERE";
+            $sql1 = "SELECT id, titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email FROM Post ";
             $sql2 = " ORDER BY id DESC LIMIT 5";
 
             $sql1 = getfiltersID($sql1);
@@ -560,7 +594,7 @@
 
     function filtering_photo(){
 
-        $sql1 = "SELECT foto FROM Post WHERE";
+        $sql1 = "SELECT foto FROM Post";
         $sql2 = " ORDER BY id DESC LIMIT 5";
 
         $sql1 = getfiltersID($sql1);
@@ -578,32 +612,37 @@
     }
 
     function getfiltersID($sql1){
+
+        if(!empty($_GET)){
+            $sql1 .= " WHERE ";
+        }
+
         if (isset($_GET['city'])) {
 
             $res = query("SELECT id FROM Qytet WHERE emer='". $_GET['city'] . "'");
             $city = mysqli_fetch_assoc($res);
-            $sql1 = $sql1 . " qytetiId='" . $city['id'] . "'";
+            $sql1 .= " qytetiId='" . $city['id'] . "'";
         }
         if (isset($_GET['animal'])) {
             if(isset($_GET['city'])){
-                $sql1 = $sql1 . " and ";
+                $sql1 .= " and ";
             }
 
             $res = query("SELECT id FROM Kafshe WHERE emer='". $_GET['animal']."'");
             $animal = mysqli_fetch_assoc($res);
-            $sql1 = $sql1 . " kafshaId='" . $animal['id'] . "'";
+            $sql1 .= " kafshaId='" . $animal['id'] . "'";
             
         }
         if (isset($_GET['category'])) {
             if (isset($_GET['animal']) || isset($_GET['city'])){
-                $sql1 = $sql1 . " and ";
+                $sql1 .= " and ";
             }
 
             $res = query("SELECT id FROM Kategori WHERE emer='". $_GET['category']."'");
             $category = mysqli_fetch_assoc($res);
-            $sql1 = $sql1 . " kategoriId='" . $category['id'] . "'";
+            $sql1 .= " kategoriId='" . $category['id'] . "'";
         }
-
+        
         return $sql1;
     }
 
