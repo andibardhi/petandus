@@ -400,12 +400,15 @@
     
                 if(!empty($errors)){
                     foreach($errors as $error){
-                        echo '<div class="alert alert-danger">'.$error.'</div>';
+                        echo '<div class="alert alert-danger">'. $error .'</div>';
                     }
                 }else{
                     // Post registration
                     if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
                         echo 'success';
+                        set_message('<p class="text-success text-center">Postimi u krijua me sukses.</p>');
+                        sleep(3);
+                        redirect('posts.php');
                     }else{
                         echo('<p class="text-danger text-center">Ndodhi një gabim. Ju lutem provoni përsëri!/p>');
                     }
@@ -429,8 +432,6 @@
         $postID = getpostID($userID, $time);
         
         save_photo($postID);
-
-        set_message('<p class="text-success text-center">Postimi u krijua me sukses.</p>');
 
         return true;
     }
@@ -505,6 +506,18 @@
 
         for($i = 0; $i < count($data); $i++){
 
+            $id = $data[$i][0];
+            $title = $data[$i][1];
+            $desc = $data[$i][2];
+            $img = $imgs[$i];
+            $date = substr($data[$i][3], 0, 10);
+            $user = $data[$i][4];
+            $ctgr = $data[$i][5];
+            $anim = $data[$i][6];
+            $city = $data[$i][7];
+
+            $info = $date . " | " . $user . " | " . $ctgr . " | " . $anim . " | " . $city;
+
             echo "
             <a href='./single-post.php' id='post'>    
                 <div class='row single-post'>
@@ -536,6 +549,33 @@
         return $row['username'];
     }
 
+    function getCityName($cityid){
+        $sql = "SELECT emer from Qytet WHERE id='" . $cityid . "'";
+        $result = query($sql);
+        confirm($result);
+        $row = fetch_data($result);
+
+        return $row['emer'];
+    }
+
+    function getCategoryName($ctid){
+        $sql = "SELECT emer from Kategori WHERE id='" . $ctid . "'";
+        $result = query($sql);
+        confirm($result);
+        $row = fetch_data($result);
+
+        return $row['emer'];
+    }
+
+    function getAnimalName($anid){
+        $sql = "SELECT emer from Kafshe WHERE id='" . $anid . "'";
+        $result = query($sql);
+        confirm($result);
+        $row = fetch_data($result);
+
+        return $row['emer'];
+    }
+
     function retrieve_data($nr){
 
         $sql = "SELECT id, titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email FROM Post ORDER BY id DESC LIMIT " . $nr;
@@ -547,8 +587,14 @@
         $row = mysqli_fetch_all($result);
         
         for ($i = 0; $i < row_count($result); $i++){
-            $uname = getUserName($row[$i][4]);
-            $row[$i][4] = $uname;
+            $usname = getUserName($row[$i][4]);
+            $cgname = getCategoryName($row[$i][5]);
+            $anname = getAnimalName($row[$i][6]);
+            $ctname = getCityName($row[$i][7]);
+            $row[$i][4] = $usname;
+            $row[$i][5] = $cgname;
+            $row[$i][6] = $anname;
+            $row[$i][7] = $ctname;
         }
 
         return $row;
@@ -582,10 +628,18 @@
             $result = query($sql1.$sql2);
             
             confirm($result);
+
             $row = mysqli_fetch_all($result);
+            
             for ($i = 0; $i < row_count($result); $i++){
-                $uname = getUserName($row[$i][4]);
-                $row[$i][4] = $uname;
+                $usname = getUserName($row[$i][4]);
+                $cgname = getCategoryName($row[$i][5]);
+                $anname = getAnimalName($row[$i][6]);
+                $ctname = getCityName($row[$i][7]);
+                $row[$i][4] = $usname;
+                $row[$i][5] = $cgname;
+                $row[$i][6] = $anname;
+                $row[$i][7] = $ctname;
             }
 
             return $row;
@@ -644,6 +698,95 @@
         }
         
         return $sql1;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    //*-------------- Single post page functions-------------------*//
+    ////////////////////////////////////////////////////////////////////
+
+    function build_single_post($id){
+
+        $data = get_data_byID($id);
+        $img = get_photo_byID($id);
+
+        $id = $data[0][0];
+        $title = $data[0][1];
+        $desc = $data[0][2];
+        $image = $img[0];
+        $date = substr($data[0][3], 0, 10);
+        $user = $data[0][4];
+        $ctgr = $data[0][5];
+        $anim = $data[0][6];
+        $city = $data[0][7];
+        $tel = $data[0][8];
+        $email = $data[0][9];
+        
+        echo "
+            <div class='container'>
+            <div class='row justify-content-center'>
+                <img src='data:image/jpeg;base64, " . $image . "' alt='post_photo'>
+            </div>
+            <div class='row justify-content-center title'>
+                <span>" . $title . "</span>
+            </div>
+            <div class='row description'>
+                <span>" . $desc . "</span>
+            </div>
+            <div class='row email'>
+            Email:&nbsp;<a href='mailto:email@example.com'>" . $email . "</a>
+            </div>
+            <div class='row phone'>
+             <span>" . $tel . "</span>
+            </div>
+            <div class='row categories'>
+                <div class='col-4 category'>" . $ctgr . "</div>
+                <div class='col-4 city'>" . $city . "</div>
+                <div class='col-4 animal'>" . $anim ."</div>
+            </div>
+        </div>
+        ";
+
+    }
+
+    function get_data_byID($id){
+
+        $sql = "SELECT id, titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email FROM Post WHERE id=" . $id;
+
+        $result = query($sql);
+
+        confirm($result);
+
+        $row = mysqli_fetch_all($result);
+        
+        for ($i = 0; $i < row_count($result); $i++){
+            $usname = getUserName($row[$i][4]);
+            $cgname = getCategoryName($row[$i][5]);
+            $anname = getAnimalName($row[$i][6]);
+            $ctname = getCityName($row[$i][7]);
+            $row[$i][4] = $usname;
+            $row[$i][5] = $cgname;
+            $row[$i][6] = $anname;
+            $row[$i][7] = $ctname;
+        }
+
+        return $row;
+    }
+
+    function get_photo_byID($id){
+        
+        $sql = "SELECT foto FROM Post WHERE id=" . $id;
+
+        $result = query($sql);
+
+        confirm($result);
+
+        $img = array();
+
+        while($d = mysqli_fetch_row($result)){
+            array_push($img, base64_encode($d[0]));
+        }
+
+        return $img;
     }
 
 ?>
