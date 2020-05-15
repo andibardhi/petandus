@@ -519,19 +519,19 @@
             $info = $date . " | " . $user . " | " . $ctgr . " | " . $anim . " | " . $city;
 
             echo "
-            <a href='./single-post.php?id=" . $id . "' id='post'>
+            <a href='./single-post.php' id='post'>    
                 <div class='row single-post'>
-                    <title class='row' id='title'>" . $title . "</title>
+                    <title class='row' id='title'>" . $data[$i][1] . "</title>
                     <div class='row justify-content-around'>
+                        <div class='col-5 img'>
+                            <img src='data:image/jpeg;base64, " . $imgs[$i] . "' alt='post_photo'>
+                        </div>
                         <div class='col-7 description'>
-                            <span id='desc'>" . $desc . "</span>
+                            <span id='desc'>" . $data[$i][2] . "</span>
                         </div>
-                        <div class='col-5'>
-                            <img src='data:image/jpeg;base64, " . $img . "' alt='post_photo'>
+                        <div class='row info'>
+                        <span id='info'>" . $data[$i][3] . $data[$i][4] . $data[$i][5] . $data[$i][7] . "</span>
                         </div>
-                    </div>
-                    <div class='row'>
-                        <span id='info'>" . $info . "</span>
                     </div>
                 </div>
             </a>

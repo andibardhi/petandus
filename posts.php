@@ -59,14 +59,12 @@
 
         <!-- postet start -->
         <div class="container col-md-8" id="posts">
-            <div class="row justify-content-center" id="post_holder">
                 <?php
                 if(!empty($_GET))
                     generate_post(1);
                 else
                     generate_post(0);
                 ?>
-            </div>
         </div> <!-- postet end -->
 
         <br>
