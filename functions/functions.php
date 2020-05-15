@@ -530,7 +530,7 @@
                             <span id='desc'>" . $data[$i][2] . "</span>
                         </div>
                         <div class='row info'>
-                        <span id='info'>" . $data[$i][3] . $data[$i][4] . $data[$i][5] . $data[$i][7] . "</span>
+                        <span id='info'>" . $data[$i][3] . " | " . $data[$i][4] ." | " . $data[$i][5] ." | " . $data[$i][7] . "</span>
                         </div>
                     </div>
                 </div>
