@@ -46,8 +46,23 @@
 }
 
 
+ @media only screen and (min-width: 1600px) {
+    .single-post .img{
+        width: 450px;
+        height: 350px;
+    }
+}
+
+@media only screen and (min-width: 1200px) {
+    .single-post .img{
+        width: 300px;
+        height: 200px;
+    }
+} 
+
+
 .single-post title{
-    padding-left: 20px;
+    padding-left: 16px;
 }
 
 
@@ -59,9 +74,34 @@ h6,title{
     text-transform: uppercase;
     font-weight: 700;
     letter-spacing: 0.1em;
+
 }
 
 a:hover{
     text-decoration: none;
 }
+
+#title{
+    width:100%;
+    font-size: 1.5rem;
+    padding-bottom: 8px;
+}
+
+.info{
+    width: 100%;
+    padding-top: 15px;
+    font-size: 0.7rem;
+}
+
+/* @media only screen and (min-width: 1200px) {
+    .single-post .description{
+        min-width: 430px;
+    }
+}
+
+@media only screen and (min-width: 1300px) {
+    .single-post .description{
+        min-width: 500px;
+    }
+} */
 

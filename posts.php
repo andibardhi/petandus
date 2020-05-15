@@ -36,10 +36,10 @@
             <div class="btn-group">
                 <select id="btncolor" name="city" id="city">
                     <option value="null" selected disabled style=" display: none;">Qyteti</option>
-                    <option value="tirane" >Tirane</option>
-                    <option value="durres">Durres</option>
-                    <option value="korce">Korce</option>
-                    <option value="vlore">Vlore</option>
+                    <option value="tirane" >Tiranë</option>
+                    <option value="durres">Durrës</option>
+                    <option value="korce">Korçë</option>
+                    <option value="vlore">Vlorë</option>
                 </select>
             </div>
 
@@ -59,129 +59,20 @@
 
         <!-- postet start -->
         <div class="container col-md-8" id="posts">
-            <div class="row justify-content-center">
-            <a href="./single-post.php" id="post">    
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
-                        <!-- KETU -->
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post"> 
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div><br>
-                        <!-- KETU -->
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post"> 
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div><br>
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post">    
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
-                    </div><br><br>
-                    <div class="row">
-                        <span id="info">
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post">    
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div>
-                    </div>
-                    <div class="row">
-                        <span id="info">
-                    </div>
-                </div>
-            </a>
-            </div>
+                <?php
+                if(!empty($_GET))
+                    generate_post(1);
+                else
+                    generate_post(0);
+                ?>
         </div> <!-- postet end -->
-        
+
         <br>
 
         <?php
             include_once('./includes/footer.php');
         ?>
     </body>
-
-    <script>
-
-        var dt = <?php echo json_encode(retrieve_data()); ?>;
-        var im = <?php echo json_encode(show_photo()); ?>;
-
-        console.log(dt);
-        var src = 'data:image/jpeg;base64,';
-
-        var images = $('img');
-        var posts  = $("#posts a");
-
-        var ctgr = {1: "Adoptim", 2: "Pet Sitting", 3: "Kujdesje"};
-        var city = {1: "Tirane", 2: "Durres", 3: "Korce", 4: "Vlore"};
-
-        $.each(images, function(i, v){
-            $(this).attr('src', src + im[i]);
-            console.log(i);
-        });
-
-        $.each(posts, function(i, v){
-            $(this).find('#title').text(dt[i][1]);
-            $(this).find('#desc').text(dt[i][2]);
-            var d = dt[i][3];
-            var u = dt[i][4]
-            var ct = ctgr[dt[i][5]];
-            var ci = city[dt[i][6]];
-            $(this).find('#info').text(d + " | " + u + " | " + ct + " | " + ci);
-        }); 
-        
-    </script>
 
 </html>
 
