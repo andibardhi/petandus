@@ -519,7 +519,7 @@
             $info = $date . " | " . $user . " | " . $ctgr . " | " . $anim . " | " . $city;
 
             echo "
-            <a href='./single-post.php' id='post'>    
+            <a href='./single-post.php?id=" . $data[$i][0] . "' id='post'>      
                 <div class='row single-post'>
                     <title class='row' id='title'>" . $data[$i][1] . "</title>
                     <div class='row justify-content-around'>
