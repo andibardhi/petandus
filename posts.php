@@ -60,6 +60,7 @@
         <!-- postet start -->
         <div class="container col-md-8" id="posts">
             <div class="row justify-content-center" id="post_holder">
+
             <a href="./single-post.php" id="post">    
                 <div class="row single-post">
                     <title class="row" id="title">Titull</title>
@@ -70,40 +71,6 @@
                         <div class="col-5">
                             <img alt="post_photo">
                         </div>
-                        <!-- KETU -->
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post"> 
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div><br>
-                        <!-- KETU -->
-                        <div class="row">
-                            <span id="info">
-                        </div>
-                    </div>
-                </div>
-            </a>
-            <a href="./single-post.php" id="post"> 
-                <div class="row single-post">
-                    <title class="row" id="title">Titull</title>
-                    <div class="row justify-content-around">
-                        <div class="col-7 description">
-                            <span id="desc"></span>
-                        </div>
-                        <div class="col-5">
-                            <img alt="post_photo">
-                        </div><br>
                         <div class="row">
                             <span id="info">
                         </div>
@@ -120,9 +87,9 @@
                         <div class="col-5">
                             <img alt="post_photo">
                         </div>
-                    </div><br><br>
-                    <div class="row">
-                        <span id="info">
+                        <div class="row">
+                            <span id="info">
+                        </div>
                     </div>
                 </div>
             </a>
@@ -136,12 +103,45 @@
                         <div class="col-5">
                             <img alt="post_photo">
                         </div>
-                    </div>
-                    <div class="row">
-                        <span id="info">
+                        <div class="row">
+                            <span id="info">
+                        </div>
                     </div>
                 </div>
             </a>
+            <a href="./single-post.php" id="post">    
+                <div class="row single-post">
+                    <title class="row" id="title">Titull</title>
+                    <div class="row justify-content-around">
+                        <div class="col-7 description">
+                            <span id="desc"></span>
+                        </div>
+                        <div class="col-5">
+                            <img alt="post_photo">
+                        </div>
+                        <div class="row">
+                            <span id="info">
+                        </div>
+                    </div>
+                </div>
+            </a>
+            <a href="./single-post.php" id="post">    
+                <div class="row single-post">
+                    <title class="row" id="title">Titull</title>
+                    <div class="row justify-content-around">
+                        <div class="col-7 description">
+                            <span id="desc"></span>
+                        </div>
+                        <div class="col-5">
+                            <img alt="post_photo">
+                        </div>
+                        <div class="row">
+                            <span id="info">
+                        </div>
+                    </div>
+                </div>
+            </a>
+
             </div>
         </div> <!-- postet end -->
         
