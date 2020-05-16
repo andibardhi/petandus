@@ -464,6 +464,8 @@
         
         save_photo($postID);
 
+        set_message('<p class="text-success text-center">Postimi u krijua me sukses.</p>');
+
         return true;
     }
 
@@ -617,17 +619,6 @@
         confirm($result);
 
         $row = mysqli_fetch_all($result);
-        
-        for ($i = 0; $i < row_count($result); $i++){
-            $usname = getUserName($row[$i][4]);
-            $cgname = getCategoryName($row[$i][5]);
-            $anname = getAnimalName($row[$i][6]);
-            $ctname = getCityName($row[$i][7]);
-            $row[$i][4] = $usname;
-            $row[$i][5] = $cgname;
-            $row[$i][6] = $anname;
-            $row[$i][7] = $ctname;
-        }
 
         return $row;
     }
@@ -697,6 +688,41 @@
         return $imgs;
     }
 
+    function getUserIDbyUsername(){
+        $username = $_SESSION['username'];
+        $sql = "SELECT id  FROM `user` where username = '$username'";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0][0];
+    }
+
+    function getDataFromProfile(){
+        $id = getUserIDbyUsername();
+        $sql = "SELECT *  FROM `profil` where userid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0];
+    }
+    function getDataFromUser(){
+        $id = getUserIDbyUsername();
+        $sql = "SELECT * FROM `user` WHERE id =  $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0];
+    }
+
+    function getUserPosts(){
+        $id = getUserIDbyUsername();
+        $sql = "SELECT * FROM `post` WHERE autorid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row;
+    }
+    
     function getfiltersID($sql1){
 
         if(!empty($_GET)){
@@ -821,4 +847,70 @@
         return $img;
     }
 
+    function whatdataIS($message, $data){
+        
+        echo("<h6>".$message." - >  ".var_dump($data)."</h6>");
+        exit();
+    }
+    function updateProfile(){
+        // var_dump("Para se Klikuam Submit!!!");
+        //     exit();
+        // $firstname = $_REQUEST['firstname'];
+        // $lastname = $_REQUEST['lastname'];
+        // $birthdate = $_REQUEST['birthday'];
+        // $phone = $_REQUEST['phone'];
+        // $city = $_REQUEST['city'];
+        // $email = $_REQUEST['email'];
+        // var_dump('firstname ->'.$firstname);
+        // var_dump('lastname ->'.$lastname);
+        // var_dump('birthdate->'.$birthdate);
+        // var_dump('phone ->'.$phone);
+        // var_dump('city ->'.$city);
+        // var_dump('email ->'.$email);
+
+        if(isset($_REQUEST['submitEditProfile'])){
+            // var_dump("Klikuam Submit!!!");
+            // exit();
+  
+            $firstname = $_REQUEST['firstname'];
+            $lname = $_REQUEST['lastname'];
+            $birthdate = $_REQUEST['birthday'];
+            $phone = $_REQUEST['phone'];
+            $city = $_REQUEST['city'];
+            $email = $_REQUEST['email'];
+     
+
+            $password = md5($_REQUEST['pasword']);
+            updateProfiledata($firstname, $lname, $phone, $birthdate, $city );
+            updataUserData($password, $email);
+            //To be completed with profile image update
+            
+        }
+    }
+
+    function updateProfiledata($name, $lastName, $phone, $birthdate, $city ){
+        
+        $id = getUserIDbyUsername();
+        $sql = "UPDATE profil
+         SET
+            emer = '$name',
+            mbiemer = '$lastName',
+            mosha='$birthdate',
+            nrtel= '$phone',
+            qyteti= '$city'
+         WHERE 
+            userid = $id";
+        confirm(query($sql));
+    }
+
+    function updataUserData($passw, $email){
+        $id = getUserIDbyUsername();
+        $sql = "UPDATE user
+         SET
+             email = '$email',
+             password = '$passw'
+         WHERE 
+            id = $id "; 
+        confirm(query($sql));
+    }
 ?>

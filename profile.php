@@ -18,6 +18,16 @@
 <body>
     <?php
     include_once('./includes/navbar.php');
+    include_once('functions/config.php'); 
+    $data = getUserPosts();
+    $profileData = getDataFromProfile();
+    $userData = getDataFromUser();
+    // echo("Profile Data ->  ");
+    // var_dump($profileData);
+    // echo("<br>");
+    // echo("User Data ->  ");
+    // var_dump($userData);
+    // exit();
     ?>
     <br>
     <div class="container">
@@ -27,21 +37,21 @@
                     <img class="rounded-circle profile-picture" src="./img/profile-picture.jpg" height="150" width="150">
                 </div>
                 <div class="row justify-content-center">
-                    <h4 class="text-center">Emer Mbiemer</h4>
+                    <h4 class="text-center"><?php echo $profileData[1].' '. $profileData[2]?></h4>
                 </div>
                 <br>
                 <div class="row justify-content-center">
                     <div class="col personal-info">
                         <div class="row justify-content-center">
-                            <a href="./edit-profile.php" class="fa fa-edit edit-icon" style="text-decoration: none;"></a>
+                            <a href="./edit-profile.php?userid=<?php echo $profileData[0]?>" class="fa fa-edit edit-icon" style="text-decoration: none;"></a>
                             <h6 class="text-center">Te dhenat personale</h6>
                         </div>
                         <div class="row">
                             <ul>
-                                <li>@emermbiemer</li>
-                                <li>30 vjec</li>
-                                <li>+355 68 XXXXXXX</li>
-                                <li>Tirane</li>
+                                <li><?php echo $userData[2];?></li>
+                                <li><?php echo $userData[3].' vjec'?></li>
+                                <li><?php echo $userData[5]?></li>
+                                <li><?php echo $userData[6]?></li>
                             </ul>
                         </div>
                     </div>
@@ -49,73 +59,46 @@
             </div>
 
             <div class="col-md-8">
+            <a href="./new-post.php" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post </a>
             
                 <div class="row justify-content-center">
-                <a href="./new-post.php"> <button type="button" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post</button> </a>
-                    <a href="./single-post.php"> 
-                        <div class="row single-post">
-                            <title class="row">Titull</title>
-                            <div class="row justify-content-around">
-                                <div class="col-7 description">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                    an
-                                    unknown printer took a galley of type ...
+                    
+                    <?php
+                       
+                    if(count($data)>0){
+
+                        foreach ($data as $postValue){
+                            $title = $postValue[1];
+                            $description = $postValue[2];
+                            $postId = $postValue[0];
+                            $modifikoPostin = "Modifiko Postimin";
+                          
+                        ?>
+                            <a href="./single-post.php?id=<?php echo $postId?>"> 
+                                <div class="row single-post">
+                                    <title class="row"><?php echo $title?></title>
+                                    <div class="row justify-content-around">
+                                        <div class="col-7 description">
+                                        <?php echo $description?>
+                                        </div>
+                                        <div class="col-5">
+                                            <img src="./img/profile-dog.jpg">
+                                        </div>
+                                    </div>
+                                    <div class="row">
+                                        <a href="./single-post.php?id=<?php echo $postId?>">
+                                            <button class="btn edit-post"> <?php echo $modifikoPostin?> </button>
+                                        </a>
+                                    </div>
                                 </div>
-                                <div class="col-5">
-                                    <img src="./img/profile-dog.jpg">
-                                </div>
-                            </div>
-                            <div class="row">
-                                <a href="./edit-post.php">
-                                
-                                    <button class="btn edit-post">  Modifiko postin </button>
-                                </a>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="./single-post.php"> 
-                        <div class="row single-post">
-                            <title class="row">Titull</title>
-                            <div class="row justify-content-around">
-                                <div class="col-7 description">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                    an
-                                    unknown printer took a galley of type ...
-                                </div>
-                                <div class="col-5">
-                                    <img src="./img/profile-cat.jpg">
-                                </div>
-                            </div>
-                            <div class="row">
-                            <a href="./edit-post.php">
-                                    <button class="btn edit-post"> Modifiko postin </button>
-                                </a>
-                            </div>
-                        </div>
-                    </a>
-                    <a href="./single-post.php"> 
-                        <div class="row single-post">
-                            <title class="row">Titull</title>
-                            <div class="row justify-content-around">
-                                <div class="col-7 description">
-                                    Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                                    Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when
-                                    an
-                                    unknown printer took a galley of type ...
-                                </div>
-                                <div class="col-5">
-                                    <img src="./img/profile-fish.jpg">
-                                </div>
-                            </div>
-                            <div class="row">
-                            <a href="./edit-post.php">
-                                    <button class="btn edit-post"> Modifiko postin </button>
-                                </a>
-                            </div>
-                        </div>
-                    </a>
+                            </a>
+                        <?php } 
+                    }else {?>
+                    <br>
+                    <br>
+                        <a href="./new-post.php" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post </a>
+                        <h1 style="margin-top: 2em">Ju akoma nuk keni krijuar postime!</h1>
+                    <?php }?>
                 </div>
             </div>
 

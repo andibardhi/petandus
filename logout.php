@@ -5,7 +5,6 @@
         setcookie('username', '', time() - 84600);
     }
     session_destroy();
-    session_start();
     set_message('<p class="text-success text-center">Shihemi së shpejti...</p>');
     redirect('login.php');
 ?>
