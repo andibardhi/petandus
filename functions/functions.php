@@ -44,7 +44,7 @@
             $lastname = clean($_POST['lastname']);
             $birthdate = clean($_POST['birthdate']);
             $phonenumber = clean($_POST['phonenumber']);
-            $city = (int)$_POST['city'];
+            $city = clean($_POST['city']);
             $username = clean($_POST['username']);
             $email = strtolower(clean($_POST['email']));
             $password = clean($_POST['password']);
@@ -112,10 +112,12 @@
             }
             else{
                 //We register the user because no error was found completing the form
-                if(user_registration($username, $email, $password)){
+                if(user_registration($firstname, $lastname, $birthdate, $phonenumber, $city, $username, $email, $password)){
                     //If registration succesful redirect the user
                     //echo('<p class="text-success text-center">U regjistruat me sukses.Kontrolloni email për aktivizim!</p>');
-                    echo('<p class="text-success text-center">U regjistruat me sukses.</p>');
+                    // echo('<p class="text-success text-center">U regjistruat me sukses.</p>');
+                    set_message('<p class="text-success text-center">Regjistrimi përfundoi. Mund të kyçeni në sistem.</p>');
+                    redirect("login.php");
                 }else{
                     echo('<p class="text-danger text-center">Ndodhi një gabim. Ju lutem provoni përsëri!/p>');  
                 }
@@ -152,26 +154,40 @@
     }
 
     //Registering the user in system
-    function user_registration($username, $email, $password){
+    function user_registration($firstname, $lastname, $birthdate, $phonenumber, $city, $username, $email, $password){
+        $tmpFirstname = Escape($firstname);
+        $tmpLastname = Escape($lastname);
         $tmpUsername = Escape($username);
         $tmpEmail = Escape($email);
         $tmpPassword = Escape($password);
-
         $hashed_password = md5($tmpPassword);
         //$time = microtime();
         //$validation_code = md5($tmpUsername.$time);
 
-        //$sql = "insert into user (username, email, password, validation_code) values ('$username', '$email', '$hashed_password', '$validation_code')";
-        $sql = "insert into User (username, email, password) values ('$username', '$email', '$hashed_password')";
-        $result = query($sql);
-        confirm($result);
-        
-        set_message('<p class="text-success text-center">Regjistrimi përfundoi. Mund të kyçeni në sistem.</p>');
-        redirect("login.php");
+        global $connect;
+        $sql = "insert into User (username, email, password) values ('$tmpUsername', '$tmpEmail', '$hashed_password')";
+        if(mysqli_query($connect, $sql)){
+            //Ruaj id e shtuar se fundmi ne tabelen e user-ave ne databaze
+            $last_id = mysqli_insert_id($connect);
+            
+            $birthyear = (int)substr($birthdate, 0, 4);
+            $year = (int)(new DateTime)->format("Y");
+            $age = $year - $birthyear;
+
+            //Me pas bej shtimin e rekordit ne tabelen e profilit
+            $sql2 = "insert into Profil (userId, emer, mbiemer, mosha, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$age', '$phonenumber', '$city')";
+            if(mysqli_query($connect, $sql2)){
+                return true;
+            }else{
+                return false;
+            }
+        } 
+        else {
+            //Ndodh error
+            return false;
+        }
         //Send account activation email
         //send_activation_email($tmpEmail, $validation_code);
-
-        return true;
     }
 
     //Sending email activation link to the user function

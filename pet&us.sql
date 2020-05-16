@@ -14,7 +14,7 @@ CREATE TABLE `Profil` (
 	`emer` varchar(30) NOT NULL,
 	`mbiemer` varchar(30) NOT NULL,
 	`mosha` INT NOT NULL,
-	`foto` varchar(255) NOT NULL,
+	`foto` mediumblob,
 	`nrtel` INT NOT NULL,
 	`qyteti` varchar(20) NOT NULL,
 	PRIMARY KEY (`userId`)
