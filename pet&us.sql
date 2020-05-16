@@ -37,8 +37,8 @@ CREATE TABLE `Post` (
 
 CREATE TABLE `Blog` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`titull` varchar(50) NOT NULL,
-	`pershkrim` varchar(255) NOT NULL,
+	`titull` varchar(255) NOT NULL,
+	`pershkrim` text NOT NULL,
 	`foto` varchar(255) NOT NULL,
 	`data` DATETIME NOT NULL,
 	`nrtel` INT NOT NULL,
