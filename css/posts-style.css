@@ -14,7 +14,9 @@
 }
 
 
-
+#desc{
+    word-wrap: break-word;
+}
 
 .txtformat{
     color:#e45225;
@@ -57,6 +59,7 @@
     .single-post .img{
         width: 300px;
         height: 200px;
+
     }
 } 
 
