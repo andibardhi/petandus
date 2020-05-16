@@ -20,9 +20,14 @@
     include_once('./includes/navbar.php');
     include_once('functions/config.php'); 
     $data = getUserPosts();
-    $userData = getProfileData();
-    var_dump($userData);
-    exit();
+    $profileData = getDataFromProfile();
+    $userData = getDataFromUser();
+    // echo("Profile Data ->  ");
+    // var_dump($profileData);
+    // echo("<br>");
+    // echo("User Data ->  ");
+    // var_dump($userData);
+    // exit();
     ?>
     <br>
     <div class="container">
@@ -32,21 +37,21 @@
                     <img class="rounded-circle profile-picture" src="./img/profile-picture.jpg" height="150" width="150">
                 </div>
                 <div class="row justify-content-center">
-                    <h4 class="text-center">Emer Mbiemer</h4>
+                    <h4 class="text-center"><?php echo $profileData[1].' '. $profileData[2]?></h4>
                 </div>
                 <br>
                 <div class="row justify-content-center">
                     <div class="col personal-info">
                         <div class="row justify-content-center">
-                            <a href="./edit-profile.php" class="fa fa-edit edit-icon" style="text-decoration: none;"></a>
+                            <a href="./edit-profile.php?userid=<?php echo $profileData[0]?>" class="fa fa-edit edit-icon" style="text-decoration: none;"></a>
                             <h6 class="text-center">Te dhenat personale</h6>
                         </div>
                         <div class="row">
                             <ul>
-                                <li>@emermbiemer</li>
-                                <li>30 vjec</li>
-                                <li>+355 68 XXXXXXX</li>
-                                <li>Tirane</li>
+                                <li><?php echo $userData[2];?></li>
+                                <li><?php echo $userData[3].' vjec'?></li>
+                                <li><?php echo $userData[5]?></li>
+                                <li><?php echo $userData[6]?></li>
                             </ul>
                         </div>
                     </div>
@@ -54,6 +59,7 @@
             </div>
 
             <div class="col-md-8">
+            <a href="./new-post.php" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post </a>
             
                 <div class="row justify-content-center">
                     
@@ -66,12 +72,8 @@
                             $description = $postValue[2];
                             $postId = $postValue[0];
                             $modifikoPostin = "Modifiko Postimin";
-                            // var_dump($title);
-                            // var_dump($description);
-                            //$postURL = 'title=?'.$title="?".$postId;
-                            //var_dump($postURL)
+                          
                         ?>
-                        <a href="./new-post.php" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post </a>
                             <a href="./single-post.php?id=<?php echo $postId?>"> 
                                 <div class="row single-post">
                                     <title class="row"><?php echo $title?></title>
