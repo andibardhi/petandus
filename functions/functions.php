@@ -161,21 +161,32 @@
         $tmpEmail = Escape($email);
         $tmpPassword = Escape($password);
         $hashed_password = md5($tmpPassword);
+        $img_location = null;
         //$time = microtime();
         //$validation_code = md5($tmpUsername.$time);
+
+        if($_FILES['img']['name'] != ''){
+            $tmp = explode(".", $_FILES['img']['name']);
+            $ext = end($tmp);
+            $name = basename($_FILES['img']['name']);
+            $img_location = 'profile_picture/' . $name;
+            if(move_uploaded_file($_FILES['img']['tmp_name'], $img_location)){
+                //die("U uploadua!");
+            }else{
+                $img_location = null;
+            }
+        }
 
         global $connect;
         $sql = "insert into User (username, email, password) values ('$tmpUsername', '$tmpEmail', '$hashed_password')";
         if(mysqli_query($connect, $sql)){
             //Ruaj id e shtuar se fundmi ne tabelen e user-ave ne databaze
             $last_id = mysqli_insert_id($connect);
-            
-            $birthyear = (int)substr($birthdate, 0, 4);
-            $year = (int)(new DateTime)->format("Y");
-            $age = $year - $birthyear;
+
+            $tmpDate = date("Y-m-d", strtotime($birthdate));
 
             //Me pas bej shtimin e rekordit ne tabelen e profilit
-            $sql2 = "insert into Profil (userId, emer, mbiemer, mosha, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$age', '$phonenumber', '$city')";
+            $sql2 = "insert into Profil (userId, emer, mbiemer, datelindja, foto, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$tmpDate','$img_location' , '$phonenumber', '$city')";
             if(mysqli_query($connect, $sql2)){
                 return true;
             }else{
@@ -274,12 +285,14 @@
         if($row=fetch_data($result)){
             //We get the record from database because we need to compare passwords
             $record_pass = $row['password'];
+            $user_role = $row['role'];
             if(md5($password) == $record_pass){
                 if($remember_me == true){
                     //We store the cookie for 1 day
                     setcookie('username', $username, time() + 86400);
                 }
                 $_SESSION['username'] = $username;
+                $_SESSION['role'] = $user_role;
                 return true;
             }else{
                 return false;
