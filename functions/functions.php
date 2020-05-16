@@ -407,13 +407,17 @@
                 }
     
                 if(strlen($description) > $desc_max_char){
-                    $errors[] = "Ju lutem vendosni përshkrimin me më pak se 200 gërma!";
+                    $errors[] = "Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
                 }
     
                 if(strlen($description) < $desc_min_char){
                     $errors[] = "Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
                 }
-    
+
+                if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                    $errors[] = "Email jo i saktë!";
+                }
+                
                 if(!empty($errors)){
                     foreach($errors as $error){
                         echo '<div class="alert alert-danger">'. $error .'</div>';
@@ -421,12 +425,9 @@
                 }else{
                     // Post registration
                     if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
-                        echo 'success';
-                        set_message('<p class="text-success text-center">Postimi u krijua me sukses.</p>');
                         sleep(3);
                         redirect('posts.php');
                     }else{
-                        echo('<p class="text-danger text-center">Ndodhi një gabim. Ju lutem provoni përsëri!/p>');
                     }
                 }
             }
@@ -444,6 +445,7 @@
 
         $sql = "insert into Post (titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email) values ('". $title. "','" . $description . "','" . $time . "','" . $userID . "','" . $categoryID . "','" . $animalID . "','" . $cityID . "','" . $phonenumber . "','" . $email . "')";
         $result = query($sql);
+        confirm($result);
 
         $postID = getpostID($userID, $time);
         
@@ -457,6 +459,7 @@
         // UserID
         $sql = "select id from User where username='" . $username . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $userID = $row['id'];
 
@@ -464,6 +467,7 @@
 
         $sql = "select id from Qytet where emer='" . $city . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $cityID = $row['id'];
 
@@ -471,6 +475,7 @@
 
         $sql = "select id from Kafshe where emer='" . $animal . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $animalID = $row['id'];
 
@@ -478,6 +483,7 @@
 
         $sql = "select id from Kategori where emer='" . $category . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $categoryID = $row['id'];
 
@@ -486,20 +492,17 @@
 
     function save_photo($postID){
 
-        if(count($_FILES["image"]["tmp_name"]) > 0){
-            for($count = 0; $count < count($_FILES["image"]["tmp_name"]); $count++){
-                $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][$count]));
-                $sql = "update Post set foto='" . $image_file . "' where id='" . $postID . "'";
-                $result = query($sql);
-                confirm($result);
-            }
-        }
+        $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
+        $sql = "update Post set foto='" . $image_file . "' where id='" . $postID . "'";
+        $result = query($sql);
+        confirm($result);
     }
 
     function getpostID($userID, $time){
 
         $sql = "select id from Post where autorID='" . $userID . "' and data='" . $time . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $postID = $row['id'];
 
@@ -516,8 +519,8 @@
             $data = filtering_data();
             $imgs = filtering_photo();    
         }else{
-            $data = retrieve_data(5);
-            $imgs = retrieve_photo(5);
+            $data = retrieve_data(6);
+            $imgs = retrieve_photo(6);
         }
 
         for($i = 0; $i < count($data); $i++){
@@ -535,18 +538,18 @@
             $info = $date . " | " . $user . " | " . $ctgr . " | " . $anim . " | " . $city;
 
             echo "
-            <a href='./single-post.php?id=" . $data[$i][0] . "' id='post'>      
+            <a href='./single-post.php?id=" . $id . "' id='post'>      
                 <div class='row single-post'>
-                    <title class='row' id='title'>" . $data[$i][1] . "</title>
+                    <title class='row' id='title'>" . $title . "</title>
                     <div class='row justify-content-around'>
                         <div class='col-5 img'>
-                            <img src='data:image/jpeg;base64, " . $imgs[$i] . "' alt='post_photo'>
+                            <img src='data:image/jpeg;base64, " . $img . "' alt='post_photo'>
                         </div>
                         <div class='col-7 description'>
-                            <span id='desc'>" . $data[$i][2] . "</span>
+                            <span id='desc'>" . $desc . "</span>
                         </div>
                         <div class='row info'>
-                        <span id='info'>" . $data[$i][3] . " | " . $data[$i][4] ." | " . $data[$i][5] ." | " . $data[$i][7] . "</span>
+                        <span id='info'>" . $info . "</span>
                         </div>
                     </div>
                 </div>
