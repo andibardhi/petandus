@@ -519,8 +519,8 @@
             $data = filtering_data();
             $imgs = filtering_photo();    
         }else{
-            $data = retrieve_data(5);
-            $imgs = retrieve_photo(5);
+            $data = retrieve_data(6);
+            $imgs = retrieve_photo(6);
         }
 
         for($i = 0; $i < count($data); $i++){
