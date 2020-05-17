@@ -401,7 +401,7 @@
                 $email = strtolower(clean($_POST['email']));
                 $animal = clean($_POST['animal']);
                 $category = clean($_POST['category']);
-    
+
                 date_default_timezone_set("Europe/Tirane");
                 $time = date("Y-m-d H:i:s");
     
@@ -430,17 +430,24 @@
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
                     $errors[] = "Email jo i saktë!";
                 }
+
+                $allowed = array('jpeg', 'png', 'jpg');
+                $filename = $_FILES['image']['name'][0];
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                if (!in_array($ext, $allowed)) {
+                    $errors[] = "Format jo i duhur i fotos!";
+                }
                 
                 if(!empty($errors)){
                     foreach($errors as $error){
-                        echo '<div class="alert alert-danger">'. $error .'</div>';
+                        header('HTTP/1.1 500 Internal Server Error');
+                        echo $error;
                     }
                 }else{
                     // Post registration
                     if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
-                        sleep(3);
-                        redirect('posts.php');
                     }else{
+
                     }
                 }
             }
@@ -456,15 +463,14 @@
         $animalID = $all_id['animalID'];
         $categoryID = $all_id['categoryID'];
 
+        // Ruajtja e te dhenave
         $sql = "insert into Post (titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email) values ('". $title. "','" . $description . "','" . $time . "','" . $userID . "','" . $categoryID . "','" . $animalID . "','" . $cityID . "','" . $phonenumber . "','" . $email . "')";
         $result = query($sql);
         confirm($result);
 
+        // Ruajtja e fotos
         $postID = getpostID($userID, $time);
-        
         save_photo($postID);
-
-        set_message('<p class="text-success text-center">Postimi u krijua me sukses.</p>');
 
         return true;
     }
@@ -619,6 +625,17 @@
         confirm($result);
 
         $row = mysqli_fetch_all($result);
+
+        for ($i = 0; $i < row_count($result); $i++){
+            $usname = getUserName($row[$i][4]);
+            $cgname = getCategoryName($row[$i][5]);
+            $anname = getAnimalName($row[$i][6]);
+            $ctname = getCityName($row[$i][7]);
+            $row[$i][4] = $usname;
+            $row[$i][5] = $cgname;
+            $row[$i][6] = $anname;
+            $row[$i][7] = $ctname;
+        }
 
         return $row;
     }
@@ -794,7 +811,7 @@
             Email:&nbsp;<a href='mailto:email@example.com'>" . $email . "</a>
             </div>
             <div class='row phone'>
-             <span>" . $tel . "</span>
+             <span>Telefon: " . $tel . "</span>
             </div>
             <div class='row categories'>
                 <div class='col-4 category'>" . $ctgr . "</div>
@@ -803,7 +820,6 @@
             </div>
         </div>
         ";
-
     }
 
     function get_data_byID($id){
@@ -846,6 +862,10 @@
 
         return $img;
     }
+
+    /////////////////////////////////////////////////////////////////////
+    //*-------------- Profile page functions-------------------*//
+    ////////////////////////////////////////////////////////////////////
 
     function whatdataIS($message, $data){
         
