@@ -47,7 +47,7 @@
                 <select id="btncolor" name="category" id="category">
                     <option value="null" selected disabled style=" display: none;">Kategoria</option>
                     <option value="adoptim" >Adoptim</option>
-                    <option value="petsitting">Pet sitting</option>
+                    <option value="pet sitting">Pet sitting</option>
                     <option value="veteriner">veteriner</option>
                 </select>
             </div>
