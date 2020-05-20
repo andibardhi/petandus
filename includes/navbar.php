@@ -13,9 +13,9 @@ include_once('./functions/config.php');
             <?php
             }
             ?>
-            <a href="./index.php">Kryefaqja</a>
-            <a class="active" href="./posts.php">Postime</a>
-            <a href="./blog.php">Blog</a>
+            <a href="./index.php" <?php if (stripos($_SERVER['REQUEST_URI'],'index.php') !== false) {echo 'class="active"';} ?> >Kryefaqja</a>
+            <a  <?php if (stripos($_SERVER['REQUEST_URI'],'posts.php') !== false) {echo 'class="active"';} ?> href="./posts.php">Postime</a>
+            <a href="./blog.php" <?php if (stripos($_SERVER['REQUEST_URI'],'blog.php') !== false) {echo 'class="active"';} ?> >Blog</a>
             <?php 
                 if(isset($_SESSION['username']) OR isset($_COOKIE['username'])){
             ?>

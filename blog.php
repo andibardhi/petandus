@@ -85,6 +85,7 @@
                 <a href="./single-blog.php">    
                     <div class="row single-post">
                         <div class="row justify-content-around">
+                            
                             <div class="col-12">
                                 <img src="./img/c.jpg" alt="post_photo" >
                             </div>
