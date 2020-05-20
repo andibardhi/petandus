@@ -25,7 +25,7 @@
         <div class="container col-md-8">
             <div class="row justify-content-center">
             
-                <a href="./single-post.php">    
+                <a href="./single-blog.php">    
                     <div class="row single-post">
                         <div class="row justify-content-around">
                             <div class="col-12">
@@ -44,7 +44,7 @@
                     </div>
                 </a>
 
-                <a href="./single-post.php">    
+                <a href="./single-blog.php">    
                     <div class="row single-post">
                         <div class="row justify-content-around">
                             <div class="col-12">
@@ -63,7 +63,7 @@
                     </div>
                 </a>
                 
-                <a href="./single-post.php">    
+                <a href="./single-blog.php">    
                     <div class="row single-post">
                         <div class="row justify-content-around">
                             <div class="col-12">
@@ -82,7 +82,7 @@
                     </div>
                 </a>
 
-                <a href="./single-post.php">    
+                <a href="./single-blog.php">    
                     <div class="row single-post">
                         <div class="row justify-content-around">
                             <div class="col-12">
