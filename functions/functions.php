@@ -161,20 +161,29 @@
         $tmpEmail = Escape($email);
         $tmpPassword = Escape($password);
         $hashed_password = md5($tmpPassword);
-        $img_location = null;
-        //$time = microtime();
-        //$validation_code = md5($tmpUsername.$time);
+        
+        //Kodi per ruajtje imazhi lokalisht ne server, dhe paraqitja e lokacionit ne databaze
+        // $img_location = null;
+        // //$time = microtime();
+        // //$validation_code = md5($tmpUsername.$time);
 
-        if($_FILES['img']['name'] != ''){
-            $tmp = explode(".", $_FILES['img']['name']);
-            $ext = end($tmp);
-            $name = basename($_FILES['img']['name']);
-            $img_location = 'profile_picture/' . $name;
-            if(move_uploaded_file($_FILES['img']['tmp_name'], $img_location)){
-                //die("U uploadua!");
-            }else{
-                $img_location = null;
-            }
+        // if($_FILES['img']['name'] != ''){
+        //     $tmp = explode(".", $_FILES['img']['name']);
+        //     $ext = end($tmp);
+        //     $name = basename($_FILES['img']['name']);
+        //     $img_location = 'profile_picture/' . $name;
+        //     if(move_uploaded_file($_FILES['img']['tmp_name'], $img_location)){
+        //         //die("U uploadua!");
+        //     }else{
+        //         $img_location = null;
+        //     }
+        // }
+
+        //Ruajtja e imazhit si blob
+        $img = null;
+
+        if(is_uploaded_file($_FILES['img']['tmp_name'] != '')){
+            $img = addslashes(file_get_contents($_FILES['img']['tmp_name']));
         }
 
         global $connect;
@@ -186,7 +195,7 @@
             $tmpDate = date("Y-m-d", strtotime($birthdate));
 
             //Me pas bej shtimin e rekordit ne tabelen e profilit
-            $sql2 = "insert into Profil (userId, emer, mbiemer, datelindja, foto, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$tmpDate','$img_location' , '$phonenumber', '$city')";
+            $sql2 = "insert into Profil (userId, emer, mbiemer, datelindja, foto, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$tmpDate','$img' , '$phonenumber', '$city')";
             if(mysqli_query($connect, $sql2)){
                 return true;
             }else{
