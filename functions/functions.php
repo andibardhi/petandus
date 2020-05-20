@@ -161,21 +161,32 @@
         $tmpEmail = Escape($email);
         $tmpPassword = Escape($password);
         $hashed_password = md5($tmpPassword);
+        $img_location = null;
         //$time = microtime();
         //$validation_code = md5($tmpUsername.$time);
+
+        if($_FILES['img']['name'] != ''){
+            $tmp = explode(".", $_FILES['img']['name']);
+            $ext = end($tmp);
+            $name = basename($_FILES['img']['name']);
+            $img_location = 'profile_picture/' . $name;
+            if(move_uploaded_file($_FILES['img']['tmp_name'], $img_location)){
+                //die("U uploadua!");
+            }else{
+                $img_location = null;
+            }
+        }
 
         global $connect;
         $sql = "insert into User (username, email, password) values ('$tmpUsername', '$tmpEmail', '$hashed_password')";
         if(mysqli_query($connect, $sql)){
             //Ruaj id e shtuar se fundmi ne tabelen e user-ave ne databaze
             $last_id = mysqli_insert_id($connect);
-            
-            $birthyear = (int)substr($birthdate, 0, 4);
-            $year = (int)(new DateTime)->format("Y");
-            $age = $year - $birthyear;
+
+            $tmpDate = date("Y-m-d", strtotime($birthdate));
 
             //Me pas bej shtimin e rekordit ne tabelen e profilit
-            $sql2 = "insert into Profil (userId, emer, mbiemer, mosha, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$age', '$phonenumber', '$city')";
+            $sql2 = "insert into Profil (userId, emer, mbiemer, datelindja, foto, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$tmpDate','$img_location' , '$phonenumber', '$city')";
             if(mysqli_query($connect, $sql2)){
                 return true;
             }else{
@@ -274,12 +285,14 @@
         if($row=fetch_data($result)){
             //We get the record from database because we need to compare passwords
             $record_pass = $row['password'];
+            $user_role = $row['role'];
             if(md5($password) == $record_pass){
                 if($remember_me == true){
                     //We store the cookie for 1 day
                     setcookie('username', $username, time() + 86400);
                 }
                 $_SESSION['username'] = $username;
+                $_SESSION['role'] = $user_role;
                 return true;
             }else{
                 return false;
@@ -388,7 +401,7 @@
                 $email = strtolower(clean($_POST['email']));
                 $animal = clean($_POST['animal']);
                 $category = clean($_POST['category']);
-    
+
                 date_default_timezone_set("Europe/Tirane");
                 $time = date("Y-m-d H:i:s");
     
@@ -417,17 +430,24 @@
                 if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
                     $errors[] = "Email jo i saktë!";
                 }
+
+                $allowed = array('jpeg', 'png', 'jpg');
+                $filename = $_FILES['image']['name'][0];
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                if (!in_array($ext, $allowed)) {
+                    $errors[] = "Format jo i duhur i fotos!";
+                }
                 
                 if(!empty($errors)){
                     foreach($errors as $error){
-                        echo '<div class="alert alert-danger">'. $error .'</div>';
+                        header('HTTP/1.1 500 Internal Server Error');
+                        echo $error;
                     }
                 }else{
                     // Post registration
                     if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
-                        sleep(3);
-                        redirect('posts.php');
                     }else{
+
                     }
                 }
             }
@@ -443,12 +463,13 @@
         $animalID = $all_id['animalID'];
         $categoryID = $all_id['categoryID'];
 
+        // Ruajtja e te dhenave
         $sql = "insert into Post (titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email) values ('". $title. "','" . $description . "','" . $time . "','" . $userID . "','" . $categoryID . "','" . $animalID . "','" . $cityID . "','" . $phonenumber . "','" . $email . "')";
         $result = query($sql);
         confirm($result);
 
+        // Ruajtja e fotos
         $postID = getpostID($userID, $time);
-        
         save_photo($postID);
 
         return true;
@@ -604,7 +625,7 @@
         confirm($result);
 
         $row = mysqli_fetch_all($result);
-        
+
         for ($i = 0; $i < row_count($result); $i++){
             $usname = getUserName($row[$i][4]);
             $cgname = getCategoryName($row[$i][5]);
@@ -684,6 +705,41 @@
         return $imgs;
     }
 
+    function getUserIDbyUsername(){
+        $username = $_SESSION['username'];
+        $sql = "SELECT id  FROM `user` where username = '$username'";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0][0];
+    }
+
+    function getDataFromProfile(){
+        $id = getUserIDbyUsername();
+        $sql = "SELECT *  FROM `profil` where userid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0];
+    }
+    function getDataFromUser(){
+        $id = getUserIDbyUsername();
+        $sql = "SELECT * FROM `user` WHERE id =  $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0];
+    }
+
+    function getUserPosts(){
+        $id = getUserIDbyUsername();
+        $sql = "SELECT * FROM `post` WHERE autorid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row;
+    }
+    
     function getfiltersID($sql1){
 
         if(!empty($_GET)){
@@ -755,7 +811,7 @@
             Email:&nbsp;<a href='mailto:email@example.com'>" . $email . "</a>
             </div>
             <div class='row phone'>
-             <span>" . $tel . "</span>
+             <span>Telefon: " . $tel . "</span>
             </div>
             <div class='row categories'>
                 <div class='col-4 category'>" . $ctgr . "</div>
@@ -764,7 +820,6 @@
             </div>
         </div>
         ";
-
     }
 
     function get_data_byID($id){
@@ -808,4 +863,74 @@
         return $img;
     }
 
+    /////////////////////////////////////////////////////////////////////
+    //*-------------- Profile page functions-------------------*//
+    ////////////////////////////////////////////////////////////////////
+
+    function whatdataIS($message, $data){
+        
+        echo("<h6>".$message." - >  ".var_dump($data)."</h6>");
+        exit();
+    }
+    function updateProfile(){
+        // var_dump("Para se Klikuam Submit!!!");
+        //     exit();
+        // $firstname = $_REQUEST['firstname'];
+        // $lastname = $_REQUEST['lastname'];
+        // $birthdate = $_REQUEST['birthday'];
+        // $phone = $_REQUEST['phone'];
+        // $city = $_REQUEST['city'];
+        // $email = $_REQUEST['email'];
+        // var_dump('firstname ->'.$firstname);
+        // var_dump('lastname ->'.$lastname);
+        // var_dump('birthdate->'.$birthdate);
+        // var_dump('phone ->'.$phone);
+        // var_dump('city ->'.$city);
+        // var_dump('email ->'.$email);
+
+        if(isset($_REQUEST['submitEditProfile'])){
+            // var_dump("Klikuam Submit!!!");
+            // exit();
+  
+            $firstname = $_REQUEST['firstname'];
+            $lname = $_REQUEST['lastname'];
+            $birthdate = $_REQUEST['birthday'];
+            $phone = $_REQUEST['phone'];
+            $city = $_REQUEST['city'];
+            $email = $_REQUEST['email'];
+     
+
+            $password = md5($_REQUEST['pasword']);
+            updateProfiledata($firstname, $lname, $phone, $birthdate, $city );
+            updataUserData($password, $email);
+            //To be completed with profile image update
+            
+        }
+    }
+
+    function updateProfiledata($name, $lastName, $phone, $birthdate, $city ){
+        
+        $id = getUserIDbyUsername();
+        $sql = "UPDATE profil
+         SET
+            emer = '$name',
+            mbiemer = '$lastName',
+            mosha='$birthdate',
+            nrtel= '$phone',
+            qyteti= '$city'
+         WHERE 
+            userid = $id";
+        confirm(query($sql));
+    }
+
+    function updataUserData($passw, $email){
+        $id = getUserIDbyUsername();
+        $sql = "UPDATE user
+         SET
+             email = '$email',
+             password = '$passw'
+         WHERE 
+            id = $id "; 
+        confirm(query($sql));
+    }
 ?>
