@@ -13,17 +13,17 @@ CREATE TABLE `Profil` (
 	`userId` INT NOT NULL,
 	`emer` varchar(30) NOT NULL,
 	`mbiemer` varchar(30) NOT NULL,
-	`mosha` INT NOT NULL,
-	`foto` varchar(255) NOT NULL,
-	`nrtel` INT NOT NULL,
+	`datelindja` DATE NOT NULL,
+	`foto` varchar(255),
+	`nrtel` varchar(13) NOT NULL,
 	`qyteti` varchar(20) NOT NULL,
 	PRIMARY KEY (`userId`)
 );
 
 CREATE TABLE `Post` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`titull` varchar(30) NOT NULL,
-	`pershkrim` varchar(255) NOT NULL,
+	`titull` varchar(255) NOT NULL,
+	`pershkrim` text NOT NULL,
 	`foto` mediumblob,
 	`data` DATETIME NOT NULL,
 	`autorId` INT NOT NULL,
@@ -37,8 +37,8 @@ CREATE TABLE `Post` (
 
 CREATE TABLE `Blog` (
 	`id` INT NOT NULL AUTO_INCREMENT,
-	`titull` varchar(50) NOT NULL,
-	`pershkrim` varchar(255) NOT NULL,
+	`titull` varchar(255) NOT NULL,
+	`pershkrim` text NOT NULL,
 	`foto` varchar(255) NOT NULL,
 	`data` DATETIME NOT NULL,
 	`nrtel` INT NOT NULL,

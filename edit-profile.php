@@ -21,8 +21,11 @@
     $profileData = getDataFromProfile();
     $userData = getDataFromUser();
     updateProfile();
+    $data = getDataByName( "id" , "kategori" ,"Tirane"); 
+    var_dump($data);
+    exit();
     ?>
-    <br>
+    <br>n 
     <div class="container">
                 <form class="form" id="editProfile" method="POST">
                     <h1>Modifikoni profilin</h1>

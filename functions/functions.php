@@ -44,7 +44,7 @@
             $lastname = clean($_POST['lastname']);
             $birthdate = clean($_POST['birthdate']);
             $phonenumber = clean($_POST['phonenumber']);
-            $city = (int)$_POST['city'];
+            $city = clean($_POST['city']);
             $username = clean($_POST['username']);
             $email = strtolower(clean($_POST['email']));
             $password = clean($_POST['password']);
@@ -112,10 +112,12 @@
             }
             else{
                 //We register the user because no error was found completing the form
-                if(user_registration($username, $email, $password)){
+                if(user_registration($firstname, $lastname, $birthdate, $phonenumber, $city, $username, $email, $password)){
                     //If registration succesful redirect the user
                     //echo('<p class="text-success text-center">U regjistruat me sukses.Kontrolloni email për aktivizim!</p>');
-                    echo('<p class="text-success text-center">U regjistruat me sukses.</p>');
+                    // echo('<p class="text-success text-center">U regjistruat me sukses.</p>');
+                    set_message('<p class="text-success text-center">Regjistrimi përfundoi. Mund të kyçeni në sistem.</p>');
+                    redirect("login.php");
                 }else{
                     echo('<p class="text-danger text-center">Ndodhi një gabim. Ju lutem provoni përsëri!/p>');  
                 }
@@ -152,26 +154,51 @@
     }
 
     //Registering the user in system
-    function user_registration($username, $email, $password){
+    function user_registration($firstname, $lastname, $birthdate, $phonenumber, $city, $username, $email, $password){
+        $tmpFirstname = Escape($firstname);
+        $tmpLastname = Escape($lastname);
         $tmpUsername = Escape($username);
         $tmpEmail = Escape($email);
         $tmpPassword = Escape($password);
-
         $hashed_password = md5($tmpPassword);
+        $img_location = null;
         //$time = microtime();
         //$validation_code = md5($tmpUsername.$time);
 
-        //$sql = "insert into user (username, email, password, validation_code) values ('$username', '$email', '$hashed_password', '$validation_code')";
-        $sql = "insert into User (username, email, password) values ('$username', '$email', '$hashed_password')";
-        $result = query($sql);
-        confirm($result);
-        
-        set_message('<p class="text-success text-center">Regjistrimi përfundoi. Mund të kyçeni në sistem.</p>');
-        redirect("login.php");
+        if($_FILES['img']['name'] != ''){
+            $tmp = explode(".", $_FILES['img']['name']);
+            $ext = end($tmp);
+            $name = basename($_FILES['img']['name']);
+            $img_location = 'profile_picture/' . $name;
+            if(move_uploaded_file($_FILES['img']['tmp_name'], $img_location)){
+                //die("U uploadua!");
+            }else{
+                $img_location = null;
+            }
+        }
+
+        global $connect;
+        $sql = "insert into User (username, email, password) values ('$tmpUsername', '$tmpEmail', '$hashed_password')";
+        if(mysqli_query($connect, $sql)){
+            //Ruaj id e shtuar se fundmi ne tabelen e user-ave ne databaze
+            $last_id = mysqli_insert_id($connect);
+
+            $tmpDate = date("Y-m-d", strtotime($birthdate));
+
+            //Me pas bej shtimin e rekordit ne tabelen e profilit
+            $sql2 = "insert into Profil (userId, emer, mbiemer, datelindja, foto, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$tmpDate','$img_location' , '$phonenumber', '$city')";
+            if(mysqli_query($connect, $sql2)){
+                return true;
+            }else{
+                return false;
+            }
+        } 
+        else {
+            //Ndodh error
+            return false;
+        }
         //Send account activation email
         //send_activation_email($tmpEmail, $validation_code);
-
-        return true;
     }
 
     //Sending email activation link to the user function
@@ -258,12 +285,14 @@
         if($row=fetch_data($result)){
             //We get the record from database because we need to compare passwords
             $record_pass = $row['password'];
+            $user_role = $row['role'];
             if(md5($password) == $record_pass){
                 if($remember_me == true){
                     //We store the cookie for 1 day
                     setcookie('username', $username, time() + 86400);
                 }
                 $_SESSION['username'] = $username;
+                $_SESSION['role'] = $user_role;
                 return true;
             }else{
                 return false;
@@ -391,13 +420,17 @@
                 }
     
                 if(strlen($description) > $desc_max_char){
-                    $errors[] = "Ju lutem vendosni përshkrimin me më pak se 200 gërma!";
+                    $errors[] = "Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
                 }
     
                 if(strlen($description) < $desc_min_char){
                     $errors[] = "Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
                 }
-    
+
+                if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                    $errors[] = "Email jo i saktë!";
+                }
+                
                 if(!empty($errors)){
                     foreach($errors as $error){
                         echo '<div class="alert alert-danger">'. $error .'</div>';
@@ -405,12 +438,9 @@
                 }else{
                     // Post registration
                     if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
-                        echo 'success';
-                        set_message('<p class="text-success text-center">Postimi u krijua me sukses.</p>');
                         sleep(3);
                         redirect('posts.php');
                     }else{
-                        echo('<p class="text-danger text-center">Ndodhi një gabim. Ju lutem provoni përsëri!/p>');
                     }
                 }
             }
@@ -428,6 +458,7 @@
 
         $sql = "insert into Post (titull, pershkrim, data, autorID, kategoriID, kafshaID, qytetiID, nrtel, email) values ('". $title. "','" . $description . "','" . $time . "','" . $userID . "','" . $categoryID . "','" . $animalID . "','" . $cityID . "','" . $phonenumber . "','" . $email . "')";
         $result = query($sql);
+        confirm($result);
 
         $postID = getpostID($userID, $time);
         
@@ -443,6 +474,7 @@
         // UserID
         $sql = "select id from User where username='" . $username . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $userID = $row['id'];
 
@@ -450,6 +482,7 @@
 
         $sql = "select id from Qytet where emer='" . $city . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $cityID = $row['id'];
 
@@ -457,6 +490,7 @@
 
         $sql = "select id from Kafshe where emer='" . $animal . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $animalID = $row['id'];
 
@@ -464,6 +498,7 @@
 
         $sql = "select id from Kategori where emer='" . $category . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $categoryID = $row['id'];
 
@@ -472,20 +507,19 @@
 
     function save_photo($postID){
 
-        if(count($_FILES["image"]["tmp_name"]) > 0){
-            for($count = 0; $count < count($_FILES["image"]["tmp_name"]); $count++){
-                $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][$count]));
-                $sql = "update Post set foto='" . $image_file . "' where id='" . $postID . "'";
-                $result = query($sql);
-                confirm($result);
-            }
-        }
+        $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
+        // var_dump($image_file);
+        // exit();
+        $sql = "update Post set foto='" . $image_file . "' where id='" . $postID . "'";
+        $result = query($sql);
+        confirm($result);
     }
 
     function getpostID($userID, $time){
 
         $sql = "select id from Post where autorID='" . $userID . "' and data='" . $time . "'";
         $result = query($sql);
+        confirm($result);
         $row = fetch_data($result);
         $postID = $row['id'];
 
@@ -502,8 +536,8 @@
             $data = filtering_data();
             $imgs = filtering_photo();    
         }else{
-            $data = retrieve_data(5);
-            $imgs = retrieve_photo(5);
+            $data = retrieve_data(6);
+            $imgs = retrieve_photo(6);
         }
 
         for($i = 0; $i < count($data); $i++){
@@ -521,18 +555,18 @@
             $info = $date . " | " . $user . " | " . $ctgr . " | " . $anim . " | " . $city;
 
             echo "
-            <a href='./single-post.php?id=" . $data[$i][0] . "' id='post'>      
+            <a href='./single-post.php?id=" . $id . "' id='post'>      
                 <div class='row single-post'>
-                    <title class='row' id='title'>" . $data[$i][1] . "</title>
+                    <title class='row' id='title'>" . $title . "</title>
                     <div class='row justify-content-around'>
                         <div class='col-5 img'>
-                            <img src='data:image/jpeg;base64, " . $imgs[$i] . "' alt='post_photo'>
+                            <img src='data:image/jpeg;base64, " . $img . "' alt='post_photo'>
                         </div>
                         <div class='col-7 description'>
-                            <span id='desc'>" . $data[$i][2] . "</span>
+                            <span id='desc'>" . $desc . "</span>
                         </div>
                         <div class='row info'>
-                        <span id='info'>" . $data[$i][3] . " | " . $data[$i][4] ." | " . $data[$i][5] ." | " . $data[$i][7] . "</span>
+                        <span id='info'>" . $info . "</span>
                         </div>
                     </div>
                 </div>
@@ -820,34 +854,15 @@
         echo("<h6>".$message." - >  ".var_dump($data)."</h6>");
         exit();
     }
-    function updateProfile(){
-        // var_dump("Para se Klikuam Submit!!!");
-        //     exit();
-        // $firstname = $_REQUEST['firstname'];
-        // $lastname = $_REQUEST['lastname'];
-        // $birthdate = $_REQUEST['birthday'];
-        // $phone = $_REQUEST['phone'];
-        // $city = $_REQUEST['city'];
-        // $email = $_REQUEST['email'];
-        // var_dump('firstname ->'.$firstname);
-        // var_dump('lastname ->'.$lastname);
-        // var_dump('birthdate->'.$birthdate);
-        // var_dump('phone ->'.$phone);
-        // var_dump('city ->'.$city);
-        // var_dump('email ->'.$email);
 
+    function updateProfile(){
         if(isset($_REQUEST['submitEditProfile'])){
-            // var_dump("Klikuam Submit!!!");
-            // exit();
-  
             $firstname = $_REQUEST['firstname'];
             $lname = $_REQUEST['lastname'];
             $birthdate = $_REQUEST['birthday'];
             $phone = $_REQUEST['phone'];
             $city = $_REQUEST['city'];
             $email = $_REQUEST['email'];
-     
-
             $password = md5($_REQUEST['pasword']);
             updateProfiledata($firstname, $lname, $phone, $birthdate, $city );
             updataUserData($password, $email);
@@ -881,4 +896,126 @@
             id = $id "; 
         confirm(query($sql));
     }
+
+    function displayPostImage($imageType,$data, $cssClass){
+        echo '<img class="'.$cssClass.'" src="data:'.$imageTypeS.';base64,"'.$data.'">';
+    }
+
+    function getPost(){
+        $userId = $_GET['userId'];
+        $postID = $_GET['postid'];
+        $sql = "SELECT * FROM `post` WHERE autorid = $userId AND id =$postID";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0];
+    }
+    
+    function getEmerById($id, $tableName){
+        $sql = "SELECT emer FROM `$tableName`";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+
+        return $row;
+    }
+
+    function getDataById($id, $tableName, $data){
+
+        $sql = "SELECT $data FROM `$tableName` WHERE id = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        
+        return $row;
+    }
+
+    function getAllData($data , $tableName){
+        $sql = "SELECT $data FROM `$tableName`";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        
+        return $row;
+    }
+
+    function printList($array){
+        foreach($array as $data){
+            
+            $i = 0;
+            
+            echo '<option value="'.$data[$i].'">'.$data[$i].'</option>';
+            $i++;
+        }
+    }
+
+    function getDataByName($name, $tableName, $data){
+
+        $sql = "SELECT $data FROM `$tableName` WHERE emer LIKE '$name'";
+        // var_dump($sql);
+        // exit();
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        // var_dump($row);
+        // exit();
+        return $row[0][0];
+        
+    }
+
+
+
+    function updatePost(){
+        
+        // if(isset($_REQUEST['editPost'])){
+            // ini_set("display_errors", 0);
+        if(isset($_REQUEST['editPost'])){
+            $title = $_REQUEST['title'];
+            $description = $_REQUEST['description'];
+            // $image = $_REQUEST['image'];
+            $email = $_REQUEST['email'];
+            $phone = $_REQUEST['phonenumber'];
+            $qyteti =$_REQUEST['city'];
+            $city = getDataByName($qyteti, "qytet",  "id");
+            $category = getDataByName( $_REQUEST['category'],  "kategori","id");
+            $animal =getDataByName($_REQUEST['animal'], "kafshe", "id" ); 
+            $data = date('m/d/Y');
+            $userId = $_GET['userId'];
+            $postID = $_GET['postid'];
+
+            
+            
+            // var_dump($title); echo("<--title <br>");
+            // var_dump($description); echo("<--description <br>");
+            // var_dump($email); echo("<--email <br>");
+            // var_dump($phone); echo("<--phone <br>");
+            // var_dump($city); echo("<--city <br>");
+            // var_dump($category); echo("<-- cat<br>");
+            // var_dump($animal); echo("<--animal <br>");
+            // var_dump($data); echo("<-- data <br>");
+            $sql = 
+            " UPDATE post
+                SET 
+               
+                titull = '$title',
+                pershkrim= '$description',
+                data= $data,
+                autorId= $userId,
+                kategoriId= $category,
+                kafshaId= $animal,
+                qytetiId= $city,
+                nrtel= '$phone',
+                email= '$email'
+
+                WHERE id= $postID";
+                // var_dump($sql);
+                // exit();
+
+            confirm(query($sql));
+            save_photo($postID);
+            return $row[0];
+        }
+
+    }
+
 ?>

@@ -21,13 +21,9 @@
     include_once('functions/config.php'); 
     $data = getUserPosts();
     $profileData = getDataFromProfile();
-    $userData = getDataFromUser();
-    // echo("Profile Data ->  ");
     // var_dump($profileData);
-    // echo("<br>");
-    // echo("User Data ->  ");
-    // var_dump($userData);
-    // exit();
+    $userData = getDataFromUser();
+     
     ?>
     <br>
     <div class="container">
@@ -43,16 +39,19 @@
                 <div class="row justify-content-center">
                     <div class="col personal-info">
                         <div class="row justify-content-center">
-                            <a href="./edit-profile.php?userid=<?php echo $profileData[0]?>" class="fa fa-edit edit-icon" style="text-decoration: none;"></a>
                             <h6 class="text-center">Te dhenat personale</h6>
                         </div>
                         <div class="row">
                             <ul>
                                 <li><?php echo $userData[2];?></li>
-                                <li><?php echo $userData[3].' vjec'?></li>
+                                <li><?php echo $profileData[5].' vjec'?></li>
                                 <li><?php echo $userData[5]?></li>
                                 <li><?php echo $userData[6]?></li>
+                                <li>
+                                    <a href="./edit-profile.php?userid=<?php echo $profileData[0]?>" class="btn  fa fa-edit edit-icon" style="text-decoration: none;">Modifiko Profilin</a>
+                                </li>
                             </ul>
+
                         </div>
                     </div>
                 </div>
@@ -60,19 +59,19 @@
 
             <div class="col-md-8">
             <a href="./new-post.php" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post </a>
-            
                 <div class="row justify-content-center">
-                    
                     <?php
-                       
                     if(count($data)>0){
-
                         foreach ($data as $postValue){
                             $title = $postValue[1];
                             $description = $postValue[2];
                             $postId = $postValue[0];
                             $modifikoPostin = "Modifiko Postimin";
-                          
+                            $finfo    = new finfo(FILEINFO_MIME);
+                            $mimeType = $finfo->buffer($postValue[3]);
+                            $imageType = strstr($mimeType, ';', true);
+                            $img = get_photo_byID($postId);
+                            $image = $img[0];
                         ?>
                             <a href="./single-post.php?id=<?php echo $postId?>"> 
                                 <div class="row single-post">
@@ -82,11 +81,12 @@
                                         <?php echo $description?>
                                         </div>
                                         <div class="col-5">
-                                            <img src="./img/profile-dog.jpg">
+                                            <!-- <img src="getImage.php?id=<?php echo $postId?>" class="img-responsive" /> -->
+                                            <img src="data:<?php echo $imageType?>;base64, <?php echo $image ?>" alt='post_photo'>
                                         </div>
                                     </div>
                                     <div class="row">
-                                        <a href="./single-post.php?id=<?php echo $postId?>">
+                                        <a href="./edit-post.php?postid=<?php echo $postId.'&userId='.$userData[0]?>">
                                             <button class="btn edit-post"> <?php echo $modifikoPostin?> </button>
                                         </a>
                                     </div>

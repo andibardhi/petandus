@@ -41,6 +41,8 @@
               <input type="text" name="email" id="email"  placeholder="Email">
               <input type="password" name="password" id="password" placeholder="Fjalëkalimi">
               <input type="password" name="cpassword" id="cpassword" name="cpassword" placeholder="Konfirmim Fjalëkalimi">
+              <input type="file" name="profile_image" id="profile_image" placeholder="Ngarkoni foton tuaj">
+              <span id="uploaded_image"></span>
               <button id="btn"> Regjistrohu </button> 
               <label> Keni nje llogari? <a href="./login.php">Login!</a> </label> 
           </div>
@@ -50,6 +52,24 @@
 
     <script>
         $(document).ready(function () {
+            var img_errors = [];
+            $("#profile_image").change(function(){
+                img_errors = [];
+                var img = document.getElementById("profile_image").files[0];
+                var img_name = img.name;
+                var img_size = img.size;
+                var img_extension = img_name.split(".").pop().toLowerCase();
+                if($.inArray(img_extension, ['gif', 'png', 'jpg', 'jpeg']) == -1){
+                    img_errors.push("Imazhi duhet format .png, .jpg ose .gif!");
+                    alert(img_errors);
+                }
+                //Madhesia me shume se 2.5mb
+                if(img_size > 2500000){
+                    img_errors.push("Imazhi nuk lejohet më tepër se 2.5mb!");
+                    alert(img_errors);
+                }
+            });
+
             $("#btn").click(function () {
                 var firstname = $('#firstname').val();
                 var lastname = $('#lastname').val();
@@ -62,9 +82,11 @@
                 var cpassword = $('#cpassword').val();
                 var max_char = 25;
                 var min_char = 3;
-                var errors = "";
                 var count = 0;
-                
+                var errors = "";
+                //Variabli ku ruhet imazhi
+                var img = document.getElementById("profile_image").files[0];
+
                 if(firstname.length > max_char){
                   errors+="<br>Ju lutem vendosni emrin me më pak se 25 gërma!";
                   count++;
@@ -121,7 +143,7 @@
 
 
                 if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword ) {
-                    $.post('register.php', { firstname: firstname,lastname: lastname,birthdate: birthdate,phonenumber: phonenumber,city: city, username: username, password: password, cpassword: cpassword, email: email }, 
+                    $.post('register.php', { firstname: firstname,lastname: lastname,birthdate: birthdate,phonenumber: phonenumber,city: city, username: username, password: password, cpassword: cpassword, email: email, img: img },
                      (data,response) => {
                         if(data.slice(0, 600).includes("success")){
                             window.location.href="login.php";
