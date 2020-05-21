@@ -182,9 +182,7 @@
         //Ruajtja e imazhit si blob
         $img = null;
 
-        if(is_uploaded_file($_FILES['img']['tmp_name'] != '')){
-            $img = addslashes(file_get_contents($_FILES['img']['tmp_name']));
-        }
+        $img = addslashes(file_get_contents($_FILES['img']['tmp_name']));
 
         global $connect;
         $sql = "insert into User (username, email, password) values ('$tmpUsername', '$tmpEmail', '$hashed_password')";
@@ -195,7 +193,7 @@
             $tmpDate = date("Y-m-d", strtotime($birthdate));
 
             //Me pas bej shtimin e rekordit ne tabelen e profilit
-            $sql2 = "insert into Profil (userId, emer, mbiemer, datelindja, foto, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$tmpDate','$img' , '$phonenumber', '$city')";
+            $sql2 = "insert into Profil (userId, emer, mbiemer, datelindja, foto, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$tmpDate', '$img' , '$phonenumber', '$city')";
             if(mysqli_query($connect, $sql2)){
                 return true;
             }else{
