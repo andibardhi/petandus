@@ -21,9 +21,7 @@
     $profileData = getDataFromProfile();
     $userData = getDataFromUser();
     updateProfile();
-    $data = getDataByName( "id" , "kategori" ,"Tirane"); 
-    var_dump($data);
-    exit();
+  
     ?>
     <br>n 
     <div class="container">
