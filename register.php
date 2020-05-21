@@ -24,7 +24,8 @@
     <div class="alert alert-danger text-center" id="error" style="visibility: hidden;"></div>
     <div class="row align-items-center justify-content-center h-100">
       <div class="col-6 mx-auto">
-          <div id="box" class="box" autocomplete="on" >
+          <div id="box" class="box"  >
+            <form id="form" autocomplete="on">
               <h1>Regjistrohu</h1>
               <input type="text" name="firstname" id="firstname" placeholder="Emri">
               <input type="text" name="lastname" id="lastname" placeholder="Mbiemri">
@@ -32,17 +33,18 @@
               <input type="text" name="phonenumber" id="phonenumber" placeholder="Numer telefoni">
               <select id="city" name="city" >
                   <option value="null" selected disabled > Qyteti </option>
-                  <option value="tirane">Tirane</option>
-                  <option value="durres">Durres</option>
-                  <option value="korce">Korce</option>
-                  <option value="vlore">Vlore</option>
+                  <option value="Dirane">Tirane</option>
+                  <option value="Durres">Durres</option>
+                  <option value="Korce">Korce</option>
+                  <option value="Vlore">Vlore</option>
               </select>
               <input type="text" name="username" id="username" placeholder="Username">
               <input type="text" name="email" id="email"  placeholder="Email">
               <input type="password" name="password" id="password" placeholder="Fjalëkalimi">
               <input type="password" name="cpassword" id="cpassword" name="cpassword" placeholder="Konfirmim Fjalëkalimi">
-              <input type="file" name="profile_image" id="profile_image" placeholder="Ngarkoni foton tuaj">
+              <input type="file" name="img" id="img" placeholder="Ngarkoni foton tuaj">
               <span id="uploaded_image"></span>
+              </form>
               <button id="btn"> Regjistrohu </button> 
               <label> Keni nje llogari? <a href="./login.php">Login!</a> </label> 
           </div>
@@ -85,7 +87,7 @@
                 var count = 0;
                 var errors = "";
                 //Variabli ku ruhet imazhi
-                var img = document.getElementById("profile_image").files[0];
+                var img = document.getElementById("img").files[0];
 
                 if(firstname.length > max_char){
                   errors+="<br>Ju lutem vendosni emrin me më pak se 25 gërma!";
@@ -139,21 +141,27 @@
                   errors+="<br>Email jo i saktë!";
                   count++;
                 }
-
-
+                var input = document.getElementById("img");
+                var formData = new FormData(document.getElementById("form"));
+                formData.append( 'img', input.files[0] );
 
                 if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword ) {
-                    $.post('register.php', { firstname: firstname,lastname: lastname,birthdate: birthdate,phonenumber: phonenumber,city: city, username: username, password: password, cpassword: cpassword, email: email, img: img },
-                     (data,response) => {
-                        if(data.slice(0, 600).includes("success")){
+                    $.ajax({
+                        method: 'POST',
+                        data: formData,
+                        contentType: false,
+                        cache: false,
+                        processData: false,
+                        success: function(r){
+                          if(r.slice(0, 600).includes("success")){
                             window.location.href="login.php";
                         }
                         else{
-                            if(data.slice(0, 600).includes('Username është në përdorim!')){
+                            if(r.slice(0, 600).includes('Username është në përdorim!')){
                               errors+="<br>Username është në përdorim!";
                               count++;
                             }
-                            if(data.slice(0, 600).includes('Email-i është në përdorim!')){
+                            if(r.slice(0, 600).includes('Email-i është në përdorim!')){
                               errors+="<br>Email-i është në përdorim!";
                               count++;
                             }
@@ -162,8 +170,12 @@
                             $('#box').css("top",count.toString()+"%");
                             $('#error').css("visibility", "visible");
                         }
-                    }
-                    );
+                        },
+                        error: function(r){
+                          $('#error').html(r);
+                          $('#error').css("visibility", "visible");
+                        }
+                    });
                 }
                 else{
                   count=(count*2)+48;
