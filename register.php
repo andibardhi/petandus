@@ -42,14 +42,11 @@
               <input type="text" name="email" id="email"  placeholder="Email">
               <input type="password" name="password" id="password" placeholder="Fjalëkalimi">
               <input type="password" name="cpassword" id="cpassword" name="cpassword" placeholder="Konfirmim Fjalëkalimi">
-<<<<<<< HEAD
               <input type="file" name="profile_image" id="profile_image" placeholder="Ngarkoni foton tuaj">
               <span id="uploaded_image"></span>
-=======
               <input type="file" name="img" id="img" placeholder="Ngarkoni foton tuaj">
               <span id="uploaded_image"></span>
               </form>
->>>>>>> master
               <button id="btn"> Regjistrohu </button> 
               <label> Keni nje llogari? <a href="./login.php">Login!</a> </label> 
           </div>
@@ -92,11 +89,8 @@
                 var count = 0;
                 var errors = "";
                 //Variabli ku ruhet imazhi
-<<<<<<< HEAD
                 var img = document.getElementById("profile_image").files[0];
-=======
                 var img = document.getElementById("img").files[0];
->>>>>>> master
 
                 if(firstname.length > max_char){
                   errors+="<br>Ju lutem vendosni emrin me më pak se 25 gërma!";
@@ -155,11 +149,9 @@
                 formData.append( 'img', input.files[0] );
 
                 if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword ) {
-<<<<<<< HEAD
                     $.post('register.php', { firstname: firstname,lastname: lastname,birthdate: birthdate,phonenumber: phonenumber,city: city, username: username, password: password, cpassword: cpassword, email: email, img: img },
                      (data,response) => {
                         if(data.slice(0, 600).includes("success")){
-=======
                     $.ajax({
                         method: 'POST',
                         data: formData,
@@ -168,7 +160,6 @@
                         processData: false,
                         success: function(r){
                           if(r.slice(0, 600).includes("success")){
->>>>>>> master
                             window.location.href="login.php";
                         }
                         else{
