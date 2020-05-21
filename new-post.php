@@ -102,18 +102,25 @@
             errors += "<br>Ju lutem vendosni titullin me më pak se 30 gërma!";
             count++;
           }
+
           if(title.length < min_char){
             errors += "<br>Ju lutem vendosni titullin me më shumë se 5 gërma!";
             count++;
           }
+
           if(description.length > desc_max_char){
             errors += "<br>Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
             count++;
           }
+
           if(description.length < desc_min_char){
             errors += "<br>Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
             count++;
           }
+<<<<<<< HEAD
+=======
+
+>>>>>>> master
           if(phonenumber.length > 12 || phonenumber.length < 10 || /^\d+$/.test(phonenumber) == false){
             errors += "<br>Ju lutem vendosni një numër telefoni të saktë!";
             count++;
@@ -136,6 +143,10 @@
 
             var formData = new FormData(document.getElementById("newpost"));
             formData.append('ajax', 1);
+<<<<<<< HEAD
+=======
+            // .val() => .text()
+>>>>>>> master
             formData.set('city', city);
             formData.set('animal', animal);
             formData.set('category', category);
@@ -147,6 +158,7 @@
                 cache: false,
                 processData: false,
                 success: function(r){
+<<<<<<< HEAD
                     console.log(r);
                     $('#success').html("Postimi u krijua me sukses");
                     $('#success').css("visibility", "visible");
@@ -157,6 +169,15 @@
                   $('#success').removeClass("alert alert-success text-center");
                   $('#success').addClass("alert alert-danger text-center");
                   $('#success').css("visibility", "visible");
+=======
+                    $('#success').html("Postimi u krijua me sukses");
+                    $('#success').css("visibility", "visible");
+                    window.location.replace("./posts.php");
+                },
+                error: function(r){
+                  $('#error').html(r);
+                  $('#error').css("visibility", "visible");
+>>>>>>> master
                 }
             });
           }

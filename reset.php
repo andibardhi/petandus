@@ -3,7 +3,7 @@
 <html lang="en" dir="ltr">
   <head>
     <meta charset="utf-8">
-    <title>َPet&Us Login</title>
+    <title>َPet&Us Reset</title>
     <link rel="stylesheet" href="css/style-login-register.css">
     
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
