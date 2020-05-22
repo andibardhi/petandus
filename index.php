@@ -78,8 +78,11 @@ include_once('./includes/navbar.php');
             
               <div class="card-body">
                 <div class="list-unstyled mt-3 mb-4 opacity">
-                <div class="text-centered" style="padding-left: 22px;"> Adoptim</div>
-                  <a href="http://localhost/petus/posts.php?category=adoptim"> <img src="./img/adopt.jpg" class="foto" ></a>
+                
+                <a href="http://localhost/petus/posts.php?category=adoptim">
+                  <div class="text-centered" style="padding-left: 22px;"> Adoptim</div>
+                  <img src="./img/adopt.jpg" class="foto" >
+                </a>
                 </div>
               </div>
             
@@ -87,17 +90,21 @@ include_once('./includes/navbar.php');
             
               <div class="card-body">
                 <div class="list-unstyled mt-3 mb-4 opacity">
-                  <div class="text-centered">Veteriner</div>
-                  <a href="http://localhost/petus/posts.php?category=veteriner"> <img src="./img/vet.jpg" class="foto"  ></a>
+                  
+                  <a href="http://localhost/petus/posts.php?category=veteriner"> 
+                    <div class="text-centered">Veteriner</div>
+                    <img src="./img/vet.jpg" class="foto"  >
+                  </a>
                 </div>
               </div>
             
 
               <div class="card-body">
                 <div class="list-unstyled mt-3 mb-4 opacity">
-                  <div class="text-centered" style="margin-left: 8px;">Pet-Sitting</div>
-                  <a href="http://localhost/petus/posts.php?category=pet+sitting"> <img src="./img/petsit.jpg" class="foto"  >
-                    
+                  
+                  <a href="http://localhost/petus/posts.php?category=pet+sitting"> 
+                    <div class="text-centered" style="margin-left: 8px;">Pet-Sitting</div>
+                    <img src="./img/petsit.jpg" class="foto" >
                   </a> 
 
                 </div>
