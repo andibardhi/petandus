@@ -30,8 +30,8 @@
             $id = $_POST['id'];
 
             $con = mysqli_connect("localhost","root","","petus");
-            $sql1 = "DELETE FROM USER WHERE id=$id";
-            $sql2 = "DELETE FROM PROFIL WHERE userId=$id";
+            $sql1 = "DELETE FROM PROFIL WHERE userId=$id";
+            $sql2 = "DELETE FROM USER WHERE id=$id";
             if ($con->query($sql1) === TRUE && $con->query($sql2)=== TRUE) {
                     echo "success";      
             } else {
