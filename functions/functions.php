@@ -161,21 +161,6 @@
         $tmpEmail = Escape($email);
         $tmpPassword = Escape($password);
         $hashed_password = md5($tmpPassword);
-        $img_location = null;
-        //$time = microtime();
-        //$validation_code = md5($tmpUsername.$time);
-
-        if($_FILES['img']['name'] != ''){
-            $tmp = explode(".", $_FILES['img']['name']);
-            $ext = end($tmp);
-            $name = basename($_FILES['img']['name']);
-            $img_location = 'profile_picture/' . $name;
-            if(move_uploaded_file($_FILES['img']['tmp_name'], $img_location)){
-                //die("U uploadua!");
-            }else{
-                $img_location = null;
-            }
-        }
         
         //Kodi per ruajtje imazhi lokalisht ne server, dhe paraqitja e lokacionit ne databaze
         // $img_location = null;
@@ -208,7 +193,6 @@
             $tmpDate = date("Y-m-d", strtotime($birthdate));
 
             //Me pas bej shtimin e rekordit ne tabelen e profilit
-            $sql2 = "insert into Profil (userId, emer, mbiemer, datelindja, foto, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$tmpDate','$img_location' , '$phonenumber', '$city')";
             $sql2 = "insert into Profil (userId, emer, mbiemer, datelindja, foto, nrtel, qyteti) values ('$last_id', '$tmpFirstname', '$tmpLastname', '$tmpDate', '$img' , '$phonenumber', '$city')";
             if(mysqli_query($connect, $sql2)){
                 return true;
@@ -469,8 +453,6 @@
                 }else{
                     // Post registration
                     if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
-                        sleep(3);
-                        redirect('posts.php');
                     }else{
 
                     }
@@ -539,8 +521,6 @@
     function save_photo($postID){
 
         $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
-        // var_dump($image_file);
-        // exit();
         $sql = "update Post set foto='" . $image_file . "' where id='" . $postID . "'";
         $result = query($sql);
         confirm($result);
@@ -899,15 +879,34 @@
         echo("<h6>".$message." - >  ".var_dump($data)."</h6>");
         exit();
     }
-
     function updateProfile(){
+        // var_dump("Para se Klikuam Submit!!!");
+        //     exit();
+        // $firstname = $_REQUEST['firstname'];
+        // $lastname = $_REQUEST['lastname'];
+        // $birthdate = $_REQUEST['birthday'];
+        // $phone = $_REQUEST['phone'];
+        // $city = $_REQUEST['city'];
+        // $email = $_REQUEST['email'];
+        // var_dump('firstname ->'.$firstname);
+        // var_dump('lastname ->'.$lastname);
+        // var_dump('birthdate->'.$birthdate);
+        // var_dump('phone ->'.$phone);
+        // var_dump('city ->'.$city);
+        // var_dump('email ->'.$email);
+
         if(isset($_REQUEST['submitEditProfile'])){
+            // var_dump("Klikuam Submit!!!");
+            // exit();
+  
             $firstname = $_REQUEST['firstname'];
             $lname = $_REQUEST['lastname'];
             $birthdate = $_REQUEST['birthday'];
             $phone = $_REQUEST['phone'];
             $city = $_REQUEST['city'];
             $email = $_REQUEST['email'];
+     
+
             $password = md5($_REQUEST['pasword']);
             updateProfiledata($firstname, $lname, $phone, $birthdate, $city );
             updataUserData($password, $email);
