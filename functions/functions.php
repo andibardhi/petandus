@@ -776,7 +776,7 @@
 
             $res = query("SELECT id FROM Kategori WHERE emer='". $_GET['category']."'");
             $category = mysqli_fetch_assoc($res);
-            $sql1 .= " kategoriId='" . $category['id'] . "'";
+            $sql1 .= "kategoriId='" . $category['id'] . "'";
         }
         
         return $sql1;

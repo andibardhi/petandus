@@ -22,8 +22,8 @@
         <!-- filer start -->
         <div class="container col-md-8" style="padding: 0px;">
             <form method="get"> 
-                <a href="./new-post.php" > <button type="button" class="btn" id="btncolor" style="background-color:#e45225; border-radius: 50px;  padding: 13px 15px; color: white"> <i class="fa fa-pencil" style="font-size:27px"></i> </button> </a>
-            <span class="txtformat" style="padding-left:150px;"> Shto filter: </span> 
+                <a href="./new-post.php" > <button type="button" class="btn" id="btncolor" style="background-color:#e45225; border-radius: 50px;  padding: 13px 15px; color: white"> Krijo post <i class="fa fa-pencil" style="font-size:27px"></i> </button> </a>
+            <span class="txtformat" style="padding-left: 4rem;"> Shto filter: </span> 
             <div class="btn-group">
                 <select id="btncolor" name="animal" id="animal">
                     <option value="null" selected disabled style=" display: none;">Kafsha</option>
@@ -48,7 +48,7 @@
                     <option value="null" selected disabled style=" display: none;">Kategoria</option>
                     <option value="adoptim" >Adoptim</option>
                     <option value="pet sitting">Pet sitting</option>
-                    <option value="veteriner">veteriner</option>
+                    <option value="veteriner">Veteriner</option>
                 </select>
             </div>
             <button type="submit" id="btncolor" class="btn" style="margin-left: 2%; background-color:#e45225; border-radius: 40px; color:white;">Shto</button>
