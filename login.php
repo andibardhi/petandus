@@ -19,6 +19,7 @@
         <div class="row align-items-center justify-content-center h-100">
         <div class="col-6 mx-auto">
         <div class="box" >
+        <a href="./index.php" class="logo"> PET&US </a>
             <h1>Login</h1>
             <input type="text" name="username" id="username" placeholder="Username">
             <div class="reveal-password">
