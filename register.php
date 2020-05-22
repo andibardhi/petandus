@@ -199,7 +199,7 @@
                 var formData = new FormData(document.getElementById("form"));
                 formData.append( 'img', input.files[0] );
 
-                if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword && city=="null" ) {
+                if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword && city!="null" ) {
                     $.ajax({
                         method: 'POST',
                         data: formData,
