@@ -1,7 +1,7 @@
 <?php include_once('functions/config.php'); ?>
 <?php 
   if (isset($_POST['ajax'])){
-    post_validation();
+    blog_validation();
     exit;
   }
 ?>
@@ -26,11 +26,11 @@
     <br>
     <div class="container">
     <div class="alert alert-danger text-center" id="error" style="visibility: hidden;"></div>
-      <form class="form" method="post" id="newpost" enctype="multipart/form-data">
+      <form class="form" method="post" id="newblog" enctype="multipart/form-data">
           <h1>Krijoni blog</h1>
-          <label for="title">Titull:</label>
+          <label for="title"></label>
           <input type="text" class="form-control" id="title" name="title">
-          <label for="description">Përshkrim:</label>
+          <label for="description"></label>
           <textarea id="description" name="description" rows="4" cols="50"></textarea><br><br>
           <div class="custom-file">
             <input type="file" class="custom-file-input" name="image[]" id="image" accept=".jpg, .png, .jpeg">
@@ -40,13 +40,94 @@
               <input type="button" class="btn btn-primary text-center" id="btn" value="Konfirmo"></button>
           </div>
           <br>
+          <div class="alert alert-success text-center" id="success" style="visibility: hidden;"></div>
       </form>
     </div>
 
+    <script>
 
-    <?php
-    include_once('./includes/footer.php');
-    ?>
+    $(document).ready(function () {
+
+      // Shfaqet emri i file ne box
+      $(".custom-file-input").on("change", function() {
+        var fileName = $(this).val().split("\\").pop();
+        $(this).siblings(".custom-file-label").addClass("selected").html(fileName);
+      });
+
+      $("#btn").click(function () {
+        var title = $('#title').val();
+        var description = $('#description').val();
+        var files_length = $('#image')[0].files.length;
+        var image = $('#image').val();
+        var min_char = 05;
+        var max_char = 30;
+        var desc_min_char = 005;
+        var desc_max_char = 2048;
+        var errors = "";
+        var count = 0;
+
+        if(title.length > max_char){
+          errors += "<br>Ju lutem vendosni titullin me më pak se 30 gërma!";
+          count++;
+        }
+
+        if(title.length < min_char){
+          errors += "<br>Ju lutem vendosni titullin me më shumë se 5 gërma!";
+          count++;
+        }
+
+        if(description.length > desc_max_char){
+          errors += "<br>Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
+          count++;
+        }
+
+        if(description.length < desc_min_char){
+          errors += "<br>Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
+          count++;
+        }
+
+        if(files_length == 0){
+          errors += "<br>Ju duhet të ngarkoni të paktën një foto";
+          count++;
+        }
+
+        if (title != "" && files_length != 0 && description != "" && count == 0){
+          
+          $('#error').css("visibility", "hidden");
+
+          var formData = new FormData(document.getElementById("newblog"));
+          formData.append('ajax', 1);
+
+          $.ajax({
+              method: 'POST',
+              data: formData,
+              contentType: false,
+              cache: false,
+              processData: false,
+              success: function(r){
+                  $('#success').html("Blogu u krijua me sukses");
+                  $('#success').css("visibility", "visible");
+                  window.location.replace("./blog.php");
+              },
+              error: function(r){
+                $('#error').html(r);
+                $('#error').css("visibility", "visible");
+              }
+          });
+        }
+        else{
+          count=(count*2)+48;
+          $('#error').html(errors.slice(4,errors.length));
+          $('#box').css("top",count.toString()+"%");
+          $('#error').css("visibility", "visible");
+        }
+      });
+    });
+
+</script>
+
+  <?php include_once('./includes/footer.php'); ?>
+
 </body>
 
 </html>

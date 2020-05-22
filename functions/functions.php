@@ -940,4 +940,232 @@
             id = $id "; 
         confirm(query($sql));
     }
+
+    /////////////////////////////////////////////////////////////////////
+    //*-------------------Single blog page functions------------------*//
+    ////////////////////////////////////////////////////////////////////
+
+    function build_single_blog($id){
+
+        $data = getBlogDataFromId($id);
+        $photo = getBlogPhotoFromId($id);
+
+        $id = $data[0][0];
+        $title = $data[0][1];
+        $desc = $data[0][2];
+        $image = $photo[0];
+        $date = substr($data[0][3], 0, 10);
+
+        echo "
+            <div class='row justify-content-center title'>
+                <span>" . $title . "</span>
+            </div>
+            <div class='row description'>
+                <span>" . $desc . "</span>
+            </div>
+            <br>
+            <div class='row justify-content-center'>
+                <img src='data:image/jpeg;base64, " . $image . "' alt='blog_photo'>
+            </div>
+            <div class='row categories'>
+                <div class='col-4 id'>#" . $id . "</div>
+                <div class='col-4 data'>" . $date . "</div>
+            </div>
+            ";
+    }
+
+    function getBlogDataFromId($id){
+        
+        $sql = "SELECT id, titull, pershkrim, data FROM Blog WHERE id = " . $id;
+
+        $result = query($sql);
+        
+        confirm($result);
+
+        $row = mysqli_fetch_all($result);
+
+        return $row;
+    }
+
+    function getBlogPhotoFromId($id){
+        
+        $sql = "SELECT foto FROM Blog WHERE id = " . $id;
+
+        $result = query($sql);
+
+        confirm($result);
+
+        $img = array();
+
+        while($d = mysqli_fetch_row($result)){
+            array_push($img, base64_encode($d[0]));
+        }
+
+        return $img;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    //*-----------------------Blog page functions--------------------*//
+    ////////////////////////////////////////////////////////////////////
+
+    function generate_blog($nr){
+
+        $data = get_blog_data($nr);
+        $imgs = get_blog_photo($nr);
+
+        for($i = 0; $i < count($data); $i++){
+
+            $id = $data[$i][0];
+            $title = $data[$i][1];
+            $desc = $data[$i][2];
+            $img = $imgs[$i];
+            $date = substr($data[$i][3], 0, 10);
+
+            echo "
+            <a href='./single-blog.php?id=" . $id . "'>    
+                <div class='row single-post'>
+                    <div class='row justify-content-around'>
+                        
+                        <div class='col-12'>
+                            <img src='data:image/jpeg;base64, " . $img . "' alt='blog_photo'>
+                        </div>
+                        <h3> <title class='row'>" . $title . "</title> </h3>
+                        <div class='col-12 description'>
+                            <span>" . $desc . "</span>
+                        </div>
+                        <div class='row info'>
+                            <span id='info'>" . $date . "</span>
+                        </div>
+                    </div>
+                </div>
+            </a>
+            ";
+        }
+    }
+
+    function get_blog_data($nr){
+
+        $sql = "SELECT id, titull, pershkrim, data FROM Blog ORDER BY id DESC LIMIT " . $nr;
+
+        $result = query($sql);
+
+        confirm($result);
+
+        $row = mysqli_fetch_all($result);
+
+        return $row;
+    }
+
+    function get_blog_photo($nr){
+        
+        $sql = "SELECT foto FROM Blog ORDER BY id DESC LIMIT " . $nr;
+
+        $result = query($sql);
+
+        confirm($result);
+
+        $imgs = array();
+
+        while($d = mysqli_fetch_row($result)){
+            array_push($imgs, base64_encode($d[0]));
+        }
+
+        return $imgs;
+    }
+
+    /////////////////////////////////////////////////////////////////////
+    //*-------------------Create blog page functions------------------*//
+    ////////////////////////////////////////////////////////////////////
+
+    function blog_validation(){
+
+        if($_SERVER['REQUEST_METHOD']=='POST'){
+            //Variable for storing errors
+            echo "Fotiiiii";
+            $errors = [];
+
+            $title = clean($_POST['title']);
+            $description = clean($_POST['description']);
+
+            date_default_timezone_set("Europe/Tirane");
+            $date = date("Y-m-d H:i:s");
+
+            $min_char = 05;
+            $max_char = 30;
+            $desc_min_char = 005;
+            $desc_max_char = 200;
+            $count = 0;
+
+            if(strlen($title) > $max_char){
+                $errors[] = "Ju lutem vendosni titullin me më pak se 30 gërma!";
+            }
+
+            if(strlen($title) < $min_char){
+                $errors[] = "Ju lutem vendosni titullin me më shumë se 5 gërma!";
+            }
+
+            if(strlen($description) > $desc_max_char){
+                $errors[] = "Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
+            }
+
+            if(strlen($description) < $desc_min_char){
+                $errors[] = "Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
+            }
+
+            $allowed = array('jpeg', 'png', 'jpg');
+            $filename = $_FILES['image']['name'][0];
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if (!in_array($ext, $allowed)) {
+                $errors[] = "Format jo i duhur i fotos!";
+            }
+            
+            if(!empty($errors)){
+                foreach($errors as $error){
+                    header('HTTP/1.1 500 Internal Server Error');
+                    echo $error;
+                }
+            }else{
+                // Post registration
+                if(create_blog($title, $description, $date)){
+
+                }else{
+
+                }
+            }
+        }
+    }
+
+    function create_blog($title, $description, $date){
+
+        // Ruajtja e te dhenave
+        $sql = "insert into Blog (titull, pershkrim, data) values ('". $title. "','" . $description . "','" . $date . "')";
+        $result = query($sql);
+        confirm($result);
+
+        // Ruajtja e fotos
+        $postID = getblogID($date);
+        save_blog_photo($postID);
+
+        return true;
+    }
+
+    function save_blog_photo($postID){
+
+        $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
+        $sql = "update Blog set foto='" . $image_file . "' where id='" . $postID . "'";
+        $result = query($sql);
+        confirm($result);
+    }
+
+    function getblogID($date){
+
+        $sql = "select id from Blog where data='" . $date . "'";
+        $result = query($sql);
+        confirm($result);
+        $row = fetch_data($result);
+        $postID = $row['id'];
+
+        return $postID;
+    }
+
 ?>
