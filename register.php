@@ -35,7 +35,7 @@
               <p for="phonenumber">*Numri duhet te filloj me 06</p>
               <select id="city" name="city" >
                   <option value="null" selected disabled > Qyteti </option>
-                  <option value="Dirane">Tirane</option>
+                  <option value="Tirane">Tirane</option>
                   <option value="Durres">Durres</option>
                   <option value="Korce">Korce</option>
                   <option value="Vlore">Vlore</option>
