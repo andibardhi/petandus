@@ -870,6 +870,7 @@
         return $img;
     }
 
+
     /////////////////////////////////////////////////////////////////////
     //*-------------- Profile page functions-------------------*//
     ////////////////////////////////////////////////////////////////////
@@ -1060,6 +1061,23 @@
             return $row[0];
         }
 
+    }
+
+    function get_profileImage($id){
+        $id= 
+        $sql = "SELECT foto FROM Post WHERE id=" . $id;
+
+        $result = query($sql);
+
+        confirm($result);
+
+        $img = array();
+
+        while($d = mysqli_fetch_row($result)){
+            array_push($img, base64_encode($d[0]));
+        }
+
+        return $img;
     }
 
 ?>

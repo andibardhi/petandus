@@ -1,5 +1,5 @@
-<!DOCTYPE html>
 <html lang="en" dir="ltr">
+<!DOCTYPE html>
 
 <head>
     <meta charset="utf-8">
@@ -18,19 +18,37 @@
 <body>
     <?php
     include_once('./includes/navbar.php');
-    include_once('functions/config.php'); 
+    include_once('functions/config.php');
+
     $data = getUserPosts();
     $profileData = getDataFromProfile();
-    // var_dump($profileData);
+    
+    $ffinfo    = new finfo(FILEINFO_MIME);
+    $mimeTypeP = $ffinfo->buffer($profileData[4]);
+    $imageTypeP = strstr($mimeTypeP, ';', true);
+
+
     $userData = getDataFromUser();
-     
+
+    $img = base64_encode($profileData[4]);
+    // $image = $img[0];
+    // var_dump($img);
+    // exit();
+    
+ 
+
     ?>
     <br>
     <div class="container">
         <div class="row justify-content-around" id="main">
             <div class="col-md-3">
                 <div class="row justify-content-center">
-                    <img class="rounded-circle profile-picture" src="./img/profile-picture.jpg" height="150" width="150">
+                <?php if($img != null){?>
+                    <img class="rounded-circle profile-picture img-fluid" src="data:<?php echo $imageTypeP?>;base64, <?php echo $img ?>" alt='post_photo'>
+                <?php }else{?>
+                    <img class="rounded-circle profile-picture img-fluid" src="./img/profile-picture.jpg" height="150" width="150">
+                <?php } ?>
+                
                 </div>
                 <div class="row justify-content-center">
                     <h4 class="text-center"><?php echo $profileData[1].' '. $profileData[2]?></h4>
@@ -43,12 +61,15 @@
                         </div>
                         <div class="row">
                             <ul>
-                                <li><?php echo $userData[2];?></li>
-                                <li><?php echo $profileData[5].' vjec'?></li>
+                                <li><i class="fa fa-envelope-o" aria-hidden="true"></i><?php echo ' '. $userData[2];?></li>
+                                <li><i class="fa fa-calendar-o" aria-hidden="true"></i><?php echo ' '.$profileData[3]?></li>
                                 <li><?php echo $userData[5]?></li>
-                                <li><?php echo $userData[6]?></li>
+                                <li> <i class="fa fa-thumb-tack" aria-hidden="true"></i> <?php echo ' '. $profileData[6]?></li>
                                 <li>
-                                    <a href="./edit-profile.php?userid=<?php echo $profileData[0]?>" class="btn  fa fa-edit edit-icon" style="text-decoration: none;">Modifiko Profilin</a>
+                                <br>
+                                    <a href="./edit-profile.php?userid=<?php echo $profileData[0]?>" style="text-decoration: none;">
+                                        <button class="btn edit-post"> <i class="fa fa-edit" aria-hidden="true"></i>    Modifiko Profilin</button>
+                                    </a>
                                 </li>
                             </ul>
 
@@ -72,31 +93,31 @@
                             $imageType = strstr($mimeType, ';', true);
                             $img = get_photo_byID($postId);
                             $image = $img[0];
+                          
                         ?>
-                            <a href="./single-post.php?id=<?php echo $postId?>"> 
-                                <div class="row single-post">
-                                    <title class="row"><?php echo $title?></title>
-                                    <div class="row justify-content-around">
-                                        <div class="col-7 description">
-                                        <?php echo $description?>
-                                        </div>
-                                        <div class="col-5">
-                                            <!-- <img src="getImage.php?id=<?php echo $postId?>" class="img-responsive" /> -->
-                                            <img src="data:<?php echo $imageType?>;base64, <?php echo $image ?>" alt='post_photo'>
-                                        </div>
-                                    </div>
-                                    <div class="row">
-                                        <a href="./edit-post.php?postid=<?php echo $postId.'&userId='.$userData[0]?>">
-                                            <button class="btn edit-post"> <?php echo $modifikoPostin?> </button>
-                                        </a>
-                                    </div>
-                                </div>
-                            </a>
+                        <div class="row single-post">
+                            <div class="col-8 description">
+                                <a href="./single-post.php?id=<?php echo $postId?>"> 
+                                    <h3 class=""><?php echo $title?></h3>
+                                    <?php echo $description?>
+                                </a>
+                                <br>
+                                <br>
+                                    <a href="./edit-post.php?postid=<?php echo $postId.'&userId='.$userData[0]?>">
+                                        <button class="btn edit-post"> <?php echo $modifikoPostin?> </button>
+                                    </a>
+                                    <button class="btn edit-post" name="deletePost" type="submit" >Fshi </button>
+                            </div>
+                            <div class="col-4">
+                                <!-- <img src="getImage.php?id=<?php echo $postId?>" class="img-responsive" /> -->
+                                <img class="img-fluid" src="data:<?php echo $imageType?>;base64, <?php echo $image ?>" alt='post_photo'>
+                            </div>
+                            
+                        </div>
                         <?php } 
                     }else {?>
                     <br>
                     <br>
-                        <a href="./new-post.php" class="btn create-post"> <i class="fa fa-plus-circle"></i> Krijo post </a>
                         <h1 style="margin-top: 2em">Ju akoma nuk keni krijuar postime!</h1>
                     <?php }?>
                 </div>
