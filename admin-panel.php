@@ -133,6 +133,10 @@
             </div>
         </div>
     </div>
+
+    <?php
+        include_once('./includes/footer.php');
+    ?>
     <script>
         function fshipost(id){
             if(confirm('Jeni i sigurte qe doni te fshini kete post?')){
