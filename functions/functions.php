@@ -391,72 +391,63 @@
     /////////////////////////////////////////////////////////////////////
     
     function post_validation(){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+            //Variable for storing errors
+            $errors = [];
+            
+            $username = $_SESSION['username'];
+            $title = clean($_POST['title']);
+            $description = clean($_POST['description']);
+            $phonenumber = clean($_POST['phonenumber']);
+            $city = clean($_POST['city']);
+            $email = strtolower(clean($_POST['email']));
+            $animal = clean($_POST['animal']);
+            $category = clean($_POST['category']);
 
-        if (!isset($_SESSION['username'])){
-            set_message('postim anonim');
-            redirect('register.php');
-        }else{
-            if($_SERVER['REQUEST_METHOD']=='POST'){
-                //Variable for storing errors
-                $errors = [];
-                
-                $username = $_SESSION['username'];
-                $title = clean($_POST['title']);
-                $description = clean($_POST['description']);
-                $phonenumber = clean($_POST['phonenumber']);
-                $city = clean($_POST['city']);
-                $email = strtolower(clean($_POST['email']));
-                $animal = clean($_POST['animal']);
-                $category = clean($_POST['category']);
+            date_default_timezone_set("Europe/Tirane");
+            $time = date("Y-m-d H:i:s");
 
-                date_default_timezone_set("Europe/Tirane");
-                $time = date("Y-m-d H:i:s");
-    
-                $min_char = 05;
-                $max_char = 30;
-                $desc_min_char = 005;
-                $desc_max_char = 200;
-                $count = 0;
-    
-                if(strlen($title) > $max_char){
-                    $errors[] = "Ju lutem vendosni titullin me më pak se 30 gërma!";
-                }
-    
-                if(strlen($title) < $min_char){
-                    $errors[] = "Ju lutem vendosni titullin me më shumë se 5 gërma!";
-                }
-    
-                if(strlen($description) > $desc_max_char){
-                    $errors[] = "Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
-                }
-    
-                if(strlen($description) < $desc_min_char){
-                    $errors[] = "Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
-                }
+            $min_char = 05;
+            $max_char = 30;
+            $desc_min_char = 005;
+            $desc_max_char = 200;
+            $count = 0;
 
-                if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                    $errors[] = "Email jo i saktë!";
-                }
+            if(strlen($title) > $max_char){
+                $errors[] = "Ju lutem vendosni titullin me më pak se 30 gërma!";
+            }
 
-                $allowed = array('jpeg', 'png', 'jpg');
-                $filename = $_FILES['image']['name'][0];
-                $ext = pathinfo($filename, PATHINFO_EXTENSION);
-                if (!in_array($ext, $allowed)) {
-                    $errors[] = "Format jo i duhur i fotos!";
-                }
-                
-                if(!empty($errors)){
-                    foreach($errors as $error){
-                        header('HTTP/1.1 500 Internal Server Error');
-                        echo $error;
-                    }
-                }else{
-                    // Post registration
-                    if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
-                    }else{
+            if(strlen($title) < $min_char){
+                $errors[] = "Ju lutem vendosni titullin me më shumë se 5 gërma!";
+            }
 
-                    }
+            if(strlen($description) > $desc_max_char){
+                $errors[] = "Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
+            }
+
+            if(strlen($description) < $desc_min_char){
+                $errors[] = "Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
+            }
+
+            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                $errors[] = "Email jo i saktë!";
+            }
+
+            $allowed = array('jpeg', 'png', 'jpg');
+            $filename = $_FILES['image']['name'][0];
+            $ext = pathinfo($filename, PATHINFO_EXTENSION);
+            if (!in_array($ext, $allowed)) {
+                $errors[] = "Format jo i duhur i fotos!";
+            }
+            
+            if(!empty($errors)){
+                foreach($errors as $error){
+                    header('HTTP/1.1 500 Internal Server Error');
+                    echo $error;
                 }
+            }else{
+                // Post save
+                create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time);
             }
         }
     }
@@ -478,8 +469,6 @@
         // Ruajtja e fotos
         $postID = getpostID($userID, $time);
         save_photo($postID);
-
-        return true;
     }
 
     function get_allID($username, $city, $animal, $category){
@@ -944,6 +933,7 @@
         confirm(query($sql));
     }
 
+
     /////////////////////////////////////////////////////////////////////
     //*-------------------Single blog page functions------------------*//
     ////////////////////////////////////////////////////////////////////
@@ -1082,9 +1072,8 @@
 
     function blog_validation(){
 
-        if($_SERVER['REQUEST_METHOD']=='POST'){
+        if($_SERVER['REQUEST_METHOD'] == 'POST'){
             //Variable for storing errors
-            echo "Fotiiiii";
             $errors = [];
 
             $title = clean($_POST['title']);
@@ -1094,9 +1083,9 @@
             $date = date("Y-m-d H:i:s");
 
             $min_char = 05;
-            $max_char = 30;
+            $max_char = 40;
             $desc_min_char = 005;
-            $desc_max_char = 200;
+            $desc_max_char = 2048;
             $count = 0;
 
             if(strlen($title) > $max_char){
@@ -1128,12 +1117,8 @@
                     echo $error;
                 }
             }else{
-                // Post registration
-                if(create_blog($title, $description, $date)){
-
-                }else{
-
-                }
+                // Blog save
+                create_blog($title, $description, $date);
             }
         }
     }
@@ -1148,8 +1133,6 @@
         // Ruajtja e fotos
         $postID = getblogID($date);
         save_blog_photo($postID);
-
-        return true;
     }
 
     function save_blog_photo($postID){
