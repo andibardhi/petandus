@@ -1018,13 +1018,12 @@
             <a href='./single-blog.php?id=" . $id . "'>    
                 <div class='row single-post'>
                     <div class='row justify-content-around'>
-                        
-                        <div class='col-12'>
-                            <img src='data:image/jpeg;base64, " . $img . "' alt='blog_photo'>
-                        </div>
                         <h3> <title class='row'>" . $title . "</title> </h3>
                         <div class='col-12 description'>
                             <span>" . $desc . "</span>
+                        </div>
+                        <div class='col-12'>
+                            <img src='data:image/jpeg;base64, " . $img . "' alt='blog_photo'>
                         </div>
                         <div class='row info'>
                             <span id='info'>" . $date . "</span>
