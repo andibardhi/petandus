@@ -25,15 +25,17 @@
     <div class="row align-items-center justify-content-center h-100">
       <div class="col-6 mx-auto">
           <div id="box" class="box"  >
+          <a href="./index.php" class="logo"> PET&US </a>
             <form id="form" autocomplete="on">
               <h1>Regjistrohu</h1>
               <input type="text" name="firstname" id="firstname" placeholder="Emri">
               <input type="text" name="lastname" id="lastname" placeholder="Mbiemri">
-              <input type="date" name="birthdate" id="birthdate" placeholder="Datëlindja">
-              <input type="text" name="phonenumber" id="phonenumber" placeholder="Numer telefoni">
+              <input type="date" name="birthdate" id="birthdate" placeholder="Datëlindja" max="2002-05-22" >
+              <input type="text" name="phonenumber" id="phonenumber" placeholder="Numer telefoni" style="margin-bottom: 0;">
+              <p for="phonenumber">*Numri duhet te filloj me 06</p>
               <select id="city" name="city" >
                   <option value="null" selected disabled > Qyteti </option>
-                  <option value="Dirane">Tirane</option>
+                  <option value="Tirane">Tirane</option>
                   <option value="Durres">Durres</option>
                   <option value="Korce">Korce</option>
                   <option value="Vlore">Vlore</option>
@@ -54,6 +56,26 @@
 
     <script>
         $(document).ready(function () {
+
+            //maxdate per datelindjen 
+            var maxDay = new Date().getDate();
+            var maxMonth = new Date().getMonth()+1;
+            var maxYear = new Date().getFullYear()-18;
+            var maxDate = ""+maxYear+"-";
+
+            if(maxMonth.toString().length==1){
+              maxMonth = "0"+maxMonth;
+            }
+            maxDate+=maxMonth+"-";
+
+            if(maxDay.toString().length==1){
+              maxDay = "0"+maxDay;
+            }
+            maxDate+=maxDay;
+
+            $('input[type="date"]').attr("max", maxDate);
+
+
             var img_errors = [];
             $("#profile_image").change(function(){
                 img_errors = [];
@@ -77,7 +99,7 @@
                 var lastname = $('#lastname').val();
                 var birthdate = $('#birthdate').val();
                 var phonenumber = $('#phonenumber').val();
-                var city = $("#city option:selected").text();
+                var city = $("#city option:selected").val();
                 var email = $('#email').val();
                 var username = $('#username').val();
                 var password = $('#password').val();
@@ -131,8 +153,40 @@
                   count++;
                 }
 
-                if(phonenumber < 10){
+                if(parseInt(birthdate.slice(0,4))>maxYear ){
+                  errors+="<br>Duhet te jeni me i madh se 18 vjec!";
+                  count++;
+                }else if(parseInt(birthdate.slice(0,4))==maxYear ){
+                  if(parseInt(birthdate.slice(5,7))>maxMonth ){
+                    errors+="<br>Duhet te jeni me i madh se 18 vjec!";
+                    count++;
+                  }else if(parseInt(birthdate.slice(5,7))==maxMonth){
+                    if(parseInt(birthdate.slice(8,10))>maxDay ){
+                    errors+="<br>Duhet te jeni me i madh se 18 vjec!";
+                    count++;
+                  }
+                  }
+                }
+
+
+                if(phonenumber.length != 10 || isNaN(phonenumber) || /^\d+$/.test(phonenumber) == false){
                   errors+="<br>Vendosi nje numer telefoni te saktë!";
+                  count++;
+                }
+                
+                if(phonenumber.slice(0,2)!="06"){
+                  errors+="<br>Numri duhet te filloj me 06";
+                  count++;
+                }
+
+                if(city=="null"){
+                  errors+="<br>Zgjidhni nje qytet";
+                  count++;
+                }
+
+                var usernameRegex = /^[a-z0-9_-]+$/;
+                if(!usernameRegex.test(username)){
+                  errors+="<br>Username jo i saktë!(username duhet te permbaje vetem shkronja te vogla,numra , - dhe _)";
                   count++;
                 }
 
@@ -145,7 +199,7 @@
                 var formData = new FormData(document.getElementById("form"));
                 formData.append( 'img', input.files[0] );
 
-                if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword ) {
+                if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword && city!="null" ) {
                     $.ajax({
                         method: 'POST',
                         data: formData,

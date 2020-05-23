@@ -26,16 +26,23 @@ include_once('./includes/navbar.php');
                 <li data-target="#carousel" data-slide-to="0" class="active"></li>
                 <li data-target="#carousel" data-slide-to="1"></li>
                 <li data-target="#carousel" data-slide-to="2"></li>
+                <li data-target="#carousel" data-slide-to="3"></li>
             </ol>
           <div class="carousel-inner">              
             <div class="carousel-item active">
-              <img class="d-block w-100" src="./img/a.jpg" alt="slide1">
+              <img class="d-block w-100" src="./img/dog.jpg" alt="slide1">
             </div>
             <div class="carousel-item">
-              <img class="d-block w-100" src="./img/c.jpg" alt="slide2">
+              <img class="d-block w-100" src="./img/cat.jpg" alt="slide1">
             </div>
             <div class="carousel-item">
-              <img class="d-block w-100" src="./img/a.jpg" alt="slide3">              
+              <img class="d-block w-100" src="./img/pets.jpg" alt="slide2">
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="./img/rabbit.jpg" alt="slide3">              
+            </div>
+            <div class="carousel-item">
+              <img class="d-block w-100" src="./img/fish.jpg" alt="slide4">              
             </div>
           </div>
             
@@ -71,8 +78,11 @@ include_once('./includes/navbar.php');
             
               <div class="card-body">
                 <div class="list-unstyled mt-3 mb-4 opacity">
-                <div class="text-centered">Sherbimi 1</div>
-                  <a href="#"> <img src="./img/b.jpg" ></a>
+                
+                <a href="http://localhost/petus/posts.php?category=adoptim">
+                  <div class="text-centered" style="padding-left: 22px;"> Adoptim</div>
+                  <img src="./img/adopt.jpg" class="foto" >
+                </a>
                 </div>
               </div>
             
@@ -80,17 +90,21 @@ include_once('./includes/navbar.php');
             
               <div class="card-body">
                 <div class="list-unstyled mt-3 mb-4 opacity">
-                  <div class="text-centered">Sherbimi 2</div>
-                  <a href="#"> <img src="./img/b.jpg" ></a>
+                  
+                  <a href="http://localhost/petus/posts.php?category=veteriner"> 
+                    <div class="text-centered">Veteriner</div>
+                    <img src="./img/vet.jpg" class="foto"  >
+                  </a>
                 </div>
               </div>
             
 
               <div class="card-body">
                 <div class="list-unstyled mt-3 mb-4 opacity">
-                  <div class="text-centered">Sherbimi 3</div>
-                  <a href="#"> <img src="./img/b.jpg" >
-                    
+                  
+                  <a href="http://localhost/petus/posts.php?category=pet+sitting"> 
+                    <div class="text-centered" style="margin-left: 8px;">Pet-Sitting</div>
+                    <img src="./img/petsit.jpg" class="foto" >
                   </a> 
 
                 </div>

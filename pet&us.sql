@@ -41,7 +41,6 @@ CREATE TABLE `Blog` (
 	`pershkrim` text NOT NULL,
 	`foto` varchar(255) NOT NULL,
 	`data` DATETIME NOT NULL,
-	`nrtel` INT NOT NULL,
 	PRIMARY KEY (`id`)
 );
 

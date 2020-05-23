@@ -24,7 +24,7 @@ include_once('./functions/config.php');
             <?php  
                 }else{
             ?>
-            <a href="./login.php" id="logreg">Logohu </a>
+            <a href="./login.php" id="logreg"> Hyr </a>
             <a href="./register.php" id="logreg">Regjistrohu</a>
             <?php
                 }

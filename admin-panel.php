@@ -100,14 +100,27 @@
                 <div class="col single">
                     <div class="row"><?php echo $row['username'] ?></div>
                     <div class="row"><?php echo $row['email'] ?></div>
-                    <button onclick="fshiperdorues(<?php echo $row['id'] ?>)" class="btn btn-danger">Fshi perdorues</button>
+
+                    <?php
+                        if($row['role']=='F'){
+                    ?>
+                    <button onclick="aktivizoperdorues(<?php echo $row['id'] ?>)" class="btn btn-success">Aktivizo perdorues</button>
+                    <?php
+                        }else{
+                    ?>
+                    <button onclick="caktivizoperdorues(<?php echo $row['id'] ?>)" class="btn btn-danger">Caktivizo perdorues</button>
+                    <?php
+                        }
+                    ?>
+
+
                     <?php
                         if($row['role']=='U'){
                     ?>
                     <button onclick="bejadmin(<?php echo $row['id'] ?>)" class="btn btn-success">Bej admin</button>
                     <?php
                         }
-                        else{
+                        else if($row['role']=='A'){
                     ?>
                     <button onclick="hiqadmin(<?php echo $row['id'] ?>)" class="btn btn-danger">Hiq admin</button>
                     <?php  
@@ -145,9 +158,22 @@
                 });
             }
         }
-        function fshiperdorues(id){
-            if(confirm('Jeni i sigurte qe doni te fshini kete perdorues?')){
-                $.post('./functions/admin.php', {id:id, action:'delete-user'}, function (response) {
+        function caktivizoperdorues(id){
+            if(confirm('Jeni i sigurte qe doni te caktivizoni kete perdorues?')){
+                $.post('./functions/admin.php', {id:id, action:'deactivate-user'}, function (response) {
+                    if(response=='success'){
+                        location.reload();
+                    }
+                    else{
+                        alert(response);
+                    }
+                });
+            }
+        }
+
+        function aktivizoperdorues(id){
+            if(confirm('Jeni i sigurte qe doni te aktivizoni kete perdorues?')){
+                $.post('./functions/admin.php', {id:id, action:'activate-user'}, function (response) {
                     if(response=='success'){
                         location.reload();
                     }

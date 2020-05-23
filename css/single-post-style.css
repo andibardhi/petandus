@@ -34,3 +34,8 @@ img {
 .categories{
     margin-top: 10px;
 }
+
+.username>a{
+    text-decoration: none;
+    color: white;
+}
