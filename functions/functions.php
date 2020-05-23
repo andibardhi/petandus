@@ -1019,11 +1019,13 @@
                 <div class='row single-post'>
                     <div class='row justify-content-around'>
                         <h3> <title class='row'>" . $title . "</title> </h3>
+                        
                         <div class='col-12 description'>
                             <span>" . $desc . "</span>
                         </div>
                         <div class='col-12'>
-                            <img src='data:image/jpeg;base64, " . $img . "' alt='blog_photo'>
+                            <br> 
+                            <img src='data:image/jpeg;base64, " . $img . "' alt='blog_photo' style='padding-bottom: 30px;'>
                         </div>
                         <div class='row info'>
                             <span id='info'>" . $date . "</span>
