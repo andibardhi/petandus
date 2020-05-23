@@ -820,6 +820,9 @@
             <div class='row phone'>
              <span>Telefon: " . $tel . "</span>
             </div>
+            <div class='row username'>
+             <a href='./profile.php?username=$user' > <span>@" . $user . "</span> </a>
+            </div>
             <div class='row categories'>
                 <div class='col-4 category'>" . $ctgr . "</div>
                 <div class='col-4 city'>" . $city . "</div>
