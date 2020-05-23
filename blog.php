@@ -30,7 +30,7 @@
             ?>
         </div> <!-- blog end -->
 
-        <br>
+        <br> <br>
 
         <?php
             include_once('./includes/footer.php');
