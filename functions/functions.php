@@ -558,7 +558,7 @@
             <a href='./single-post.php?id=" . $id . "' id='post'>      
                 <div class='row single-post'>
                     <title class='row' id='title'>" . $title . "</title>
-                    <div class='row justify-content-around'>
+                    <div class='row d-flex justify-content-between'>
                         <div class='col-5 img'>
                             <img src='data:image/jpeg;base64, " . $img . "' alt='post_photo'>
                         </div>
