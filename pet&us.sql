@@ -72,8 +72,8 @@ ALTER TABLE `Post` ADD CONSTRAINT `Post_fk2` FOREIGN KEY (`kafshaId`) REFERENCES
 
 ALTER TABLE `Post` ADD CONSTRAINT `Post_fk3` FOREIGN KEY (`qytetiId`) REFERENCES `Qytet`(`id`);
 
-INSERT INTO `Kategori` (emer) VALUES ('Pet Sitting'), ('Adoptim'), ('Kujdesje'), ('Lajmërim');
+INSERT INTO `Kategori` (emer) VALUES ('Pet Sitting'), ('Adoptim'), ('Kujdesje'), ('Lajmerim'), ('Tjeter');
 
-INSERT INTO `Qytet` (emer) VALUES ('Tirane'), ('Durres'), ('Korcë'), ('Vlore'),('Sarande'), ('Shkoder'), ('Elbasan'), ('Fier'), ('Berat'), ('Tjeter');
+INSERT INTO `Qytet` (emer) VALUES ('Tirane'), ('Durres'), ('Korce'), ('Vlore'),('Sarande'), ('Shkoder'), ('Elbasan'), ('Fier'), ('Berat'), ('Tjeter');
 
 INSERT INTO `Kafshe` (emer) VALUES ('Qen'), ('Mace'), ('Peshk'), ('Kavje'), ('Lepur '), ('Zog'), ('Tjeter');
