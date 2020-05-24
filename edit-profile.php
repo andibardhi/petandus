@@ -19,7 +19,10 @@
     include_once('./includes/navbar.php');
     include_once('functions/config.php'); 
     $profileData = getDataFromProfile();
+    
     $userData = getDataFromUser();
+    $allCategories = getAllData("emer","kategori");
+
     updateProfile();
   
     ?>
@@ -32,21 +35,15 @@
             <label for="lastname">Mbiemer:</label>
             <input type="text" class="form-control" id="lastname" placeholder="Mbiemer" name="lastname" value="<?php echo $profileData[2]?>" >
             <label for="birdday">Datelindje:</label>
-            <input type="date" class="form-control" id="birthdate" placeholder="1990-03-25" name="birthday">
+            <input type="date" class="form-control" id="birthdate" placeholder="1990-03-25" name="birthday" value="<?php echo $profileData[3]?>">
             <label for="phone">Nr telefoni:</label>
-            <input type="text" class="form-control" id="phonenumber" placeholder="+355 68 XXXXXXX" name="phone">
+            <input type="text" class="form-control" id="phonenumber" placeholder="<?echo '068 xx xx xxx'?>" value="<?php echo $profileData[5]?>"  name="phone">
             <label for="city">Qyteti:</label>
-            <select class="custom-select" name="city" id="city">
-                <option><?php echo $profileData[6]?></option>
-                <option value="tirane">Tirane</option>
-                <option value="durres">Durres</option>
-                <option value="korce">Korce</option>
-                <option value="vlore">Vlore</option>
+            <select class="custom-select" name="city" id="city" value="<?php echo $profileData[6]?>">
+                <?php printList($allCategories) ?>
             </select>
             <label for="email">Vendosni e-mail</label>
             <input type="email" class="form-control" name="email" placeholder="Vendosni Email" value="<?php echo $userData[2]?>">
-            <label for="pasword">Konfirmoni fjalekalimin:</label>
-            <input type="password" class="form-control" id="password" placeholder="Pasword" name="pasword" pattern="(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{8,}" required title="Ju lutem plotsoni kriteren e meposhtme">
             <div class="row justify-content-center">
                 <button class="btn btn-primary text-center" type="submit" name = "submitEditProfile">Modifiko profilin</button>
             </div>

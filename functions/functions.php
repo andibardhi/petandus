@@ -713,7 +713,11 @@
     }
 
     function getUserIDbyUsername(){
-        $username = $_SESSION['username'];
+        if(isset($_SESSION['username'])){
+            $username = $_SESSION['username'];
+        }else{
+            $username = $_GET['username'];
+        }
         $sql = "SELECT id  FROM `user` where username = '$username'";
         $result = query($sql);
         confirm($result);
@@ -884,21 +888,7 @@
         exit();
     }
     function updateProfile(){
-        // var_dump("Para se Klikuam Submit!!!");
-        //     exit();
-        // $firstname = $_REQUEST['firstname'];
-        // $lastname = $_REQUEST['lastname'];
-        // $birthdate = $_REQUEST['birthday'];
-        // $phone = $_REQUEST['phone'];
-        // $city = $_REQUEST['city'];
-        // $email = $_REQUEST['email'];
-        // var_dump('firstname ->'.$firstname);
-        // var_dump('lastname ->'.$lastname);
-        // var_dump('birthdate->'.$birthdate);
-        // var_dump('phone ->'.$phone);
-        // var_dump('city ->'.$city);
-        // var_dump('email ->'.$email);
-
+       
         if(isset($_REQUEST['submitEditProfile'])){
             // var_dump("Klikuam Submit!!!");
             // exit();
@@ -987,9 +977,28 @@
         return $row;
     }
 
-    function printList($array){
+    function _printList($array, $value){
         foreach($array as $data){
             $i = 0;
+            echo("Data<br>");
+            var_dump($data[$i]);
+            var_dump($value);
+            echo("Value<br>");
+            $selected = '';
+            if($data[$i] == $value ) {
+                $selected = 'selected';
+            }
+            echo '<option '.$selected.' value="'.$data[$i].'">'.$data[$i].'</option>';
+            $i++;
+        }
+        // exit();
+    }
+
+    function printList($array){
+        foreach($array as $data){
+            
+            $i = 0;
+            if($data)
             echo '<option value="'.$data[$i].'">'.$data[$i].'</option>';
             $i++;
         }
@@ -1003,36 +1012,36 @@
         return $row[0][0];
     }
 
-    function updatePost(){
-        if(isset($_REQUEST['editPost'])){
-            $title = $_REQUEST['title'];
-            $description = $_REQUEST['description'];
-            $email = $_REQUEST['email'];
-            $phone = $_REQUEST['phonenumber'];
-            $qyteti =$_REQUEST['city'];
-            $city = getDataByName($qyteti, "qytet",  "id");
-            $category = getDataByName( $_REQUEST['category'],  "kategori","id");
-            $animal =getDataByName($_REQUEST['animal'], "kafshe", "id" ); 
-            $data = date('m/d/Y');
-            $userId = $_GET['userId'];
-            $postID = $_GET['postid'];
-            $sql = 
-            " UPDATE post
-                SET 
-                titull = '$title',
-                pershkrim= '$description',
-                data= $data,
-                autorId= $userId,
-                kategoriId= $category,
-                kafshaId= $animal,
-                qytetiId= $city,
-                nrtel= '$phone',
-                email= '$email'
-                WHERE id= $postID";
-            confirm(query($sql));
-            save_photo($postID);
-            return $row[0];
-        }
+    function updatePost($userId, $postId){
+        $title = $_REQUEST['title'];
+        $description = $_REQUEST['description'];
+        $email = $_REQUEST['email'];
+        $phone = $_REQUEST['phonenumber'];
+        $qyteti =$_REQUEST['city'];
+        $city = getDataByName($qyteti, "qytet",  "id");
+        $category = getDataByName( $_REQUEST['category'],  "kategori","id");
+        $animal =getDataByName($_REQUEST['animal'], "kafshe", "id" ); 
+        $data = date('m/d/Y');
+        $userId = $userId;
+        $postID = $postId;
+        $sql = 
+        " UPDATE post
+            SET 
+            titull = '$title',
+            pershkrim= '$description',
+            data= $data,
+            autorId= $userId,
+            kategoriId= $category,
+            kafshaId= $animal,
+            qytetiId= $city,
+            nrtel= '$phone',
+            email= '$email'
+            WHERE id= $postID";
+        $result = query($sql);
+        // save_photo($postID);
+        //  var_dump($result);
+        //  exit();
+        return $result;
     }
 
     function get_profileImage($id){
@@ -1274,4 +1283,42 @@
         return $postID;
     }
 
+    function _getUserIDbyUsername($username){
+        $sql = "SELECT id  FROM `user` where username = '$username'";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0][0];
+    }
+
+     
+
+    function getUserPostsByUserID($id){
+        $sql = "SELECT * FROM `post` WHERE autorid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row;
+    }
+
+   function _getUserByID($id){
+    $sql = "SELECT * FROM `user` WHERE id = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+
+        return $row[0];
+   }
+   function _getProfileByID($id){
+    $sql = "SELECT * FROM `profil` WHERE userid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0];
+   }
+   function deletePostById($id){
+        $sql = "DELETE FROM `post` WHERE id = $id";
+        $result = query($sql);
+        return $result;
+   }
 ?>

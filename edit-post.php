@@ -27,50 +27,37 @@
     $postImageBlob = $post[3];
     $phoneNr = $post[9];
     $email = $post[10];
+
     $category = getDataById($post[6], "kategori", "emer");
     $city=getDataById($post[8], "qytet", "emer");
     $animal =getDataById($post[7], "kafshe", "emer"); 
-    $allCategories = getAllData("emer","kategori");;
+    
+    $allCategories = getAllData("emer","kategori");
     $allCities = getAllData("emer","qytet");
 
-    $finfo    = new finfo(FILEINFO_MIME);
-    $mimeType = $finfo->buffer($postImageBlob);
-    $imageType = strstr($mimeType, ';', true);
-    $img = get_photo_byID($postId);
-    $image = $img[0];
-
+    
     $allAnimals = getAllData("emer","kafshe");
     
+    $userId = $_GET['userId'];
+    $postID = $_GET['postid'];
     ?>
     <br>
     <div class="container">
-
-        <?php  
-    
-             ?>
-                <form class="form" method="POST">
+             
+                <form class="form" action="edit-post.php?postid=<?php echo $postId?>&userId=<?php echo $userId?>" method="POST">
                     <h1>Modifikoni post</h1>
+                    <div class="alert alert-success" id="successUpdate" role="alert">
+                        <h5>
+                            Postimi u modifikua me sukses!
+                        </h5>
+                        <script> $("#successUpdate").hide();</script>
+
+                    </div>
                     <label for="email">Titull:</label>
                     <input type="text" class="form-control" id="title" value="<?php echo $postTitle?>"  name="title">
-                    <div class="row">
-                        <div class="col-md-6">
+                    <div class="col-md-12">
                         <label for="description">Pershkrim:</label>
                         <textarea id="description" rows="4" cols="50" name="description"><?php echo $postDescription?></textarea>
-                        </div>
-                        <div class="col-md-6">
-                            <img src="data:<?php echo $imageType?>;base64, <?php echo $image ?>" alt='post_photo' class="img-fluid">
-                            <br>
-                            <br>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <label for="imazhi">Ndrysho foton</label>
-                                </div>
-                                <div class="col-md-6">
-                                    <input type="file" accept="image/*" name = "image">
-                                </div>
-                            </div>
-
-                        </div>
                     </div>
                  
                     <label for="phonenumber" >Nr i kontaktit:</label>
@@ -78,17 +65,20 @@
                     <label for="email">Emaili i kontaktit:</label>
                     <input type="text" class="form-control" id="email" value="<?php echo $email ?>" name="email">
                     <label for="city">Qyteti:</label>
-                    <select class="custom-select" name="city" id="city" value="<?php echo $city[0][0];?>">
-                        <?php printList($allCities) ?>
+                    <select class="custom-select" name="city" id="city" value="<?php echo $city;?>">
+                        <?php
+                        // var_dump($city[0][0]);
+                        // exit();
+                        _printList($allCities, $city[0][0]) ?>
                     </select>
                     <label for="animal">Kafsha:</label>
-                    <select class="custom-select" name="animal" id="animal" value="<?php echo $animal[0][0]?>">
-                        <?php printList($allAnimals) ?>
+                    <select class="custom-select" name="animal" id="animal" value="<?php echo $animal?>">
+                        <?php _printList($allAnimals, $animal[0][0]) ?>
 
                     </select>
                     <label for="category">Kategoria:</label>
-                    <select class="custom-select" name="category" id="category" value="<?php echo $category[0][0]?>">
-                        <?php printList($allCategories) ?>
+                    <select class="custom-select" name="category" id="category" value="<?php echo $category?>">
+                        <?php _printList($allCategories, $category[0][0]) ?>
                        
                     </select>
                     <br>
@@ -98,9 +88,21 @@
                     <br>
                 </form>   
     </div>
+
     <?php
     if(isset($_POST['editPost'])){
-        updatePost();
+      
+        
+        $updatePostResult =  updatePost($userId,$postId);
+        // var_dump($updatePostResult);
+        // exit();
+        if($updatePostResult){?>
+            <script>
+                $("#successUpdate").show();
+            </script>
+        <?php
+        echo "<meta http-equiv='refresh' content='0'>";
+        }
     }
 
     include_once('./includes/footer.php');

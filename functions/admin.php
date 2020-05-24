@@ -5,7 +5,7 @@
         if($_POST['action']=='delete-post'){
             $id = $_POST['id'];
 
-            $con = mysqli_connect("localhost","root","","petus");
+            $con = mysqli_connect("localhost","root","juventus1","petus");
             $sql = "DELETE FROM POST WHERE id=$id";
             if ($con->query($sql) === TRUE) {
                 echo "success";
@@ -29,7 +29,7 @@
         if($_POST['action']=='deactivate-user'){
             $id = $_POST['id'];
 
-            $con = mysqli_connect("localhost","root","","petus");
+            $con = mysqli_connect("localhost","juventus1","","petus");
             $sql = "UPDATE USER SET ROLE = 'F' WHERE id = $id";
             if ($con->query($sql) === TRUE ) {
                     echo "success";      
@@ -41,7 +41,7 @@
         if($_POST['action']=='activate-user'){
             $id = $_POST['id'];
 
-            $con = mysqli_connect("localhost","root","","petus");
+            $con = mysqli_connect("localhost","root","juventus1","petus");
             $sql = "UPDATE USER SET ROLE = 'U' WHERE id = $id";
             if ($con->query($sql) === TRUE ) {
                     echo "success";      
@@ -53,7 +53,7 @@
         if($_POST['action']=='make-admin'){
             $id = $_POST['id'];
 
-            $con = mysqli_connect("localhost","root","","petus");
+            $con = mysqli_connect("localhost","root","juventus1","petus");
             $sql = "UPDATE USER SET ROLE = 'A' WHERE id = $id";
             if ($con->query($sql) === TRUE ) {
                     echo "success";      
@@ -65,7 +65,7 @@
         if($_POST['action']=='remove-admin'){
             $id = $_POST['id'];
 
-            $con = mysqli_connect("localhost","root","","petus");
+            $con = mysqli_connect("localhost","root","juventus1","petus");
             $sql = "UPDATE USER SET ROLE = 'U' WHERE id = $id";
             if ($con->query($sql) === TRUE ) {
                     echo "success";      
