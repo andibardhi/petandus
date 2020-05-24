@@ -1075,7 +1075,7 @@
         $date = substr($data[0][3], 0, 10);
 
         echo "
-            <div class='row justify-content-center title'>
+            <div class='row title'>
                 <span>" . $title . "</span>
             </div>
             <div class='row description'>
