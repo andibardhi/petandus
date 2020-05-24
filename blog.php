@@ -26,7 +26,7 @@
                 if(isset($_SESSION['role']) && $_SESSION['role']=='A'){
         ?>
             
-            <div class="container col-md-8" style="padding: 0px;">
+            <div class="container col-md-8 d-flex justify-content-center" style="padding: 0px;">
             <form method="get"> 
                 <a href="./new-blog.php"> 
                     <button type="button" class="btn" id="btncolor" style="background-color:#e45225; border-radius: 50px;  padding: 13px 15px; color: white"> 
