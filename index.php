@@ -101,7 +101,6 @@ include_once('./includes/navbar.php');
 
               <div class="card-body">
                 <div class="list-unstyled mt-3 mb-4 opacity">
-                  
                   <a href="http://localhost/petus/posts.php?category=pet+sitting"> 
                     <div class="text-centered" style="margin-left: 8px;">Pet-Sitting</div>
                     <img src="./img/petsit.jpg" class="foto" >
@@ -114,7 +113,44 @@ include_once('./includes/navbar.php');
         </div>
       </div>
 <!-- sherbimet finish -->
-      <br>
+
+
+<!-- rreth nesh start -->
+<div style="background-color:#FFEBB6;">
+  <div class="container" >
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4" style="color: #e45225; 
+        font-family: Montserrat, sans-serif; 
+        text-transform: uppercase; 
+        letter-spacing: 0.1em;"> 
+        <b>Rreth nesh</b>
+      </h1>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <h2 class="d-flex justify-content-center"> Kush Jemi </h2>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+          It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        </p>
+      </div>
+
+      <div class="col-6">
+      <h2 class="d-flex justify-content-center" > Qellimi Jone </h2>
+        <p>
+          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
+          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
+          It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        </p>
+      </div>
+    </div>
+  </div>
+  <br><br>
+</div>
+
+
+<!-- rreth nesh finish -->
       <?php
       include_once('./includes/footer.php');
       ?>
