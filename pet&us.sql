@@ -14,7 +14,7 @@ CREATE TABLE `Profil` (
 	`emer` varchar(30) NOT NULL,
 	`mbiemer` varchar(30) NOT NULL,
 	`datelindja` DATE NOT NULL,
-	`foto` mediumblob,
+	`foto` mediumblob NOT NULL,
 	`nrtel` varchar(13) NOT NULL,
 	`qyteti` varchar(20) NOT NULL,
 	PRIMARY KEY (`userId`)
@@ -24,7 +24,7 @@ CREATE TABLE `Post` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`titull` varchar(255) NOT NULL,
 	`pershkrim` text NOT NULL,
-	`foto` mediumblob,
+	`foto` mediumblob NOT NULL,
 	`data` DATETIME NOT NULL,
 	`autorId` INT NOT NULL,
 	`kategoriId` INT NOT NULL,
@@ -39,7 +39,7 @@ CREATE TABLE `Blog` (
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`titull` varchar(255) NOT NULL,
 	`pershkrim` text NOT NULL,
-	`foto` varchar(255) NOT NULL,
+	`foto` mediumblob NOT NULL,
 	`data` DATETIME NOT NULL,
 	PRIMARY KEY (`id`)
 );
