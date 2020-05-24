@@ -1,5 +1,10 @@
 <?php include_once('functions/config.php'); ?>
-<?php 
+<?php
+  if(!isset($_SESSION['username'])){
+    redirect('register.php');
+    exit;
+  }
+
   if (isset($_POST['ajax'])){
     post_validation();
     exit;
@@ -164,7 +169,9 @@
                   $('#success').css("visibility", "visible");
                     $('#success').html("Postimi u krijua me sukses");
                     $('#success').css("visibility", "visible");
-                    window.location.replace("./posts.php");
+                    setTimeout(function(){
+                      window.location.replace("./posts.php");
+                    }, 2000);
                 },
                 error: function(r){
                   $('#error').html(r);

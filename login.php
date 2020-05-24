@@ -1,3 +1,7 @@
+<?php if(isset($_COOKIE['username'])){
+        header("Location: ./index.php");
+      } 
+?>
 <?php include_once('functions/config.php'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">

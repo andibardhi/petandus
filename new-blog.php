@@ -1,5 +1,10 @@
 <?php include_once('functions/config.php'); ?>
 <?php 
+if(!isset($_SESSION['role']) || $_SESSION['role']!='A'){
+        header("Location: ./blog.php");
+} 
+?>
+<?php 
   if (isset($_POST['ajax'])){
     blog_validation();
     exit;
@@ -60,7 +65,7 @@
         var files_length = $('#image')[0].files.length;
         var image = $('#image').val();
         var min_char = 05;
-        var max_char = 30;
+        var max_char = 40;
         var desc_min_char = 005;
         var desc_max_char = 2048;
         var errors = "";
@@ -107,7 +112,9 @@
               success: function(r){
                   $('#success').html("Blogu u krijua me sukses");
                   $('#success').css("visibility", "visible");
-                  window.location.replace("./blog.php");
+                  setTimeout(function(){
+                    window.location.replace("./blog.php");
+                  }, 2000);
               },
               error: function(r){
                 $('#error').html(r);
