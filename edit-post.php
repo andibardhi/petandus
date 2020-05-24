@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="utf-8">
+    <title>Modifiko Postim</title>
     <title>Edito post</title>
     <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'>
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -17,48 +18,93 @@
 <body>
     <?php
     include_once('./includes/navbar.php');
+    include_once('functions/config.php'); 
+   
+    $post = getPost();
+    $postId = $post[0];
+    $postTitle = $post[1];
+    $postDescription = $post[2];
+    $postImageBlob = $post[3];
+    $phoneNr = $post[9];
+    $email = $post[10];
+
+    $category = getDataById($post[6], "kategori", "emer");
+    $city=getDataById($post[8], "qytet", "emer");
+    $animal =getDataById($post[7], "kafshe", "emer"); 
+    
+    $allCategories = getAllData("emer","kategori");
+    $allCities = getAllData("emer","qytet");
+
+    
+    $allAnimals = getAllData("emer","kafshe");
+    
+    $userId = $_GET['userId'];
+    $postID = $_GET['postid'];
     ?>
     <br>
     <div class="container">
-                <form class="form">
+             
+                <form class="form" action="edit-post.php?postid=<?php echo $postId?>&userId=<?php echo $userId?>" method="POST">
                     <h1>Modifikoni post</h1>
+                    <div class="alert alert-success" id="successUpdate" role="alert">
+                        <h5>
+                            Postimi u modifikua me sukses!
+                        </h5>
+                        <script> $("#successUpdate").hide();</script>
+
+                    </div>
                     <label for="email">Titull:</label>
-                    <input type="text" class="form-control" id="title" value="Lorem Ipsum"  name="title">
-                    <label for="description">Pershkrim:</label>
-                    <textarea id="description" rows="4" cols="50">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.</textarea>
+                    <input type="text" class="form-control" id="title" value="<?php echo $postTitle?>"  name="title">
+                    <div class="col-md-12">
+                        <label for="description">Pershkrim:</label>
+                        <textarea id="description" rows="4" cols="50" name="description"><?php echo $postDescription?></textarea>
+                    </div>
+                 
                     <label for="phonenumber" >Nr i kontaktit:</label>
-                    <input type="text" class="form-control" id="phonenumber" value="068XXXXXXX" name="phonenumber">
+                    <input type="text" class="form-control" id="phonenumber" value="<?php echo $phoneNr ?>" name="phonenumber">
                     <label for="email">Emaili i kontaktit:</label>
-                    <input type="text" class="form-control" id="email" value="emermbiemer@gmail.com" name="email">
+                    <input type="text" class="form-control" id="email" value="<?php echo $email ?>" name="email">
                     <label for="city">Qyteti:</label>
-                    <select class="custom-select" name="city" id="city">
-                        <option value="tirane" selected>Tirane</option>
-                        <option value="durres">Durres</option>
-                        <option value="korce">Korce</option>
-                        <option value="vlore">Vlore</option>
+                    <select class="custom-select" name="city" id="city" value="<?php echo $city;?>">
+                        <?php
+                        // var_dump($city[0][0]);
+                        // exit();
+                        _printList($allCities, $city[0][0]) ?>
                     </select>
                     <label for="animal">Kafsha:</label>
-                    <select class="custom-select" name="animal" id="animal">
-                        <option value="qen" selected>Qen</option>
-                        <option value="mace">Mace</option>
-                        <option value="peshk">Peshk</option>
-                        <option value="kavje">Kavje</option>
+                    <select class="custom-select" name="animal" id="animal" value="<?php echo $animal?>">
+                        <?php _printList($allAnimals, $animal[0][0]) ?>
+
                     </select>
                     <label for="category">Kategoria:</label>
-                    <select class="custom-select" name="category" id="category">
-                        <option value="petsitting" selected>Pet sitting</option>
-                        <option value="adoptim">Adoptim</option>
-                        <option value="petcare">Kujdese</option>
-                        <option value="lajmerim">Lajmerim</option>
+                    <select class="custom-select" name="category" id="category" value="<?php echo $category?>">
+                        <?php _printList($allCategories, $category[0][0]) ?>
+                       
                     </select>
                     <br>
                     <div class="row justify-content-center">
-                        <button class="btn btn-primary text-center" type="button">Konfirmo</button>
+                        <button class="btn btn-primary text-center" type="submit" name="editPost" type="button">Konfirmo</button>
                     </div>
                     <br>
                 </form>   
     </div>
+
     <?php
+    if(isset($_POST['editPost'])){
+      
+        
+        $updatePostResult =  updatePost($userId,$postId);
+        // var_dump($updatePostResult);
+        // exit();
+        if($updatePostResult){?>
+            <script>
+                $("#successUpdate").show();
+            </script>
+        <?php
+        echo "<meta http-equiv='refresh' content='0'>";
+        }
+    }
+
     include_once('./includes/footer.php');
     ?>
 </body>

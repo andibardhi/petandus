@@ -32,7 +32,7 @@
     }
 
     /////////////////////////////////////////////////////////////////////
-    //*------------------Register page functions----------------------*//
+    //------------------Register page functions----------------------//
     /////////////////////////////////////////////////////////////////////
     //Validating user input data on register.php page
     function register_validation(){
@@ -221,7 +221,7 @@
     }
 
     ///////////////////////////////////////////////////////////////////////
-    //*------------------Activation page functions----------------------*//
+    //------------------Activation page functions----------------------//
     ///////////////////////////////////////////////////////////////////////
     //Activation function
     function activation(){
@@ -246,7 +246,7 @@
     }
     
     ///////////////////////////////////////////////////////////////////////
-    //*------------------Login form functions----------------------*//
+    //------------------Login form functions----------------------//
     ///////////////////////////////////////////////////////////////////////
     //Login form user input validation
     function login_validation(){
@@ -319,7 +319,7 @@
     }
 
      ///////////////////////////////////////////////////////////////////////
-    //*------------------Recover form functions----------------------*//
+    //------------------Recover form functions----------------------//
     ///////////////////////////////////////////////////////////////////////
     function recover_password(){
         if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -352,7 +352,7 @@
     }
 
     ///////////////////////////////////////////////////////////////////////
-    //*------------------Reset form functions----------------------*//
+    //------------------Reset form functions----------------------//
     ///////////////////////////////////////////////////////////////////////
     function reset_password(){
         if($_SERVER['REQUEST_METHOD'] == "POST"){
@@ -387,67 +387,76 @@
 }
 
     /////////////////////////////////////////////////////////////////////
-    //*------------------New post page functions----------------------*//
+    //------------------New post page functions----------------------//
     /////////////////////////////////////////////////////////////////////
     
     function post_validation(){
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
-            //Variable for storing errors
-            $errors = [];
-            
-            $username = $_SESSION['username'];
-            $title = clean($_POST['title']);
-            $description = clean($_POST['description']);
-            $phonenumber = clean($_POST['phonenumber']);
-            $city = clean($_POST['city']);
-            $email = strtolower(clean($_POST['email']));
-            $animal = clean($_POST['animal']);
-            $category = clean($_POST['category']);
 
-            date_default_timezone_set("Europe/Tirane");
-            $time = date("Y-m-d H:i:s");
+        if (!isset($_SESSION['username'])){
+            set_message('postim anonim');
+            redirect('register.php');
+        }else{
+            if($_SERVER['REQUEST_METHOD']=='POST'){
+                //Variable for storing errors
+                $errors = [];
+                
+                $username = $_SESSION['username'];
+                $title = clean($_POST['title']);
+                $description = clean($_POST['description']);
+                $phonenumber = clean($_POST['phonenumber']);
+                $city = clean($_POST['city']);
+                $email = strtolower(clean($_POST['email']));
+                $animal = clean($_POST['animal']);
+                $category = clean($_POST['category']);
 
-            $min_char = 05;
-            $max_char = 30;
-            $desc_min_char = 005;
-            $desc_max_char = 200;
-            $count = 0;
-
-            if(strlen($title) > $max_char){
-                $errors[] = "Ju lutem vendosni titullin me më pak se 30 gërma!";
-            }
-
-            if(strlen($title) < $min_char){
-                $errors[] = "Ju lutem vendosni titullin me më shumë se 5 gërma!";
-            }
-
-            if(strlen($description) > $desc_max_char){
-                $errors[] = "Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
-            }
-
-            if(strlen($description) < $desc_min_char){
-                $errors[] = "Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
-            }
-
-            if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
-                $errors[] = "Email jo i saktë!";
-            }
-
-            $allowed = array('jpeg', 'png', 'jpg');
-            $filename = $_FILES['image']['name'][0];
-            $ext = pathinfo($filename, PATHINFO_EXTENSION);
-            if (!in_array($ext, $allowed)) {
-                $errors[] = "Format jo i duhur i fotos!";
-            }
-            
-            if(!empty($errors)){
-                foreach($errors as $error){
-                    header('HTTP/1.1 500 Internal Server Error');
-                    echo $error;
+                date_default_timezone_set("Europe/Tirane");
+                $time = date("Y-m-d H:i:s");
+    
+                $min_char = 05;
+                $max_char = 30;
+                $desc_min_char = 005;
+                $desc_max_char = 200;
+                $count = 0;
+    
+                if(strlen($title) > $max_char){
+                    $errors[] = "Ju lutem vendosni titullin me më pak se 30 gërma!";
                 }
-            }else{
-                // Post save
-                create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time);
+    
+                if(strlen($title) < $min_char){
+                    $errors[] = "Ju lutem vendosni titullin me më shumë se 5 gërma!";
+                }
+    
+                if(strlen($description) > $desc_max_char){
+                    $errors[] = "Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
+                }
+    
+                if(strlen($description) < $desc_min_char){
+                    $errors[] = "Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
+                }
+
+                if(!filter_var($email, FILTER_VALIDATE_EMAIL)){
+                    $errors[] = "Email jo i saktë!";
+                }
+
+                $allowed = array('jpeg', 'png', 'jpg');
+                $filename = $_FILES['image']['name'][0];
+                $ext = pathinfo($filename, PATHINFO_EXTENSION);
+                if (!in_array($ext, $allowed)) {
+                    $errors[] = "Format jo i duhur i fotos!";
+                }
+                
+                if(!empty($errors)){
+                    foreach($errors as $error){
+                        header('HTTP/1.1 500 Internal Server Error');
+                        echo $error;
+                    }
+                }else{
+                    // Post registration
+                    if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
+                    }else{
+
+                    }
+                }
             }
         }
     }
@@ -469,6 +478,8 @@
         // Ruajtja e fotos
         $postID = getpostID($userID, $time);
         save_photo($postID);
+
+        return true;
     }
 
     function get_allID($username, $city, $animal, $category){
@@ -527,7 +538,7 @@
     }
 
     /////////////////////////////////////////////////////////////////////
-    //*------------------Posts page functions----------------------*//
+    //------------------Posts page functions----------------------//
     ////////////////////////////////////////////////////////////////////    
 
     function generate_post($filter){
@@ -558,7 +569,7 @@
             <a href='./single-post.php?id=" . $id . "' id='post'>      
                 <div class='row single-post'>
                     <title class='row' id='title'>" . $title . "</title>
-                    <div class='row d-flex justify-content-between'>
+                    <div class='row justify-content-around'>
                         <div class='col-5 img'>
                             <img src='data:image/jpeg;base64, " . $img . "' alt='post_photo'>
                         </div>
@@ -702,7 +713,11 @@
     }
 
     function getUserIDbyUsername(){
-        $username = $_SESSION['username'];
+        if(isset($_SESSION['username'])){
+            $username = $_SESSION['username'];
+        }else{
+            $username = $_GET['username'];
+        }
         $sql = "SELECT id  FROM `user` where username = '$username'";
         $result = query($sql);
         confirm($result);
@@ -772,7 +787,7 @@
     }
 
     /////////////////////////////////////////////////////////////////////
-    //*-------------- Single post page functions-------------------*//
+    //-------------- Single post page functions-------------------//
     ////////////////////////////////////////////////////////////////////
 
     function build_single_post($id){
@@ -862,8 +877,9 @@
         return $img;
     }
 
+
     /////////////////////////////////////////////////////////////////////
-    //*-------------- Profile page functions-------------------*//
+    //-------------- Profile page functions-------------------//
     ////////////////////////////////////////////////////////////////////
 
     function whatdataIS($message, $data){
@@ -872,21 +888,7 @@
         exit();
     }
     function updateProfile(){
-        // var_dump("Para se Klikuam Submit!!!");
-        //     exit();
-        // $firstname = $_REQUEST['firstname'];
-        // $lastname = $_REQUEST['lastname'];
-        // $birthdate = $_REQUEST['birthday'];
-        // $phone = $_REQUEST['phone'];
-        // $city = $_REQUEST['city'];
-        // $email = $_REQUEST['email'];
-        // var_dump('firstname ->'.$firstname);
-        // var_dump('lastname ->'.$lastname);
-        // var_dump('birthdate->'.$birthdate);
-        // var_dump('phone ->'.$phone);
-        // var_dump('city ->'.$city);
-        // var_dump('email ->'.$email);
-
+       
         if(isset($_REQUEST['submitEditProfile'])){
             // var_dump("Klikuam Submit!!!");
             // exit();
@@ -899,10 +901,10 @@
             $email = $_REQUEST['email'];
      
 
-            $password = md5($_REQUEST['pasword']);
-            updateProfiledata($firstname, $lname, $phone, $birthdate, $city );
-            updataUserData($password, $email);
+            $updP = updateProfiledata($firstname, $lname, $phone, $birthdate, $city );
+            $updU = updateUserData($email);
             //To be completed with profile image update
+            return $updP && $updU;
             
         }
     }
@@ -914,28 +916,151 @@
          SET
             emer = '$name',
             mbiemer = '$lastName',
-            mosha='$birthdate',
+            datelindja='$birthdate',
             nrtel= '$phone',
             qyteti= '$city'
          WHERE 
             userid = $id";
-        confirm(query($sql));
+            // $result = query($sql);
+            $result =query($sql);
+        return $result;
     }
 
-    function updataUserData($passw, $email){
+    function updateUserData($email){
         $id = getUserIDbyUsername();
         $sql = "UPDATE user
          SET
-             email = '$email',
-             password = '$passw'
+             email = '$email'
          WHERE 
             id = $id "; 
-        confirm(query($sql));
+            
+        $result = query($sql);
+        return $result;
     }
 
+    function displayPostImage($imageType,$data, $cssClass){
+        echo '<img class="'.$cssClass.'" src="data:'.$imageTypeS.';base64,"'.$data.'">';
+    }
 
+    function getPost(){
+        $userId = $_GET['userId'];
+        $postID = $_GET['postid'];
+        $sql = "SELECT * FROM `post` WHERE autorid = $userId AND id =$postID";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0];
+    }
+    
+    function getEmerById($id, $tableName){
+        $sql = "SELECT emer FROM `$tableName`";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+
+        return $row;
+    }
+
+    function getDataById($id, $tableName, $data){
+
+        $sql = "SELECT $data FROM `$tableName` WHERE id = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        
+        return $row;
+    }
+
+    function getAllData($data , $tableName){
+        $sql = "SELECT $data FROM `$tableName`";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        
+        return $row;
+    }
+
+    function _printList($array, $value){
+        foreach($array as $data){
+            $i = 0;
+            echo("Data<br>");
+            var_dump($data[$i]);
+            var_dump($value);
+            echo("Value<br>");
+            $selected = '';
+            if($data[$i] == $value ) {
+                $selected = 'selected';
+            }
+            echo '<option '.$selected.' value="'.$data[$i].'">'.$data[$i].'</option>';
+            $i++;
+        }
+        // exit();
+    }
+
+    function printList($array){
+        foreach($array as $data){
+            
+            $i = 0;
+            if($data)
+            echo '<option value="'.$data[$i].'">'.$data[$i].'</option>';
+            $i++;
+        }
+    }
+
+    function getDataByName($name, $tableName, $data){
+        $sql = "SELECT $data FROM `$tableName` WHERE emer LIKE '$name'";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0][0];
+    }
+
+    function updatePost($userId, $postId){
+        $title = $_REQUEST['title'];
+        $description = $_REQUEST['description'];
+        $email = $_REQUEST['email'];
+        $phone = $_REQUEST['phonenumber'];
+        $qyteti =$_REQUEST['city'];
+        $city = getDataByName($qyteti, "qytet",  "id");
+        $category = getDataByName( $_REQUEST['category'],  "kategori","id");
+        $animal =getDataByName($_REQUEST['animal'], "kafshe", "id" ); 
+        $data = date('m/d/Y');
+        $userId = $userId;
+        $postID = $postId;
+        $sql = 
+        " UPDATE post
+            SET 
+            titull = '$title',
+            pershkrim= '$description',
+            data= $data,
+            autorId= $userId,
+            kategoriId= $category,
+            kafshaId= $animal,
+            qytetiId= $city,
+            nrtel= '$phone',
+            email= '$email'
+            WHERE id= $postID";
+        $result = query($sql);
+        // save_photo($postID);
+        //  var_dump($result);
+        //  exit();
+        return $result;
+    }
+
+    function get_profileImage($id){
+        $id= 
+        $sql = "SELECT foto FROM Post WHERE id=" . $id;
+        $result = query($sql);
+        confirm($result);
+        $img = array();
+        while($d = mysqli_fetch_row($result)){
+            array_push($img, base64_encode($d[0]));
+        }
+
+        return $img;
+    }
     /////////////////////////////////////////////////////////////////////
-    //*-------------------Single blog page functions------------------*//
+    //-------------------Single blog page functions------------------//
     ////////////////////////////////////////////////////////////////////
 
     function build_single_blog($id){
@@ -998,7 +1123,7 @@
     }
 
     /////////////////////////////////////////////////////////////////////
-    //*-----------------------Blog page functions--------------------*//
+    //-----------------------Blog page functions--------------------//
     ////////////////////////////////////////////////////////////////////
 
     function generate_blog($nr){
@@ -1017,21 +1142,17 @@
             echo "
             <a href='./single-blog.php?id=" . $id . "'>    
                 <div class='row single-post'>
-                    
-                    
                     <div class='row justify-content-around'>
                         
-                        <title class='row' id='title'>" . $title . "</title>
-                        <div class='col-12 description'>
-                            <span id='desc'>" . $desc . "</span>
-                        </div>
-                        
                         <div class='col-12'>
-                            <br>    
-                            <img src='data:image/jpeg;base64, " . $img . "' alt='blog_photo' style='padding-bottom: 25px; width: 550px;' class='rounded mx-auto d-block'>
+                            <img src='data:image/jpeg;base64, " . $img . "' alt='blog_photo'>
                         </div>
-                        <div class='row info d-flex flex-row-reverse'>
-                        <span id='info'>" . $date . "</span>
+                        <h3> <title class='row'>" . $title . "</title> </h3>
+                        <div class='col-12 description'>
+                            <span>" . $desc . "</span>
+                        </div>
+                        <div class='row info'>
+                            <span id='info'>" . $date . "</span>
                         </div>
                     </div>
                 </div>
@@ -1040,9 +1161,6 @@
         }
     }
 
-
-
-    
     function get_blog_data($nr){
 
         $sql = "SELECT id, titull, pershkrim, data FROM Blog ORDER BY id DESC LIMIT " . $nr;
@@ -1074,13 +1192,14 @@
     }
 
     /////////////////////////////////////////////////////////////////////
-    //*-------------------Create blog page functions------------------*//
+    //-------------------Create blog page functions------------------//
     ////////////////////////////////////////////////////////////////////
 
     function blog_validation(){
 
-        if($_SERVER['REQUEST_METHOD'] == 'POST'){
+        if($_SERVER['REQUEST_METHOD']=='POST'){
             //Variable for storing errors
+            echo "Fotiiiii";
             $errors = [];
 
             $title = clean($_POST['title']);
@@ -1090,9 +1209,9 @@
             $date = date("Y-m-d H:i:s");
 
             $min_char = 05;
-            $max_char = 40;
+            $max_char = 30;
             $desc_min_char = 005;
-            $desc_max_char = 2048;
+            $desc_max_char = 200;
             $count = 0;
 
             if(strlen($title) > $max_char){
@@ -1124,8 +1243,12 @@
                     echo $error;
                 }
             }else{
-                // Blog save
-                create_blog($title, $description, $date);
+                // Post registration
+                if(create_blog($title, $description, $date)){
+
+                }else{
+
+                }
             }
         }
     }
@@ -1140,6 +1263,8 @@
         // Ruajtja e fotos
         $postID = getblogID($date);
         save_blog_photo($postID);
+
+        return true;
     }
 
     function save_blog_photo($postID){
@@ -1161,4 +1286,42 @@
         return $postID;
     }
 
+    function _getUserIDbyUsername($username){
+        $sql = "SELECT id  FROM `user` where username = '$username'";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0][0];
+    }
+
+     
+
+    function getUserPostsByUserID($id){
+        $sql = "SELECT * FROM `post` WHERE autorid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row;
+    }
+
+   function _getUserByID($id){
+    $sql = "SELECT * FROM `user` WHERE id = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+
+        return $row[0];
+   }
+   function _getProfileByID($id){
+    $sql = "SELECT * FROM `profil` WHERE userid = $id";
+        $result = query($sql);
+        confirm($result);
+        $row = mysqli_fetch_all($result);
+        return $row[0];
+   }
+   function deletePostById($id){
+        $sql = "DELETE FROM `post` WHERE id = $id";
+        $result = query($sql);
+        return $result;
+   }
 ?>
