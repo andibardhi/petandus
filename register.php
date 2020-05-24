@@ -20,7 +20,7 @@
 <div class="container h-100">
     <?php register_validation(); ?>
     <?php
-      
+      $allCities = getAllData("emer","qytet");
       if (isset($_SESSION['info_msg']) && $_SESSION['info_msg'] == 'postim anonim'){
         echo('<div class="alert alert-danger text-center">Ju duhet të keni një llogari për të postuar</div>');
         unset($_SESSION['info_msg']);
@@ -40,10 +40,7 @@
               <p for="phonenumber">*Numri duhet te filloj me 06</p>
               <select id="city" name="city" >
                   <option value="null" selected disabled > Qyteti </option>
-                  <option value="Tirane">Tirane</option>
-                  <option value="Durres">Durres</option>
-                  <option value="Korce">Korce</option>
-                  <option value="Vlore">Vlore</option>
+                  <?php _printList($allCities, 'Qyteti') ?>
               </select>
               <input type="text" name="username" id="username" placeholder="Username">
               <input type="text" name="email" id="email"  placeholder="Email">

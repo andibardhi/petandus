@@ -29,6 +29,7 @@
             $userData = getDataFromUser();
             $cities = getAllData("emer","qytet");
             echo "<meta http-equiv='refresh' content='0'>";
+            redirect('./profile.php');
         }
     }
   
