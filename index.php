@@ -101,7 +101,6 @@ include_once('./includes/navbar.php');
 
               <div class="card-body">
                 <div class="list-unstyled mt-3 mb-4 opacity">
-                  
                   <a href="http://localhost/petus/posts.php?category=pet+sitting"> 
                     <div class="text-centered" style="margin-left: 8px;">Pet-Sitting</div>
                     <img src="./img/petsit.jpg" class="foto" >
@@ -114,7 +113,42 @@ include_once('./includes/navbar.php');
         </div>
       </div>
 <!-- sherbimet finish -->
-      <br>
+
+
+<!-- rreth nesh start -->
+<div style="background-color:#FFEBB6;">
+  <div class="container" >
+    <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+      <h1 class="display-4" style="color: #e45225; 
+        font-family: Montserrat, sans-serif; 
+        text-transform: uppercase; 
+        letter-spacing: 0.1em;"> 
+        <b>Rreth nesh</b>
+      </h1>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-5" style="background-color:#e45225; color:white;">
+        <h2 class="d-flex justify-content-center"> Kush Jemi </h2>
+        <p >
+        Këtu përdoruesit do të bashkëveprojnë me njëri-tjetrin përmes postimeve të ndryshme. 
+        Postimet mund të jenë në lidhje me adoptimin ndaj kafshëve, njoftime per kafshë të humbura, apo dhe shërbime kujdesi.
+        Gjithashtu portali ofron dhe një nënfaqe blog, ku do të paraqiten shkrime edukative apo informative nga stafi jone lidhur me tematikën e portalit.
+        </p>
+      </div>
+
+      <div class="col-5" style="background-color:#e45225; color:white; margin-left: 50px;">
+      <h2 class="d-flex justify-content-center" > Qellimi Jone </h2>
+        <p>
+        Objektivi i portalit është krijimi i një ure lidhëse midis personave të cilët kërkojnë kafshë shtëpiake dhe atyre të cilët kërkojnë të adoptojnë një të tillë. Gjithashtu njoftimet për kafshë të humbura dhe shërbimet e kujdesit janë shërbime me funksion humanitar për komunitetin.
+        </p>
+      </div>
+    </div>
+  </div>
+  <br><br>
+</div>
+
+
+<!-- rreth nesh finish -->
       <?php
       include_once('./includes/footer.php');
       ?>

@@ -27,7 +27,15 @@
 </head>
 
 <body>
-    <?php include_once('./includes/navbar.php'); ?>
+    <?php 
+      include_once('./includes/navbar.php'); 
+      $allCategories = getAllData("emer","kategori");
+      $allCities = getAllData("emer","qytet");
+      $allAnimals = getAllData("emer","kafshe");
+    
+    ?>
+
+
     <br>
     <div class="container">
     <div class="alert alert-danger text-center" id="error" style="visibility: hidden;"></div>
@@ -47,25 +55,15 @@
           <input type="text" class="form-control" id="email" name="email">
           <label for="city">Qyteti:</label>
           <select class="custom-select" name="city" id="city">
-              <option value="Tirane">Tirane</option>
-              <option value="Durres">Durres</option>
-              <option value="Korce">Korce</option>
-              <option value="Vlore">Vlore</option>
+          <?php _printList($allCities, $allCities[0][0]) ?>
           </select>
           <label for="animal">Kafsha:</label>
-          <select class="custom-select" name="animal" id="animal">
-              <option value="Qen">Qen</option>
-              <option value="Mace">Mace</option>
-              <option value="Peshk">Peshk</option>
-              <option value="Kavje">Kavje</option>
-              <option value="Tjeter">Tjeter</option>
+          <select class="custom-select" name="animal" id="animal" >
+              <?php _printList($allAnimals, $allAnimals[0][0]) ?>
           </select>
           <label for="category">Kategoria:</label>
           <select class="custom-select" name="category" id="category">
-              <option value="Pet Sitting">Pet Sitting</option>
-              <option value="Adoptim">Adoptim</option>
-              <option value="Kujdesje">Kujdesje</option>
-              <option value="Lajmerim">Lajmerim</option>
+          <?php _printList($allCategories, $allCategories[0][0]) ?>
           </select>
           <br>
           <div class="row justify-content-center">

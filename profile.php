@@ -19,7 +19,6 @@
     <?php
     include_once('./includes/navbar.php');
     include_once('functions/config.php');
-   
     if(isset($_GET['username']) || $_SESSION['username'] != null){
         ini_set("display_errors", 0);
         $data = getUserPosts();
@@ -31,7 +30,7 @@
         $amI = true;
         $deleteP = deletePostById(14);
         
-        if(!is_null($_GET['username']) &&($_GET['username'] != $userData[1])){
+        if(isset($_GET['username']) &&($_GET['username'] != $userData[1])){
             $amI = false;
 
             $_data =  getUserPostsByUserID(_getUserIDbyUsername($_GET['username']));
@@ -146,7 +145,7 @@
                                     $title = $postValue[1];
                                     $description = $postValue[2];
                                     $postId = $postValue[0];
-                                    $modifikoPostin = "Modifiko Postimin";
+                                    $modifikoPostin = "Modifiko";
                                     $finfo    = new finfo(FILEINFO_MIME);
                                     $mimeType = $finfo->buffer($postValue[3]);
                                     $imageType = strstr($mimeType, ';', true);
@@ -155,8 +154,8 @@
                                 
                                 ?>
                                 <div class="row single-post" id="post-id-<?php echo $postId?>"> 
-                                    <div class="col-8 description">
-                                        <a href="./single-post.php?id=<?php echo $postId?>"> 
+                                    <div class="col-8 description d-flex align-items-start flex-column bd-highlight">
+                                        <a class="mb-auto bd-highlight" href="./single-post.php?id=<?php echo $postId?>"> 
                                             <h3 class=""><?php echo $title?></h3>
                                             <?php 
                                                 if(strlen($description)<=100){
@@ -170,7 +169,7 @@
                                         <br>
                                         <br>
                                         <?php if($amI && $_SESSION['username'] != null){?>
-                                        <div class="row">
+                                        <div class="row  bd-highlight">
                                             <div class="col-6">
                                                 <a href="./edit-post.php?postid=<?php echo $postId.'&userId='.$userData[0]?>">
                                                     <button class="btn edit-post"> <?php echo $modifikoPostin?> </button>
