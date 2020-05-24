@@ -1,4 +1,9 @@
 <?php include_once('functions/config.php'); ?>
+<?php 
+if(!isset($_GET['id'])){
+    header("Location: ./posts.php");
+}
+?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 
