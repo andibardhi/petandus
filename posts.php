@@ -18,6 +18,11 @@
     
     <body style="background-color: #fff9e9;">
         <?php include_once('./includes/navbar.php'); ?>
+        <?php 
+        $allCategories = getAllData("emer","kategori");
+        $allCities = getAllData("emer","qytet");
+        $allAnimals = getAllData("emer","kafshe");
+        ?>
         <br><br>
         <!-- filer start -->
         <div class="container col-md-8" style="padding: 0px;">
@@ -27,28 +32,21 @@
             <div class="btn-group">
                 <select id="btncolor" name="animal" id="animal">
                     <option value="null" selected disabled style=" display: none;">Kafsha</option>
-                    <option value="qen">Qen</option>
-                    <option value="mace">Mace</option>
-                    <option value="peshk">Peshk</option>
+                    <?php _printList($allAnimals, 'Kafsha') ?>
                 </select>
             </div>
 
             <div class="btn-group">
                 <select id="btncolor" name="city" id="city">
                     <option value="null" selected disabled style=" display: none;">Qyteti</option>
-                    <option value="tirane" >Tiranë</option>
-                    <option value="durres">Durrës</option>
-                    <option value="korce">Korçë</option>
-                    <option value="vlore">Vlorë</option>
+                    <?php _printList($allCities, 'Qyteti') ?>
                 </select>
             </div>
 
             <div class="btn-group">
                 <select id="btncolor" name="category" id="category">
                     <option value="null" selected disabled style=" display: none;">Kategoria</option>
-                    <option value="adoptim" >Adoptim</option>
-                    <option value="pet sitting">Pet sitting</option>
-                    <option value="veteriner">Veteriner</option>
+                    <?php _printList($allCategories, 'Kategoria') ?>
                 </select>
             </div>
             <button type="submit" id="btncolor" class="btn" style="margin-left: 2%; background-color:#e45225; border-radius: 40px; color:white;">Shto</button>
