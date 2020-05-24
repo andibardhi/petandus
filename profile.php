@@ -19,7 +19,6 @@
     <?php
     include_once('./includes/navbar.php');
     include_once('functions/config.php');
-   
     if(isset($_GET['username']) || $_SESSION['username'] != null){
         ini_set("display_errors", 0);
         $data = getUserPosts();
@@ -31,7 +30,7 @@
         $amI = true;
         $deleteP = deletePostById(14);
         
-        if(!is_null($_GET['username']) &&($_GET['username'] != $userData[1])){
+        if(isset($_GET['username']) &&($_GET['username'] != $userData[1])){
             $amI = false;
 
             $_data =  getUserPostsByUserID(_getUserIDbyUsername($_GET['username']));
