@@ -126,22 +126,20 @@ include_once('./includes/navbar.php');
         <b>Rreth nesh</b>
       </h1>
     </div>
-    <div class="row">
-      <div class="col-6">
+    <div class="row justify-content-center">
+      <div class="col-5" style="background-color:#e45225; color:white;">
         <h2 class="d-flex justify-content-center"> Kush Jemi </h2>
-        <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-          It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        <p >
+        Këtu përdoruesit do të bashkëveprojnë me njëri-tjetrin përmes postimeve të ndryshme. 
+        Postimet mund të jenë në lidhje me adoptimin ndaj kafshëve, njoftime per kafshë të humbura, apo dhe shërbime kujdesi.
+        Gjithashtu portali ofron dhe një nënfaqe blog, ku do të paraqiten shkrime edukative apo informative nga stafi jone lidhur me tematikën e portalit.
         </p>
       </div>
 
-      <div class="col-6">
+      <div class="col-5" style="background-color:#e45225; color:white; margin-left: 50px;">
       <h2 class="d-flex justify-content-center" > Qellimi Jone </h2>
         <p>
-          Lorem Ipsum is simply dummy text of the printing and typesetting industry. 
-          Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. 
-          It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged.
+        Objektivi i portalit është krijimi i një ure lidhëse midis personave të cilët kërkojnë kafshë shtëpiake dhe atyre të cilët kërkojnë të adoptojnë një të tillë. Gjithashtu njoftimet për kafshë të humbura dhe shërbimet e kujdesit janë shërbime me funksion humanitar për komunitetin.
         </p>
       </div>
     </div>
