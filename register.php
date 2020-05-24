@@ -1,3 +1,7 @@
+<?php if(isset($_COOKIE['username'])){
+        header("Location: ./index.php");
+      } 
+?>
 <?php include_once('functions/config.php'); ?>
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
@@ -16,6 +20,7 @@
 <div class="container h-100">
     <?php register_validation(); ?>
     <?php
+      
       if (isset($_SESSION['info_msg']) && $_SESSION['info_msg'] == 'postim anonim'){
         echo('<div class="alert alert-danger text-center">Ju duhet të keni një llogari për të postuar</div>');
         unset($_SESSION['info_msg']);

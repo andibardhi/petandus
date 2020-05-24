@@ -1,5 +1,10 @@
 <?php include_once('functions/config.php'); ?>
 <?php 
+if(!isset($_SESSION['role']) || $_SESSION['role']!='A'){
+        header("Location: ./blog.php");
+} 
+?>
+<?php 
   if (isset($_POST['ajax'])){
     blog_validation();
     exit;
