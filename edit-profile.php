@@ -19,8 +19,17 @@
     include_once('./includes/navbar.php');
     include_once('functions/config.php'); 
     $profileData = getDataFromProfile();
-
     $userData = getDataFromUser();
+    
+    $finfo    = new finfo(FILEINFO_MIME);
+    $mimeType = $finfo->buffer($profileData[4]);
+    $imageType = strstr($mimeType, ';', true);
+    $img = base64_encode($profileData[4]);
+    // var_dump($img);
+    // exit();
+    // $image = $img[0];
+
+
     $cities = getAllData("emer","qytet");
     $updateResult = updateProfile();
     if(isset($_POST['submitEditProfile'])){
@@ -29,19 +38,29 @@
             $userData = getDataFromUser();
             $cities = getAllData("emer","qytet");
             echo "<meta http-equiv='refresh' content='0'>";
-            redirect('./profile.php');
+            // redirect('./profile.php');
         }
     }
   
     ?>
     <br>
     <div class="container">
-        <form class="form" id="editProfile" method="POST">
+        <form class="form" id="editProfile" method="POST" enctype="multipart/form-data">
             <h1>Modifikoni profilin</h1>
-            <label for="firstname">Emer:</label>
-            <input type="text" class="form-control" id="firstname" placeholder="Emer"  name="firstname" value="<?php echo $profileData[1]?>">
-            <label for="lastname">Mbiemer:</label>
-            <input type="text" class="form-control" id="lastname" placeholder="Mbiemer" name="lastname" value="<?php echo $profileData[2]?>" >
+            <div class="row">
+                <div class="col-6">
+                <label for="firstname">Emer:</label>
+                    <input type="text" class="form-control" id="firstname" placeholder="Emer"  name="firstname" value="<?php echo $profileData[1]?>">
+                    <label for="lastname">Mbiemer:</label>
+                    <input type="text" class="form-control" id="lastname" placeholder="Mbiemer" name="lastname" value="<?php echo $profileData[2]?>" >
+                </div>
+                <div class="col-6">
+                    <img src="data:<?php echo $imageType?>;base64, <?php echo $img ?>" alt='post_photo' class="img-fluid">
+
+                    <input type="file"  name="image[]" id="image" accept=".jpg, .png, .jpeg">
+                </div>
+            </div>
+            
             <label for="birdday">Datelindje:</label>
             <input type="date" class="form-control" id="birthdate" placeholder="1990-03-25" name="birthday" value="<?php echo $profileData[3]?>">
             <label for="phone">Nr telefoni:</label>

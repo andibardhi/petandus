@@ -899,9 +899,10 @@
             $phone = $_REQUEST['phone'];
             $city = $_REQUEST['city'];
             $email = $_REQUEST['email'];
-     
+            $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
+            
 
-            $updP = updateProfiledata($firstname, $lname, $phone, $birthdate, $city );
+            $updP = updateProfiledata($firstname, $lname, $image_file, $phone, $birthdate, $city );
             $updU = updateUserData($email);
             //To be completed with profile image update
             return $updP && $updU;
@@ -909,7 +910,7 @@
         }
     }
 
-    function updateProfiledata($name, $lastName, $phone, $birthdate, $city ){
+    function updateProfiledata($name, $lastName, $image_file, $phone, $birthdate, $city ){
         
         $id = getUserIDbyUsername();
         $sql = "UPDATE profil
@@ -918,7 +919,8 @@
             mbiemer = '$lastName',
             datelindja='$birthdate',
             nrtel= '$phone',
-            qyteti= '$city'
+            qyteti= '$city',
+            foto = '$image_file'
          WHERE 
             userid = $id";
             // $result = query($sql);
@@ -1027,6 +1029,14 @@
         $data = date('m/d/Y');
         $userId = $userId;
         $postID = $postId;
+        $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
+             
+      
+            
+      
+        // $sql = "UPDATE `post` SET foto =  imgContent WHERE id = 1";
+        // Insert image content into database 
+         
         $sql = 
         " UPDATE post
             SET 
@@ -1038,13 +1048,24 @@
             kafshaId= $animal,
             qytetiId= $city,
             nrtel= '$phone',
-            email= '$email'
+            email= '$email',
+            foto = '$image_file'
             WHERE id= $postID";
         $result = query($sql);
-        // save_photo($postID);
-        //  var_dump($result);
-        //  exit();
+      
         return $result;
+    }
+
+    function updatePostImagePost($image){
+        $status = $statusMsg = ''; 
+        if(isset($_POST["submit"])){ 
+            $status = 'error'; 
+            if(!empty($_FILES["image"]["name"])) { 
+                // Get file info 
+     
+            } 
+        }
+        return $status;
     }
 
     function get_profileImage($id){
@@ -1328,4 +1349,6 @@
         $result = query($sql);
         return $result;
    }
+
+   
 ?>
