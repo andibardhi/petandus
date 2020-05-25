@@ -30,7 +30,7 @@
         if($_POST['action']=='deactivate-user'){
             $id = $_POST['id'];
 
-            $con = mysqli_connect("localhost","","","petus");
+            $con = mysqli_connect("localhost","root","","petus");
             $sql = "UPDATE USER SET ROLE = 'F' WHERE id = $id";
             if ($con->query($sql) === TRUE ) {
                     echo "success";      
