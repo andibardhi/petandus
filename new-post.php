@@ -149,16 +149,6 @@
                 cache: false,
                 processData: false,
                 success: function(r){
-                    console.log(r);
-                    $('#success').html("Postimi u krijua me sukses");
-                    $('#success').css("visibility", "visible");
-                },
-                error: function(r){
-                  console.log(r);
-                  $('#success').html("Ndodhi një gabim. Ju lutem provoni përsëri!");
-                  $('#success').removeClass("alert alert-success text-center");
-                  $('#success').addClass("alert alert-danger text-center");
-                  $('#success').css("visibility", "visible");
                     $('#success').html("Postimi u krijua me sukses");
                     $('#success').css("visibility", "visible");
                     setTimeout(function(){

@@ -448,6 +448,7 @@
                 }else{
                     // Post registration
                     if(create_post($username, $title, $description, $phonenumber, $email, $city, $animal, $category, $time)){
+                        redirect('./posts.php');
                     }else{
 
                     }
