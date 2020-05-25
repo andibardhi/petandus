@@ -95,24 +95,18 @@
           var files_length = $('#image')[0].files.length;
           var image = $('#image').val();
           var min_char = 05;
-          var max_char = 30;
+          var max_char = 250;
           var desc_min_char = 005;
-          var desc_max_char = 200;
           var errors = "";
           var count = 0;
           
           if(title.length > max_char){
-            errors += "<br>Ju lutem vendosni titullin me më pak se 30 gërma!";
+            errors += "<br>Ju lutem vendosni titullin me më pak se 250 gërma!";
             count++;
           }
 
           if(title.length < min_char){
             errors += "<br>Ju lutem vendosni titullin me më shumë se 5 gërma!";
-            count++;
-          }
-
-          if(description.length > desc_max_char){
-            errors += "<br>Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
             count++;
           }
 

@@ -46,7 +46,7 @@
               <input type="text" name="email" id="email"  placeholder="Email">
               <input type="password" name="password" id="password" placeholder="Fjalëkalimi">
               <input type="password" name="cpassword" id="cpassword" name="cpassword" placeholder="Konfirmim Fjalëkalimi">
-              <input type="file" name="img" id="img" placeholder="Ngarkoni foton tuaj">
+              <input type="file" name="img" id="img" placeholder="Ngarkoni foton tuaj" accept=".jpg, .png, .jpeg">
               <span id="uploaded_image"></span>
               </form>
               <button id="btn"> Regjistrohu </button> 
@@ -200,8 +200,15 @@
                 var input = document.getElementById("img");
                 var formData = new FormData(document.getElementById("form"));
                 formData.append( 'img', input.files[0] );
+                
+                if(input.files[0]!=null){
+                  if(input.files[0].name.slice(-3)!="jpg" && input.files[0].name.slice(-3)!="png" && input.files[0].name.slice(-4)!="jpeg" ){
+                    errors+="<br>Formati i fotos nuk suportohet!";
+                    count++;
+                  }
+                }
 
-                if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword && city!="null" ) {
+                if (firstname != "" && lastname != "" && birthdate != "" && phonenumber != "" && city != "" && email != "" && username != ""  && password != ""  && cpassword != "" && password==cpassword && city!="null" && count==0 ) {
                     $.ajax({
                         method: 'POST',
                         data: formData,
