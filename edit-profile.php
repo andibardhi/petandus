@@ -18,6 +18,8 @@
     <?php
     include_once('./includes/navbar.php');
     include_once('functions/config.php'); 
+    ini_set("display_errors", 0);
+
     $profileData = getDataFromProfile();
     $userData = getDataFromUser();
     
@@ -29,10 +31,17 @@
     // exit();
     // $image = $img[0];
 
-
     $cities = getAllData("emer","qytet");
-    $updateResult = updateProfile();
     if(isset($_POST['submitEditProfile'])){
+
+        $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
+         
+        if( strlen($image_file) > 0 ){
+            $updateResult = updateProfile($image_file);
+        }else {
+            $updateResult = updateProfile($profileData[4]);
+        }
+
         if($updateResult){
             $profileData = getDataFromProfile();
             $userData = getDataFromUser();

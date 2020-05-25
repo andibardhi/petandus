@@ -19,7 +19,7 @@
     <?php
     include_once('./includes/navbar.php');
     include_once('functions/config.php'); 
-   
+    ini_set("display_errors", 0);
     $post = getPost();
     $postId = $post[0];
     $postTitle = $post[1];
@@ -113,18 +113,20 @@
 
     <?php
     if(isset($_POST['editPost'])){
-      
         
-        $updatePostResult =  updatePost($userId,$postId);
-        // var_dump($updatePostResult);
-        // exit();
+        $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
+        if(strlen($image_file) > 0 ){
+            $updatePostResult =  updatePost($userId,$postId, $image_file);
+        }else {
+            $updatePostResult =  updatePost($userId,$postId, $postImageBlob);
+        }
+        
         if($updatePostResult){?>
             <script>
                 $("#successUpdate").show();
             </script>
         <?php
         echo "<meta http-equiv='refresh' content='0'>";
-        // redirect('./profile.php');
         }
     }
 
