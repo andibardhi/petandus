@@ -55,7 +55,7 @@
           <input type="text" class="form-control" id="email" name="email">
           <label for="city">Qyteti:</label>
           <select class="custom-select" name="city" id="city">
-          <?php _printList($allAnimals, $allAnimals[0][0]) ?>
+          <?php _printList($allCities, $allCities[0][0]) ?>
           </select>
           <label for="animal">Kafsha:</label>
           <select class="custom-select" name="animal" id="animal" >
