@@ -19,7 +19,7 @@
     <?php
     include_once('./includes/navbar.php');
     include_once('functions/config.php'); 
-   
+    ini_set("display_errors", 0);
     $post = getPost();
     $postId = $post[0];
     $postTitle = $post[1];
@@ -38,13 +38,19 @@
     
     $allAnimals = getAllData("emer","kafshe");
     
+    $finfo    = new finfo(FILEINFO_MIME);
+    $mimeType = $finfo->buffer($postImageBlob);
+    $imageType = strstr($mimeType, ';', true);
+    $img = get_photo_byID($postId);
+    $image = $img[0];
+
     $userId = $_GET['userId'];
     $postID = $_GET['postid'];
     ?>
     <br>
     <div class="container">
              
-                <form class="form" action="edit-post.php?postid=<?php echo $postId?>&userId=<?php echo $userId?>" method="POST">
+                <form class="form" method="POST" enctype="multipart/form-data">
                     <h1>Modifikoni post</h1>
                     <div class="alert alert-success" id="successUpdate" role="alert">
                         <h5>
@@ -55,11 +61,27 @@
                     </div>
                     <label for="email">Titull:</label>
                     <input type="text" class="form-control" id="title" value="<?php echo $postTitle?>"  name="title">
-                    <div class="col-md-12">
-                        <label for="description">Pershkrim:</label>
-                        <textarea id="description" rows="4" cols="50" name="description"><?php echo $postDescription?></textarea>
+                    <div class="row">
+                        <div class="col-6">
+                            <label for="description">Pershkrim:</label>
+                            <textarea id="description" rows="4" cols="20" name="description"><?php echo $postDescription?></textarea>
+                        </div>
+                        <div class="col-6">
+                            <img src="data:<?php echo $imageType?>;base64, <?php echo $image ?>" alt='post_photo' class="img-fluid">
+                            <br>
+                            <br>
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <label for="imazhi">Ndrysho foton</label>
+                                </div>
+                                <div class="col-md-6">
+                                    <input type="file"  name="image[]" id="image" accept=".jpg, .png, .jpeg">
+                                    <!-- <input type="file" name="image" required>     -->
+                                    <!-- <input type="file" name = "image" required> -->
+                                </div>
+                            </div>
+                        </div>
                     </div>
-                 
                     <label for="phonenumber" >Nr i kontaktit:</label>
                     <input type="text" class="form-control" id="phonenumber" value="<?php echo $phoneNr ?>" name="phonenumber">
                     <label for="email">Emaili i kontaktit:</label>
@@ -91,18 +113,20 @@
 
     <?php
     if(isset($_POST['editPost'])){
-      
         
-        $updatePostResult =  updatePost($userId,$postId);
-        // var_dump($updatePostResult);
-        // exit();
+        $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
+        if(strlen($image_file) > 0 ){
+            $updatePostResult =  updatePost($userId,$postId, $image_file);
+        }else {
+            $updatePostResult =  updatePost($userId,$postId, $postImageBlob);
+        }
+        
         if($updatePostResult){?>
             <script>
                 $("#successUpdate").show();
             </script>
         <?php
         echo "<meta http-equiv='refresh' content='0'>";
-        redirect('./profile.php');
         }
     }
 
