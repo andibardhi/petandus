@@ -131,7 +131,7 @@
             count++;
           }
 
-          if (title != "" && files_length != 0 && description != "" && phonenumber != "" && email != "" && city != "" && animal != "" && category != "" && count == 0){
+          if (title != "" && files_length != 0 && description != "" && phonenumber != "" && email != "" && city != "" && animal != "" && category != "" && count == 0 ){
             
             $('#error').css("visibility", "hidden");
 
