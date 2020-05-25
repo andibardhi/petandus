@@ -887,7 +887,7 @@
         echo("<h6>".$message." - >  ".var_dump($data)."</h6>");
         exit();
     }
-    function updateProfile(){
+    function updateProfile($image){
        
         if(isset($_REQUEST['submitEditProfile'])){
             // var_dump("Klikuam Submit!!!");
@@ -899,7 +899,7 @@
             $phone = $_REQUEST['phone'];
             $city = $_REQUEST['city'];
             $email = $_REQUEST['email'];
-            $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
+            $image_file = $image;
             
 
             $updP = updateProfiledata($firstname, $lname, $image_file, $phone, $birthdate, $city );
@@ -1017,7 +1017,7 @@
         return $row[0][0];
     }
 
-    function updatePost($userId, $postId){
+    function updatePost($userId, $postId, $image){
         $title = $_REQUEST['title'];
         $description = $_REQUEST['description'];
         $email = $_REQUEST['email'];
@@ -1029,7 +1029,6 @@
         $data = date('m/d/Y');
         $userId = $userId;
         $postID = $postId;
-        $image_file = addslashes(file_get_contents($_FILES["image"]["tmp_name"][0]));
              
       
             
@@ -1049,7 +1048,7 @@
             qytetiId= $city,
             nrtel= '$phone',
             email= '$email',
-            foto = '$image_file'
+            foto = '$image'
             WHERE id= $postID";
         $result = query($sql);
       
