@@ -286,7 +286,7 @@
     }
 
     function user_login($username, $password, $remember_me){
-        $sql = "select * from User where username='$username' AND active='1'";
+        $sql = "select * from User where username='$username' AND active='1' AND (role='A' OR role='U')  ";
         $result = query($sql);
 
         if($row=fetch_data($result)){
