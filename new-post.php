@@ -158,6 +158,8 @@
                 error: function(r){
                   $('#error').html(r);
                   $('#error').css("visibility", "visible");
+                  document.body.scrollTop = 0;
+                  document.documentElement.scrollTop = 0;
                 }
             });
           }
@@ -166,6 +168,8 @@
             $('#error').html(errors.slice(4,errors.length));
             $('#box').css("top",count.toString()+"%");
             $('#error').css("visibility", "visible");
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
           }
         });
       });

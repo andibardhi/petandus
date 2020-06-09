@@ -118,7 +118,7 @@
         if(strlen($image_file) > 0 ){
             $updatePostResult =  updatePost($userId,$postId, $image_file);
         }else {
-            $updatePostResult =  updatePost($userId,$postId, $postImageBlob);
+            $updatePostResult =  updatePost($userId,$postId,null);
         }
         
         if($updatePostResult){?>

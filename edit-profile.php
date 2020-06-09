@@ -39,7 +39,7 @@
         if( strlen($image_file) > 0 ){
             $updateResult = updateProfile($image_file);
         }else {
-            $updateResult = updateProfile($profileData[4]);
+            $updateResult = updateProfile(null);
         }
 
         if($updateResult){
