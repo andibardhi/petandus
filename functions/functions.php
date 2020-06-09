@@ -558,6 +558,9 @@
             $ctgr = $data[$i][5];
             $anim = $data[$i][6];
             $city = $data[$i][7];
+            if(strlen($desc)>100){ 
+                $desc = substr($desc,0,200)." ...";
+            }
 
             $info = $date . " | " . $user . " | " . $ctgr . " | " . $anim . " | " . $city;
 
@@ -909,16 +912,31 @@
     function updateProfiledata($name, $lastName, $image_file, $phone, $birthdate, $city ){
         
         $id = getUserIDbyUsername();
-        $sql = "UPDATE profil
-         SET
-            emer = '$name',
-            mbiemer = '$lastName',
-            datelindja='$birthdate',
-            nrtel= '$phone',
-            qyteti= '$city',
-            foto = '$image_file'
-         WHERE 
-            userid = $id";
+
+        if($image_file!=null){
+            $sql = "UPDATE profil
+            SET
+               emer = '$name',
+               mbiemer = '$lastName',
+               datelindja='$birthdate',
+               nrtel= '$phone',
+               qyteti= '$city',
+               foto = '$image_file'
+            WHERE 
+               userid = $id";
+        }
+        else{
+            $sql = "UPDATE profil
+                    SET
+                        emer = '$name',
+                        mbiemer = '$lastName',
+                        datelindja='$birthdate',
+                        nrtel= '$phone',
+                        qyteti= '$city'
+                    WHERE 
+                        userid = $id";
+        }
+
             // $result = query($sql);
             $result =query($sql);
         return $result;
@@ -1031,9 +1049,25 @@
       
         // $sql = "UPDATE `post` SET foto =  imgContent WHERE id = 1";
         // Insert image content into database 
-         
-        $sql = 
-        " UPDATE post
+        if($image!=null){
+            $sql = 
+                " UPDATE post
+                SET 
+                titull = '$title',
+                pershkrim= '$description',
+                data= $data,
+                autorId= $userId,
+                kategoriId= $category,
+                kafshaId= $animal,
+                qytetiId= $city,
+                nrtel= '$phone',
+                email= '$email',
+                foto = '$image'
+                WHERE id= $postID";
+        } 
+        else{
+            $sql = 
+            " UPDATE post
             SET 
             titull = '$title',
             pershkrim= '$description',
@@ -1043,9 +1077,9 @@
             kafshaId= $animal,
             qytetiId= $city,
             nrtel= '$phone',
-            email= '$email',
-            foto = '$image'
+            email= '$email'
             WHERE id= $postID";
+        }
         $result = query($sql);
       
         return $result;
@@ -1154,7 +1188,9 @@
             $desc = $data[$i][2];
             $img = $imgs[$i];
             $date = substr($data[$i][3], 0, 10);
-
+            if(strlen($desc)>100){ 
+                $desc = substr($desc,0,200)." ...";
+            }
             echo "
             <a href='./single-blog.php?id=" . $id . "'>    
                 <div class='row single-post'>

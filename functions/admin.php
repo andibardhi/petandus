@@ -1,7 +1,7 @@
 <?php
-
-    if(isset($_POST['action'])){
-
+    include_once('config.php');  
+    
+    if(isset($_POST['action']) && isset($_SESSION['role']) && $_SESSION['role']=='A'){
 
         if($_POST['action']=='delete-post'){
             $id = $_POST['id'];
