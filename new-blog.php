@@ -127,7 +127,7 @@ if(!isset($_SESSION['role']) || $_SESSION['role']!='A'){
                 $('#error').html(r);
                 $('#error').css("visibility", "visible");
                 document.body.scrollTop = 0;
-            document.documentElement.scrollTop = 0;
+                document.documentElement.scrollTop = 0;
               }
           });
         }

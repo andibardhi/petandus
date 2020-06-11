@@ -19,7 +19,7 @@
     <?php
     include_once('./includes/navbar.php');
     include_once('functions/config.php');
-    if(isset($_GET['username']) || $_SESSION['username'] != null){
+    if(isset($_GET['username']) || isset($_SESSION['username']) ){
         ini_set("display_errors", 0);
         $data = getUserPosts();
         $profileData = getDataFromProfile();
@@ -277,7 +277,12 @@
 
             </div>
         </div>
-    <?php }?>
+    <?php }
+    else{
+        header("Location: ./index.php");
+    }
+    
+    ?>
 
     <?php
     include_once('./includes/footer.php');

@@ -1265,24 +1265,22 @@
             $date = date("Y-m-d H:i:s");
 
             $min_char = 05;
-            $max_char = 30;
-            $desc_min_char = 005;
-            $desc_max_char = 200;
+            $max_char = 250;
             $count = 0;
 
             if(strlen($title) > $max_char){
-                $errors[] = "Ju lutem vendosni titullin me më pak se 30 gërma!";
+                $errors[] = "Ju lutem vendosni titullin me më pak se 250 gërma!";
             }
 
             if(strlen($title) < $min_char){
                 $errors[] = "Ju lutem vendosni titullin me më shumë se 5 gërma!";
             }
 
-            if(strlen($description) > $desc_max_char){
-                $errors[] = "Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
-            }
+            // if(strlen($description) > $desc_max_char){
+            //     $errors[] = "Ju lutem vendosni përshkrimin me më pak se 250 gërma!";
+            // }
 
-            if(strlen($description) < $desc_min_char){
+            if(strlen($description) < $min_char){
                 $errors[] = "Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
             }
 
