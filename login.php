@@ -29,7 +29,7 @@
             <div class="reveal-password">
                 <input type="password" name="password" id="password" placeholder="Fjalëkalim"><i style="font-size:24px;cursor: pointer;" onclick="togglePassword()" class="fa">&#xf06e;</i>
             </div>
-            <input type="checkbox" name="remember" id="remember"> <label for="remember">Më mbaj mend</label><br>
+            <input type="checkbox" name="remember" id="remember"> <label for="remember">Më mbaj të loguar</label><br>
             <a href="./recover.php">Keni harruar fjalëkalimin?</a> 
             <button id="btn"> LOGIN </button> 
             <label> Nuk keni nje llogari? <a href="./register.php">Regjistrohuni!</a> </label>

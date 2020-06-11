@@ -50,7 +50,7 @@
               <span id="uploaded_image"></span>
               </form>
               <button id="btn"> Regjistrohu </button> 
-              <label> Keni nje llogari? <a href="./login.php">Login!</a> </label> 
+              <label> Keni nje llogari? <a href="./login.php">Logohuni!</a> </label> 
           </div>
                 </div>
             </div>
@@ -237,6 +237,8 @@
                         error: function(r){
                           $('#error').html(r);
                           $('#error').css("visibility", "visible");
+                          document.body.scrollTop = 0;
+                          document.documentElement.scrollTop = 0;
                         }
                     });
                 }
@@ -245,6 +247,8 @@
                   $('#error').html(errors.slice(4,errors.length));
                   $('#box').css("top",count.toString()+"%");
                   $('#error').css("visibility", "visible");
+                  document.body.scrollTop = 0;
+                  document.documentElement.scrollTop = 0;
                 }
             });
         });
