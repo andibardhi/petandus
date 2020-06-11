@@ -99,7 +99,7 @@
           var desc_min_char = 005;
           var errors = "";
           var count = 0;
-          
+
           if(title.length > max_char){
             errors += "<br>Ju lutem vendosni titullin me më pak se 250 gërma!";
             count++;
@@ -113,6 +113,13 @@
           if(description.length < desc_min_char){
             errors += "<br>Ju lutem vendosni përshkrimin me më shumë se 5 gërma!";
             count++;
+          }
+
+          if(image!=null){
+            if(image.slice(-3)!="jpg" && image.slice(-3)!="png" && image.slice(-4)!="jpeg" ){
+              errors+="<br>Formati i fotos nuk suportohet!";
+              count++;
+            }
           }
 
           if(phonenumber.length > 12 || phonenumber.length < 10 || /^\d+$/.test(phonenumber) == false){

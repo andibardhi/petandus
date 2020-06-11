@@ -96,6 +96,13 @@ if(!isset($_SESSION['role']) || $_SESSION['role']!='A'){
           count++;
         }
 
+        if(image!=null){
+            if(image.slice(-3)!="jpg" && image.slice(-3)!="png" && image.slice(-4)!="jpeg" ){
+              errors+="<br>Formati i fotos nuk suportohet!";
+              count++;
+            }
+          }
+
         if (title != "" && files_length != 0 && description != "" && count == 0){
           
           $('#error').css("visibility", "hidden");

@@ -69,7 +69,7 @@
                                         <li>
                                         <?php if($amI){?>
                                             <br>
-                                                <a href="./edit-profile.php?userid=<?php echo $profileData[0]?>" style="text-decoration: none;">
+                                                <a href="./edit-profile.php" style="text-decoration: none;">
                                                     <button class="btn edit-post"> <i class="fa fa-edit" aria-hidden="true"></i>    Modifiko Profilin</button>
                                                 </a>
                                             </li>
